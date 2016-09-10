@@ -17,11 +17,8 @@ namespace FreeImageAPI
 
 		static FreeImageEngine()
 		{
-			// Check if FreeImage.dll is present and cancel setting the callbackfuntion if not
-			if (!IsAvailable)
-			{
-				return;
-			}
+			// TODO: try to take this out of the static constructor...
+			FreeImage.ValidateAvailability();
 
 			// Create a delegate (function pointer) to 'OnMessage'
 			outputMessageFunction = new OutputMessageFunction(OnMessage);
@@ -44,17 +41,6 @@ namespace FreeImageAPI
 			{
 				// Invoke the multicast-delegate
 				m.Invoke(fif, message);
-			}
-		}
-
-		/// <summary>
-		/// Gets a value indicating if the FreeImage DLL is available or not.
-		/// </summary>
-		public static bool IsAvailable
-		{
-			get
-			{
-				return FreeImage.IsAvailable();
 			}
 		}
 

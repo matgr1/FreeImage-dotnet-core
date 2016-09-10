@@ -200,32 +200,16 @@ namespace FreeImageAPI
 		/// Further more must both libraries, including the program itself,
 		/// be the same architecture (x86 or x64).
 		/// </remarks>
-		public static bool IsAvailable()
+		public static void ValidateAvailability()
 		{
-			try
+			Version nativeVersion = new Version(GetVersion());
+			Version wrapperVersion = GetWrapperVersion();
+
+			if (false == ((nativeVersion.Major > wrapperVersion.Major) ||
+							((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor > wrapperVersion.Minor)) ||
+							((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor == wrapperVersion.Minor) && (nativeVersion.Build >= wrapperVersion.Build))))
 			{
-				// Call a static fast executing function
-				Version nativeVersion = new Version(GetVersion());
-				Version wrapperVersion = GetWrapperVersion();
-				// No exception thrown, the library seems to be present
-				return
-					(nativeVersion.Major > wrapperVersion.Major) ||
-					((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor > wrapperVersion.Minor)) ||
-					((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor == wrapperVersion.Minor) && (nativeVersion.Build >= wrapperVersion.Build));
-			}
-			catch (DllNotFoundException)
-			{
-				return false;
-			}
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
-			catch (EntryPointNotFoundException)
-			{
-				return false;
-			}
-#endif
-			catch (BadImageFormatException)
-			{
-				return false;
+				throw new InvalidOperationException("Version mismatch");
 			}
 		}
 
