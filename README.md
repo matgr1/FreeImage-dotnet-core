@@ -1,0 +1,1 @@
+This is a clone of the FreeImage project (http://freeimage.sourceforge.net/) - there are no changes apart from the addition of this readme file
