@@ -1,4 +1,5 @@
 ﻿{
+	"name": "FreeImage-dotnet-core",
 	"version": "3.17.0-*",
 
 	"buildOptions": {
@@ -69,5 +70,11 @@
 				"System.Xml": "4.0.0.0"
 			}
 		}
+	},
+
+	"scripts": {
+		"postcompile": [
+			"dotnet pack --no-build --configuration %compile:Configuration% --version-suffix alpha1"
+		]
 	}
 }
