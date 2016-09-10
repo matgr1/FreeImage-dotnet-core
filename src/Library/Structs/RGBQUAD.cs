@@ -93,7 +93,11 @@ namespace FreeImageAPI
 	///	Color another = rgbq.Color;
 	/// </code>
 	/// </example>
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 	[Serializable, StructLayout(LayoutKind.Explicit)]
+#else
+	[StructLayout(LayoutKind.Explicit)]
+#endif
 	public struct RGBQUAD : IComparable, IComparable<RGBQUAD>, IEquatable<RGBQUAD>
 	{
 		/// <summary>

@@ -94,7 +94,11 @@ namespace FreeImageAPI
 	///	Color another = firgbaf.Color;
 	/// </code>
 	/// </example>
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 	[Serializable, StructLayout(LayoutKind.Sequential)]
+#else
+	[StructLayout(LayoutKind.Sequential)]
+#endif
 	public struct FIRGBAF : IComparable, IComparable<FIRGBAF>, IEquatable<FIRGBAF>
 	{
 		/// <summary>

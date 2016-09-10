@@ -35,25 +35,34 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using System.Collections;
 using System.Collections.Generic;
 using FreeImageAPI.Metadata;
 using System.Diagnostics;
+using System.Reflection;
+
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+using System.Drawing.Imaging;
+using System.Runtime.Serialization;
+#endif
 
 namespace FreeImageAPI
 {
 	/// <summary>
 	/// Encapsulates a FreeImage-bitmap.
 	/// </summary>
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 	[Serializable, Guid("64a4c935-b757-499c-ab8c-6110316a9e51")]
 	public class FreeImageBitmap : MarshalByRefObject, ICloneable, IDisposable, IEnumerable, ISerializable
+#else
+	[Guid("64a4c935-b757-499c-ab8c-6110316a9e51")]
+	public class FreeImageBitmap : IDisposable, IEnumerable
+#endif
 	{
-		#region Fields
+#region Fields
 
 		/// <summary>
 		/// Indicates whether this instance is disposed.
@@ -124,9 +133,9 @@ namespace FreeImageAPI
 		private const string ErrorCreatingBitmap = "Unable to create bitmap.";
 		private const string ErrorUnloadBitmap = "Unable to unload bitmap.";
 
-		#endregion
+#endregion
 
-		#region Constructors and Destructor
+#region Constructors and Destructor
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FreeImageBitmap"/> class.
@@ -224,6 +233,8 @@ namespace FreeImageAPI
 			originalFormat = original.originalFormat;
 			AddMemoryPressure();
 		}
+
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FreeImageBitmap"/> class
@@ -395,6 +406,8 @@ namespace FreeImageAPI
 			originalFormat = FreeImage.GetFormat(original.RawFormat);
 			AddMemoryPressure();
 		}
+
+#endif
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FreeImageBitmap"/> class
@@ -593,9 +606,11 @@ namespace FreeImageAPI
 		/// <param name="resource">The name of the resource.</param>
 		/// <exception cref="Exception">The operation failed.</exception>
 		public FreeImageBitmap(Type type, string resource)
-			: this(type.Module.Assembly.GetManifestResourceStream(type, resource))
+			: this(FreeImage.GetAssembly(type).GetManifestResourceStream(resource))
 		{
 		}
+
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FreeImageBitmap"/> class bases on the specified size
@@ -612,6 +627,8 @@ namespace FreeImageAPI
 			FreeImage.SetResolutionX(dib, (uint)g.DpiX);
 			FreeImage.SetResolutionY(dib, (uint)g.DpiY);
 		}
+
+#endif
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FreeImageBitmap"/> class bases on the specified size and format.
@@ -904,6 +921,8 @@ namespace FreeImageAPI
 			AddMemoryPressure();
 		}
 
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FreeImageBitmap"/> class.
 		/// </summary>
@@ -934,6 +953,8 @@ namespace FreeImageAPI
 			}
 		}
 
+#endif
+
 		/// <summary>
 		/// Frees all managed and unmanaged ressources.
 		/// </summary>
@@ -944,7 +965,9 @@ namespace FreeImageAPI
 
 		#endregion
 
-		#region Operators
+#region Operators
+
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 
 		/// <summary>
 		/// Converts a <see cref="FreeImageBitmap"/> instance to a <see cref="Bitmap"/> instance.
@@ -977,6 +1000,8 @@ namespace FreeImageAPI
 		{
 			return new FreeImageBitmap(value);
 		}
+
+#endif
 
 		/// <summary>
 		/// Determines whether two specified <see cref="FreeImageBitmap"/> objects have the same value.
@@ -1017,9 +1042,9 @@ namespace FreeImageAPI
 			return (!(left == right));
 		}
 
-		#endregion
+#endregion
 
-		#region Properties
+#region Properties
 
 		/// <summary>
 		/// Type of the bitmap.
@@ -1529,6 +1554,8 @@ namespace FreeImageAPI
 			}
 		}
 
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+
 		/// <summary>
 		/// Gets all the property items (pieces of metadata) stored in this <see cref="FreeImageBitmap"/>.
 		/// </summary>
@@ -1569,6 +1596,8 @@ namespace FreeImageAPI
 					new ImageFormat(new Guid(((GuidAttribute)guidAttribute).Value));
 			}
 		}
+
+#endif
 
 		/// <summary>
 		/// Gets the width and height, in pixels, of this <see cref="FreeImageBitmap"/>.
@@ -1715,9 +1744,9 @@ namespace FreeImageAPI
 			get { EnsureNotDisposed(); return dib; }
 		}
 
-		#endregion
+#endregion
 
-		#region Methods
+#region Methods
 
 		/// <summary>
 		/// Gets the bounds of this <see cref="FreeImageBitmap"/> in the specified unit.
@@ -1736,6 +1765,8 @@ namespace FreeImageAPI
 					(float)FreeImage.GetWidth(dib),
 					(float)FreeImage.GetHeight(dib));
 		}
+
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 
 		/// <summary>
 		/// Gets the specified property item from this <see cref="FreeImageBitmap"/>.
@@ -1758,6 +1789,8 @@ namespace FreeImageAPI
 			}
 			return null;
 		}
+
+#endif
 
 		/// <summary>
 		/// Returns a thumbnail for this <see cref="FreeImageBitmap"/>.
@@ -1802,6 +1835,8 @@ namespace FreeImageAPI
 			return result;
 		}
 
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+
 		/// <summary>
 		/// Converts this <see cref="FreeImageBitmap"/> instance to a <see cref="Bitmap"/> instance.
 		/// </summary>
@@ -1811,6 +1846,8 @@ namespace FreeImageAPI
 			EnsureNotDisposed();
 			return FreeImage.GetBitmap(dib, true);
 		}
+
+#endif
 
 		/// <summary>
 		/// Returns an instance of <see cref="Scanline&lt;T&gt;"/>, representing the scanline
@@ -2546,6 +2583,8 @@ namespace FreeImageAPI
 			}
 		}
 
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+
 		/// <summary>
 		/// Returns the handle to an icon.
 		/// </summary>
@@ -2558,6 +2597,8 @@ namespace FreeImageAPI
 				return bitmap.GetHicon();
 			}
 		}
+
+#endif
 
 		/// <summary>
 		/// Creates a GDI bitmap object from this <see cref="FreeImageBitmap"/> with the same
@@ -2685,6 +2726,8 @@ namespace FreeImageAPI
 			FreeImage.SetResolutionY(dib, (uint)yDpi);
 		}
 
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+
 		/// <summary>
 		/// This function is not yet implemented.
 		/// </summary>
@@ -2714,6 +2757,8 @@ namespace FreeImageAPI
 		{
 			throw new NotImplementedException();
 		}
+
+#endif
 
 		/// <summary>
 		/// Converts this <see cref="FreeImageBitmap"/> into a different color depth.
@@ -3722,9 +3767,11 @@ namespace FreeImageAPI
 			return dib.GetHashCode();
 		}
 
-		#endregion
+#endregion
 
-		#region Static functions
+#region Static functions
+
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 
 		/// <summary>
 		/// Returns a value that indicates whether the pixel format for this <see cref="FreeImageBitmap"/> contains alpha information.
@@ -3783,6 +3830,8 @@ namespace FreeImageAPI
 				return new FreeImageBitmap(bitmap);
 			}
 		}
+
+#endif
 
 		/// <summary>
 		/// Creates a <see cref="FreeImageBitmap"/> from the specified file.
@@ -3878,6 +3927,8 @@ namespace FreeImageAPI
 			return new FreeImageBitmap(stream);
 		}
 
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+
 		/// <summary>
 		/// Returns the color depth, in number of bits per pixel,
 		/// of the specified pixel format.
@@ -3889,6 +3940,8 @@ namespace FreeImageAPI
 		{
 			return Bitmap.GetPixelFormatSize(pixfmt);
 		}
+
+#endif
 
 		/// <summary>
 		/// Performs a lossless rotation or flipping on a JPEG file.
@@ -4163,9 +4216,9 @@ namespace FreeImageAPI
 			return FreeImage.CreatePropertyItem();
 		}
 
-		#endregion
+#endregion
 
-		#region Helper functions
+#region Helper functions
 
 		/// <summary>
 		/// Throws an exception in case the instance has already been disposed.
@@ -4263,14 +4316,18 @@ namespace FreeImageAPI
 			AddMemoryPressure();
 		}
 
-		#endregion
+#endregion
 
-		#region Interfaces
+#region Interfaces
 
 		/// <summary>
 		/// Helper class to store informations for <see cref="FreeImageBitmap.SaveAdd()"/>.
 		/// </summary>
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 		private sealed class SaveInformation : ICloneable
+#else
+		private sealed class SaveInformation
+#endif
 		{
 			public string filename;
 			public FREE_IMAGE_FORMAT format = FREE_IMAGE_FORMAT.FIF_UNKNOWN;
@@ -4359,6 +4416,8 @@ namespace FreeImageAPI
 			return GetScanlines().GetEnumerator();
 		}
 
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+
 		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			EnsureNotDisposed();
@@ -4373,6 +4432,8 @@ namespace FreeImageAPI
 			}
 		}
 
-		#endregion
+#endif
+
+#endregion
 	}
 }

@@ -9,8 +9,12 @@ namespace FreeImageAPI
 	/// The <b>FI1BIT</b> structure represents a single bit.
 	/// It's value can be <i>0</i> or <i>1</i>.
 	/// </summary>
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 	[DebuggerDisplay("{value}"),
 	Serializable]
+#else
+	[DebuggerDisplay("{value}")]
+#endif
 	public struct FI1BIT
 	{
 		/// <summary>

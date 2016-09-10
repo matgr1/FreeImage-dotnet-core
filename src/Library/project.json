@@ -1,20 +1,71 @@
 ﻿{
-	"version": "3.17.0",
+	"version": "3.17.0-*",
 
 	"buildOptions": {
 		"allowUnsafe": true
 	},
 
 	"dependencies": {
-			"NETStandard.Library": "1.6.0"
+		"NETStandard.Library": "1.6.0"
 	},
 
 	"frameworks": {
+		"netstandard1.6": {
+			"imports": "dnxcore50",
+			"dependencies": {
+				"System.Drawing-dotnet-core": "1.0.0"
+			}
+		},
+		"netstandard1.5": {
+			"imports": "dnxcore50",
+			"dependencies": {
+				"System.Drawing-dotnet-core": "1.0.0"
+			}
+		},
+		"netstandard1.4": {
+			"imports": "dnxcore50",
+			"dependencies": {
+				"System.Drawing-dotnet-core": "1.0.0"
+			}
+		},
+		"netstandard1.3": {
+			"imports": "dnxcore50",
+			"dependencies": {
+				"System.Drawing-dotnet-core": "1.0.0"
+			}
+		},
+		"net461": {
+			"imports": "dnxcore50",
+			"frameworkAssemblies": {
+				"System.Drawing": "4.0.0.0",
+				"System.Xml": "4.0.0.0"
+			}
+		},
+		"net46": {
+			"imports": "dnxcore50",
+			"frameworkAssemblies": {
+				"System.Drawing": "4.0.0.0",
+				"System.Xml": "4.0.0.0"
+			}
+		},
 		"net452": {
 			"imports": "dnxcore50",
 			"frameworkAssemblies": {
 				"System.Drawing": "4.0.0.0",
-				"System.Windows": "4.0.0.0",
+				"System.Xml": "4.0.0.0"
+			}
+		},
+		"net451": {
+			"imports": "dnxcore50",
+			"frameworkAssemblies": {
+				"System.Drawing": "4.0.0.0",
+				"System.Xml": "4.0.0.0"
+			}
+		},
+		"net45": {
+			"imports": "dnxcore50",
+			"frameworkAssemblies": {
+				"System.Drawing": "4.0.0.0",
 				"System.Xml": "4.0.0.0"
 			}
 		}

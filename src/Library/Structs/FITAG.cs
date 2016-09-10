@@ -41,7 +41,11 @@ namespace FreeImageAPI
 	/// <summary>
 	/// The <b>FITAG</b> structure is a handle to a FreeImage metadata tag.
 	/// </summary>
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 	[Serializable, StructLayout(LayoutKind.Sequential)]
+#else
+	[StructLayout(LayoutKind.Sequential)]
+#endif
 	public struct FITAG : IComparable, IComparable<FITAG>, IEquatable<FITAG>
 	{
 		private IntPtr data;

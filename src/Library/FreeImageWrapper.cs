@@ -36,16 +36,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-#if NET452
 using System.Drawing;
-using System.Drawing.Imaging;
-#endif
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using FreeImageAPI.IO;
 using FreeImageAPI.Metadata;
 using System.Diagnostics;
+
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+using System.Drawing.Imaging;
+#endif
 
 namespace FreeImageAPI
 {
@@ -156,7 +157,7 @@ namespace FreeImageAPI
 
 		internal static Assembly GetAssembly(Type type)
 		{
-#if NET452
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 			return Assembly.GetAssembly(type);
 #else
 			return type.GetTypeInfo().Assembly;
@@ -204,7 +205,7 @@ namespace FreeImageAPI
 			{
 				return false;
 			}
-#if NET452
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 			catch (EntryPointNotFoundException)
 			{
 				return false;
@@ -558,7 +559,7 @@ namespace FreeImageAPI
 			}
 		}
 
-#if NET452
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 
 		/// <summary>
 		/// Converts a FreeImage bitmap to a .NET <see cref="System.Drawing.Bitmap"/>.
@@ -916,7 +917,7 @@ namespace FreeImageAPI
 			return dib;
 		}
 
-#if NET452
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 
 		/// <summary>
 		/// Saves a .NET <see cref="System.Drawing.Bitmap"/> to a file.
@@ -1069,7 +1070,7 @@ namespace FreeImageAPI
 			return dib;
 		}
 
-#if NET452
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 
 		/// <summary>
 		/// Loads a .NET <see cref="System.Drawing.Bitmap"/> from a file.
@@ -2760,6 +2761,8 @@ namespace FreeImageAPI
 			return result;
 		}
 
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+
 		/// <summary>
 		/// Returns the <see cref="FREE_IMAGE_FORMAT"/> for the specified
 		/// <see cref="ImageFormat"/>.
@@ -2787,6 +2790,8 @@ namespace FreeImageAPI
 			}
 			return FREE_IMAGE_FORMAT.FIF_UNKNOWN;
 		}
+
+#endif
 
 		/// <summary>
 		/// Retrieves all parameters needed to create a new FreeImage bitmap from
@@ -5121,10 +5126,17 @@ namespace FreeImageAPI
 
 		internal static string ColorToString(Color color)
 		{
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 			return string.Format(
 				System.Globalization.CultureInfo.CurrentCulture,
 				"{{Name={0}, ARGB=({1}, {2}, {3}, {4})}}",
 				new object[] { color.Name, color.A, color.R, color.G, color.B });
+#else
+			return string.Format(
+				System.Globalization.CultureInfo.CurrentCulture,
+				"{{ARGB=({0}, {1}, {2}, {3})}}",
+				new object[] { color.A, color.R, color.G, color.B });
+#endif
 		}
 
 		internal static void Resize(ref string str, int length)

@@ -54,7 +54,11 @@ namespace FreeImageAPI
 	/// The structure can be converted into all .NET standard types either implicit or
 	/// explicit.
 	/// </remarks>
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 	[Serializable, StructLayout(LayoutKind.Sequential), ComVisible(true)]
+#else
+	[StructLayout(LayoutKind.Sequential), ComVisible(true)]
+#endif
 	public struct FIURational : IConvertible, IComparable, IFormattable, IComparable<FIURational>, IEquatable<FIURational>
 	{
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -394,7 +398,7 @@ namespace FreeImageAPI
 			return base.GetHashCode();
 		}
 
-		#region Operators
+#region Operators
 
 		/// <summary>
 		/// Standard implementation of the operator.
@@ -574,9 +578,9 @@ namespace FreeImageAPI
 				(right.numerator * (denominator / right.denominator));
 		}
 
-		#endregion
+#endregion
 
-		#region Conversions
+#region Conversions
 
 		/// <summary>
 		/// Converts the value of a <see cref="FIURational"/> structure to a <see cref="Boolean"/> structure.
@@ -840,9 +844,9 @@ namespace FreeImageAPI
 			return new FIURational((uint)value, 1u);
 		}
 
-		#endregion
+#endregion
 
-		#region IConvertible Member
+#region IConvertible Member
 
 		TypeCode IConvertible.GetTypeCode()
 		{
@@ -929,9 +933,9 @@ namespace FreeImageAPI
 			return (ulong)this;
 		}
 
-		#endregion
+#endregion
 
-		#region IComparable Member
+#region IComparable Member
 
 		/// <summary>
 		/// Compares this instance with a specified <see cref="Object"/>.
@@ -952,9 +956,9 @@ namespace FreeImageAPI
 			return CompareTo((FIURational)obj);
 		}
 
-		#endregion
+#endregion
 
-		#region IFormattable Member
+#region IFormattable Member
 
 		/// <summary>
 		/// Formats the value of the current instance using the specified format.
@@ -971,9 +975,9 @@ namespace FreeImageAPI
 			return String.Format(formatProvider, format, ((IConvertible)this).ToDouble(formatProvider));
 		}
 
-		#endregion
+#endregion
 
-		#region IEquatable<FIURational> Member
+#region IEquatable<FIURational> Member
 
 		/// <summary>
 		/// Tests whether the specified <see cref="FIURational"/> structure is equivalent to this <see cref="FIURational"/> structure.
@@ -986,9 +990,9 @@ namespace FreeImageAPI
 			return (this == other);
 		}
 
-		#endregion
+#endregion
 
-		#region IComparable<FIURational> Member
+#region IComparable<FIURational> Member
 
 		/// <summary>
 		/// Compares this instance with a specified <see cref="FIURational"/> object.
@@ -1005,6 +1009,6 @@ namespace FreeImageAPI
 			else return 0;
 		}
 
-		#endregion
+#endregion
 	}
 }

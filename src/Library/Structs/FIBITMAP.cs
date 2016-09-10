@@ -46,7 +46,11 @@ namespace FreeImageAPI
 	/// access to either a singlepage bitmap or exactly one page of
 	/// a multipage bitmap.
 	/// </remarks>
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 	[Serializable, StructLayout(LayoutKind.Sequential)]
+#else
+	[StructLayout(LayoutKind.Sequential)]
+#endif
 	public struct FIBITMAP : IComparable, IComparable<FIBITMAP>, IEquatable<FIBITMAP>
 	{
 		private IntPtr data;

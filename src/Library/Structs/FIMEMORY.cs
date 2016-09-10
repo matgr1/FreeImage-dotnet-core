@@ -41,7 +41,11 @@ namespace FreeImageAPI
 	/// <summary>
 	/// The <b>FIMEMORY</b> structure is a handle to an opened memory stream.
 	/// </summary>
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 	[Serializable, StructLayout(LayoutKind.Sequential)]
+#else
+	[StructLayout(LayoutKind.Sequential)]
+#endif
 	public struct FIMEMORY : IComparable, IComparable<FIMEMORY>, IEquatable<FIMEMORY>
 	{
 		private IntPtr data;

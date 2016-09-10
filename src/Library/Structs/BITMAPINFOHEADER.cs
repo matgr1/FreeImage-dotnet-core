@@ -47,7 +47,11 @@ namespace FreeImageAPI
 	/// <b>BITMAPINFOHEADER</b> structure and a color table to provide a complete
 	/// definition of the dimensions and colors of a DIB.
 	/// </remarks>
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 	[Serializable, StructLayout(LayoutKind.Sequential)]
+#else
+	[StructLayout(LayoutKind.Sequential)]
+#endif
 	public struct BITMAPINFOHEADER : IEquatable<BITMAPINFOHEADER>
 	{
 		/// <summary>
