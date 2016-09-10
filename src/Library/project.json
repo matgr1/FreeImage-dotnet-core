@@ -1,15 +1,18 @@
 ﻿{
-	"version": "1.0.0-*",
+	"version": "3.17.0",
 
 	"buildOptions": {
 		"allowUnsafe": true
 	},
 
 	"dependencies": {
-		"NETStandard.Library": "1.6.0"
+			"NETStandard.Library": "1.6.0"
 	},
 
 	"frameworks": {
+		"netstandard1.6": {
+			"imports": "dnxcore50"
+		},
 		"net452": {
 			"imports": "dnxcore50",
 			"frameworkAssemblies": {

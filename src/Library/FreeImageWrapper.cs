@@ -36,13 +36,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if NET452
 using System.Drawing;
 using System.Drawing.Imaging;
+#endif
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using FreeImageAPI.IO;
 using FreeImageAPI.Metadata;
+using System.Diagnostics;
 
 namespace FreeImageAPI
 {
@@ -113,6 +116,8 @@ namespace FreeImageAPI
 
 		#region General functions
 
+		private const string FreeImageVersion = "3.17.0";
+
 		/// <summary>
 		/// Returns the internal version of this FreeImage .NET wrapper.
 		/// </summary>
@@ -123,27 +128,39 @@ namespace FreeImageAPI
 			{
 				try
 				{
-					object[] attributes = Assembly.GetAssembly(typeof(FreeImage))
-					.GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false);
-					if ((attributes != null) && (attributes.Length != 0))
+					Assembly assembly = GetFreeImageAssembly();
+					AssemblyInformationalVersionAttribute attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+					if (attribute != null)
 					{
-						AssemblyFileVersionAttribute attribute =
-						attributes[0] as AssemblyFileVersionAttribute;
-						if ((attribute != null) && (attribute.Version != null))
+						if (attribute.InformationalVersion != null)
 						{
-							return (WrapperVersion = new Version(attribute.Version));
+							return (WrapperVersion = new Version(attribute.InformationalVersion));
 						}
 					}
 				}
-				catch
+				catch(Exception e)
 				{
-
+					Debug.WriteLine($"Failed to get assembly version - {e.ToString()}");
 				}
 
-				WrapperVersion = new Version();
+				WrapperVersion = new Version("");
 			}
 
 			return WrapperVersion;
+		}
+
+		internal static Assembly GetFreeImageAssembly()
+		{
+			return GetAssembly(typeof(FreeImage));
+		}
+
+		internal static Assembly GetAssembly(Type type)
+		{
+#if NET452
+			return Assembly.GetAssembly(type);
+#else
+			return type.GetTypeInfo().Assembly;
+#endif
 		}
 
 		/// <summary>
@@ -179,27 +196,29 @@ namespace FreeImageAPI
 				Version wrapperVersion = GetWrapperVersion();
 				// No exception thrown, the library seems to be present
 				return
-                    (nativeVersion.Major > wrapperVersion.Major) ||
-                    ((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor > wrapperVersion.Minor)) ||
-                    ((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor == wrapperVersion.Minor) && (nativeVersion.Build >= wrapperVersion.Build));
-            }
+					(nativeVersion.Major > wrapperVersion.Major) ||
+					((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor > wrapperVersion.Minor)) ||
+					((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor == wrapperVersion.Minor) && (nativeVersion.Build >= wrapperVersion.Build));
+			}
 			catch (DllNotFoundException)
 			{
 				return false;
 			}
+#if NET452
 			catch (EntryPointNotFoundException)
 			{
 				return false;
 			}
+#endif
 			catch (BadImageFormatException)
 			{
 				return false;
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region Bitmap management functions
+#region Bitmap management functions
 
 		/// <summary>
 		/// Creates a new bitmap in memory.
@@ -539,6 +558,8 @@ namespace FreeImageAPI
 			}
 		}
 
+#if NET452
+
 		/// <summary>
 		/// Converts a FreeImage bitmap to a .NET <see cref="System.Drawing.Bitmap"/>.
 		/// </summary>
@@ -786,6 +807,8 @@ namespace FreeImageAPI
 			return result;
 		}
 
+#endif
+
 		/// <summary>
 		/// Converts a raw bitmap to a FreeImage bitmap.
 		/// </summary>
@@ -893,6 +916,8 @@ namespace FreeImageAPI
 			return dib;
 		}
 
+#if NET452
+
 		/// <summary>
 		/// Saves a .NET <see cref="System.Drawing.Bitmap"/> to a file.
 		/// </summary>
@@ -956,6 +981,8 @@ namespace FreeImageAPI
 			Unload(dib);
 			return result;
 		}
+
+#endif
 
 		/// <summary>
 		/// Loads a FreeImage bitmap.
@@ -1042,6 +1069,8 @@ namespace FreeImageAPI
 			return dib;
 		}
 
+#if NET452
+
 		/// <summary>
 		/// Loads a .NET <see cref="System.Drawing.Bitmap"/> from a file.
 		/// </summary>
@@ -1061,6 +1090,8 @@ namespace FreeImageAPI
 			Unload(dib);
 			return result;
 		}
+
+#endif
 
 		/// <summary>
 		/// Deletes a previously loaded FreeImage bitmap from memory and resets the handle to 0.
@@ -1689,9 +1720,9 @@ namespace FreeImageAPI
 			return result;
 		}
 
-		#endregion
+#endregion
 
-		#region Plugin functions
+#region Plugin functions
 
 		/// <summary>
 		/// Checks if an extension is valid for a certain format.
@@ -1804,9 +1835,9 @@ namespace FreeImageAPI
 			return result;
 		}
 
-		#endregion
+#endregion
 
-		#region Multipage functions
+#region Multipage functions
 
 		/// <summary>
 		/// Loads a FreeImage multi-paged bitmap.
@@ -2196,9 +2227,9 @@ namespace FreeImageAPI
 			return LoadMultiBitmapFromMemory(format, memory, flags);
 		}
 
-		#endregion
+#endregion
 
-		#region Filetype functions
+#region Filetype functions
 
 		/// <summary>
 		/// Orders FreeImage to analyze the bitmap signature.
@@ -2231,9 +2262,9 @@ namespace FreeImageAPI
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region Pixel access functions
+#region Pixel access functions
 
 		/// <summary>
 		/// Retrieves an hBitmap for a FreeImage bitmap.
@@ -2403,9 +2434,9 @@ namespace FreeImageAPI
 			return DeleteObject(hbitmap);
 		}
 
-		#endregion
+#endregion
 
-		#region Bitmap information functions
+#region Bitmap information functions
 
 		/// <summary>
 		/// Retrieves a DIB's resolution in X-direction measured in 'dots per inch' (DPI) and not in
@@ -3360,9 +3391,9 @@ namespace FreeImageAPI
 				(GetBlueMask(dib) == FI16_565_BLUE_MASK));
 		}
 
-		#endregion
+#endregion
 
-		#region ICC profile functions
+#region ICC profile functions
 
 		/// <summary>
 		/// Creates a new ICC-Profile for a FreeImage bitmap.
@@ -3391,9 +3422,9 @@ namespace FreeImageAPI
 			return new FIICCPROFILE(dib, data, size);
 		}
 
-		#endregion
+#endregion
 
-		#region Conversion functions
+#region Conversion functions
 
 		/// <summary>
 		/// Converts a FreeImage bitmap from one color depth to another.
@@ -3921,9 +3952,9 @@ namespace FreeImageAPI
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region Metadata
+#region Metadata
 
 		/// <summary>
 		/// Copies metadata from one FreeImage bitmap to another.
@@ -4178,9 +4209,9 @@ namespace FreeImageAPI
 		private static Dictionary<FIMETADATA, FREE_IMAGE_MDMODEL> metaDataSearchHandler
 			= new Dictionary<FIMETADATA, FREE_IMAGE_MDMODEL>(1);
 
-		#endregion
+#endregion
 
-		#region Rotation and Flipping
+#region Rotation and Flipping
 
 		/// <summary>
 		/// This function rotates a 1-, 8-bit greyscale or a 24-, 32-bit color image by means of 3 shears.
@@ -4334,9 +4365,9 @@ namespace FreeImageAPI
 			return result;
 		}
 
-		#endregion
+#endregion
 
-		#region Upsampling / downsampling
+#region Upsampling / downsampling
 
 		/// <summary>
 		/// Enlarges or shrinks the FreeImage bitmap selectively per side and fills newly added areas
@@ -4432,9 +4463,9 @@ namespace FreeImageAPI
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region Color
+#region Color
 
 		/// <summary>
 		/// Sets all pixels of the specified image to the color provided through the
@@ -4538,9 +4569,9 @@ namespace FreeImageAPI
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region Wrapper functions
+#region Wrapper functions
 
 		/// <summary>
 		/// Returns the next higher possible color depth.
@@ -5184,9 +5215,9 @@ namespace FreeImageAPI
 			return result;
 		}
 
-		#endregion
+#endregion
 
-		#region Dll-Imports
+#region Dll-Imports
 
 		/// <summary>
 		/// Retrieves a handle to a display device context (DC) for the client area of a specified window
@@ -5324,6 +5355,6 @@ namespace FreeImageAPI
 		[DllImport("ntdll.dll", EntryPoint = "RtlCompareMemory", SetLastError = false)]
 		internal static unsafe extern uint RtlCompareMemory(void* buf1, void* buf2, uint count);
 
-		#endregion
+#endregion
 	}
 }

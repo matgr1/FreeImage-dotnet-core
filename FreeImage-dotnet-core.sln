@@ -3,7 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Library", "Library\Library.xproj", "{249C05B3-BB94-4EB1-92AE-E6DF4C2C068A}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Library", "src\Library\Library.xproj", "{249C05B3-BB94-4EB1-92AE-E6DF4C2C068A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B03B4CBD-B223-4F9B-BC26-274A5FDB660D}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{32568241-B63B-4E05-A92D-C46C50EECFB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +25,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{249C05B3-BB94-4EB1-92AE-E6DF4C2C068A} = {32568241-B63B-4E05-A92D-C46C50EECFB9}
 	EndGlobalSection
 EndGlobal
