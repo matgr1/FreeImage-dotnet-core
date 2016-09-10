@@ -22,6 +22,7 @@ namespace FreeImageAPI
 			{
 				return;
 			}
+
 			// Create a delegate (function pointer) to 'OnMessage'
 			outputMessageFunction = new OutputMessageFunction(OnMessage);
 			// Set the callback

@@ -35,6 +35,7 @@
 
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
@@ -45,7 +46,6 @@ using System.Diagnostics;
 using System.Reflection;
 
 #if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
-using System.Drawing.Imaging;
 using System.Runtime.Serialization;
 #endif
 

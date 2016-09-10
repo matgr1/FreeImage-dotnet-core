@@ -14,25 +14,25 @@
 		"netstandard1.6": {
 			"imports": "dnxcore50",
 			"dependencies": {
-				"System.Drawing-dotnet-core": "1.0.0"
+				"System.Drawing-dotnet-core": "1.0.1"
 			}
 		},
 		"netstandard1.5": {
 			"imports": "dnxcore50",
 			"dependencies": {
-				"System.Drawing-dotnet-core": "1.0.0"
+				"System.Drawing-dotnet-core": "1.0.1"
 			}
 		},
 		"netstandard1.4": {
 			"imports": "dnxcore50",
 			"dependencies": {
-				"System.Drawing-dotnet-core": "1.0.0"
+				"System.Drawing-dotnet-core": "1.0.1"
 			}
 		},
 		"netstandard1.3": {
 			"imports": "dnxcore50",
 			"dependencies": {
-				"System.Drawing-dotnet-core": "1.0.0"
+				"System.Drawing-dotnet-core": "1.0.1"
 			}
 		},
 		"net461": {
@@ -74,7 +74,7 @@
 
 	"scripts": {
 		"postcompile": [
-			"dotnet pack --no-build --configuration %compile:Configuration% --version-suffix alpha1"
+			"dotnet pack --no-build --configuration %compile:Configuration% --version-suffix alpha2"
 		]
 	}
 }

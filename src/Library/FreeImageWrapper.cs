@@ -37,16 +37,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using FreeImageAPI.IO;
 using FreeImageAPI.Metadata;
 using System.Diagnostics;
-
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
-using System.Drawing.Imaging;
-#endif
 
 namespace FreeImageAPI
 {
@@ -74,6 +71,7 @@ namespace FreeImageAPI
 		/// Version of the wrapper library.
 		/// </summary>
 		private static Version WrapperVersion;
+		private static object WrapperVersionLock = new object();
 
 		private const int DIB_RGB_COLORS = 0;
 		private const int DIB_PAL_COLORS = 1;
@@ -127,24 +125,38 @@ namespace FreeImageAPI
 		{
 			if (WrapperVersion == null)
 			{
-				try
+				lock (WrapperVersionLock)
 				{
-					Assembly assembly = GetFreeImageAssembly();
-					AssemblyInformationalVersionAttribute attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-					if (attribute != null)
+					if (WrapperVersion == null)
 					{
-						if (attribute.InformationalVersion != null)
+						Assembly assembly = GetFreeImageAssembly();
+						AssemblyInformationalVersionAttribute attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+
+						if (attribute == null)
 						{
-							return (WrapperVersion = new Version(attribute.InformationalVersion));
+							throw new InvalidOperationException("Failed to get assembly version attribute");
+						}
+
+						if (string.IsNullOrWhiteSpace(attribute.InformationalVersion))
+						{
+							throw new InvalidOperationException("No assembly version present");
+						}
+
+						string version = attribute.InformationalVersion;
+
+						string[] versionParts = version.Split(new[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+
+						if (versionParts.Length < 1)
+						{
+							throw new InvalidOperationException("Invalid assembly version");
+						}
+
+						if (false == Version.TryParse(versionParts[0], out WrapperVersion))
+						{
+							throw new InvalidOperationException("Unable to parse assembly version");
 						}
 					}
 				}
-				catch(Exception e)
-				{
-					Debug.WriteLine($"Failed to get assembly version - {e.ToString()}");
-				}
-
-				WrapperVersion = new Version("");
 			}
 
 			return WrapperVersion;
