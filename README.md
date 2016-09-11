@@ -5,3 +5,5 @@ FreeImage native binaries are included in the nuget package for Windows, other p
 nuget package: https://www.nuget.org/packages/FreeImage-dotnet-core
 
 `Install-Package FreeImage-dotnet-core -Pre`
+
+The license is the same as the FreeImage license available at the link above
