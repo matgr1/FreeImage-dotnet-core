@@ -8,21 +8,21 @@
 
 	"scripts": {
 		"postcompile": [
-			"dotnet pack --no-build --configuration %compile:Configuration% --version-suffix alpha3"
+			"dotnet pack --no-build --configuration %compile:Configuration% --version-suffix alpha4"
 		]
 	},
 
 	"packOptions": {
 		"files": {
 			"mappings": {
-				"runtimes/win7-x86/native/": [ "./runtimes/win7-x86/native/FreeImage.dll" ],
-				"runtimes/win7-x64/native/": [ "./runtimes/win7-x64/native/FreeImage.dll" ]
+				"runtimes/win7-x86/native/": [ "../../runtimes/win7-x86/native/FreeImage.dll" ],
+				"runtimes/win7-x64/native/": [ "../../runtimes/win7-x64/native/FreeImage.dll" ]
 			}
 		}
 	},
 
 	"dependencies": {
-		"NETStandard.Library": "1.6.0" 
+		"NETStandard.Library": "1.6.0"
 	},
 
 	"frameworks": {

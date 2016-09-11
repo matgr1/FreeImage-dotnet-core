@@ -246,13 +246,13 @@ namespace FreeImageAPI.IO
 		// No write-support
 		public override void SetLength(long value)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			throw new FreeImageException("The method or operation is not implemented.");
 		}
 
 		// No write-support
 		public override void Write(byte[] buffer, int offset, int count)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			throw new FreeImageException("The method or operation is not implemented.");
 		}
 
 		public void Reset()

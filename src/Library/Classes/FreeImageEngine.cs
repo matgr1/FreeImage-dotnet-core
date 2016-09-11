@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
 
 namespace FreeImageAPI
@@ -9,46 +8,86 @@ namespace FreeImageAPI
 	/// </summary>
 	public static class FreeImageEngine
 	{
+		// TODO: ideally FreeImage would provide this... either way, it should probably be cleared before any call to the API...
+		[ThreadStatic]
+		public static string LastErrorMessage;
+
 		#region Callback
 
-		// Callback delegate
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private static readonly OutputMessageFunction outputMessageFunction;
+		private static readonly object outputMessageFunctionLock;
+
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+		private static OutputMessageFunction outputMessageFunction;
+
+		private static event OutputMessageFunction message;
 
 		static FreeImageEngine()
 		{
-			// TODO: try to take this out of the static constructor...
-			FreeImage.ValidateAvailability();
-
-			// Create a delegate (function pointer) to 'OnMessage'
-			outputMessageFunction = new OutputMessageFunction(OnMessage);
-			// Set the callback
-			FreeImage.SetOutputMessage(outputMessageFunction);
-		}
-
-		/// <summary>
-		/// Internal callback
-		/// </summary>
-		private static void OnMessage(FREE_IMAGE_FORMAT fif, string message)
-		{
-			// Get a local copy of the multicast-delegate
-			OutputMessageFunction m = Message;
-
-			// Check the local copy instead of the static instance
-			// to prevent a second thread from setting the delegate
-			// to null, which would cause a nullreference exception
-			if (m != null)
-			{
-				// Invoke the multicast-delegate
-				m.Invoke(fif, message);
-			}
+			outputMessageFunctionLock = new object();
 		}
 
 		/// <summary>
 		/// Internal errors in FreeImage generate a logstring that can be
 		/// captured by this event.
 		/// </summary>
-		public static event OutputMessageFunction Message;
+		public static event OutputMessageFunction Message
+		{
+			add
+			{
+				InitializeMessage();
+				message += value;
+			}
+			remove
+			{
+				InitializeMessage();
+				message -= value;
+			}
+		}
+
+		private static void InitializeMessage()
+		{
+			if (null == outputMessageFunction)
+			{
+				lock (outputMessageFunctionLock)
+				{
+					if (null == outputMessageFunction)
+					{
+						FreeImage.ValidateAvailability();
+
+						try
+						{
+							// Create a delegate (function pointer) to 'OnMessage'
+							outputMessageFunction =
+								delegate (FREE_IMAGE_FORMAT fif, string message)
+								{
+									LastErrorMessage = message;
+
+									// Get a local copy of the multicast-delegate
+									OutputMessageFunction m = FreeImageEngine.message;
+									
+									// Check the local copy instead of the static instance
+									// to prevent a second thread from setting the delegate
+									// to null, which would cause a nullreference exception
+									if (m != null)
+									{
+										// Invoke the multicast-delegate
+										m.Invoke(fif, message);
+									}
+								};
+
+							// Set the callback
+							FreeImage.SetOutputMessage(outputMessageFunction);
+						}
+						catch
+						{
+							outputMessageFunction = null;
+							throw;
+						}
+					}
+				}
+			}
+		}
 
 		#endregion
 

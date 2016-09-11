@@ -596,7 +596,7 @@ namespace FreeImageAPI.Metadata
 				tag = FreeImage.CloneTag(tag);
 				if (tag.IsNull)
 				{
-					throw new Exception("FreeImage.CloneTag() failed.");
+					throw new FreeImageException("FreeImage.CloneTag() failed.");
 				}
 				selfCreated = true;
 			}

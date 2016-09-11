@@ -186,11 +186,8 @@ namespace FreeImageAPI
 		}
 
 		/// <summary>
-		/// Returns a value indicating if the FreeImage library is available or not.
-		/// See remarks for further details.
+		/// Validates that the FreeImage library is available on the system - throws an exception if not
 		/// </summary>
-		/// <returns><c>false</c> if the file is not available or out of date;
-		/// <c>true</c>, otherwise.</returns>
 		/// <remarks>
 		/// The FreeImage.NET library is a wrapper for the native C++ library
 		/// (FreeImage.dll ... dont mix ist up with this library FreeImageNet.dll).
@@ -198,18 +195,39 @@ namespace FreeImageAPI
 		/// executable or in a folder contained in the envirent variable <i>PATH</i>
 		/// (for example %WINDIR%\System32).<para/>
 		/// Further more must both libraries, including the program itself,
-		/// be the same architecture (x86 or x64).
+		/// be the same architecture (x86 or x64) and be a compatible version.
 		/// </remarks>
 		public static void ValidateAvailability()
 		{
-			Version nativeVersion = new Version(GetVersion());
-			Version wrapperVersion = GetWrapperVersion();
-
-			if (false == ((nativeVersion.Major > wrapperVersion.Major) ||
-							((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor > wrapperVersion.Minor)) ||
-							((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor == wrapperVersion.Minor) && (nativeVersion.Build >= wrapperVersion.Build))))
+			try
 			{
-				throw new InvalidOperationException("Version mismatch");
+				Version nativeVersion = new Version(GetVersion());
+				Version wrapperVersion = GetWrapperVersion();
+
+				if (false ==	((nativeVersion.Major > wrapperVersion.Major) ||
+								((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor > wrapperVersion.Minor)) ||
+								((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor == wrapperVersion.Minor) && (nativeVersion.Build >= wrapperVersion.Build))))
+				{
+					throw new FreeImageException("FreeImage library version mismatch");
+				}
+			}
+			catch (DllNotFoundException e)
+			{
+				throw new FreeImageException("FreeImage library not found", e);
+			}
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+			catch (EntryPointNotFoundException e)
+			{
+				throw new FreeImageException("FreeImage entry point not found", e);
+			}
+#endif
+			catch (BadImageFormatException e)
+			{
+				throw new FreeImageException("Incorrect FreeImage library format", e);
+			}
+			catch (Exception e)
+			{
+				throw new FreeImageException("Unexpected error", e);
 			}
 		}
 

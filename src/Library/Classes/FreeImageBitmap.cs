@@ -153,7 +153,7 @@ namespace FreeImageAPI
 		{
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorLoadingBitmap);
+				throw new FreeImageException(ErrorLoadingBitmap);
 			}
 			this.dib = dib;
 			AddMemoryPressure();
@@ -176,7 +176,7 @@ namespace FreeImageAPI
 			dib = FreeImage.Clone(original.dib);
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorLoadingBitmap);
+				throw new FreeImageException(ErrorLoadingBitmap);
 			}
 			originalFormat = original.originalFormat;
 			AddMemoryPressure();
@@ -228,7 +228,7 @@ namespace FreeImageAPI
 			dib = FreeImage.Rescale(original.dib, width, height, FREE_IMAGE_FILTER.FILTER_BICUBIC);
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorLoadingBitmap);
+				throw new FreeImageException(ErrorLoadingBitmap);
 			}
 			originalFormat = original.originalFormat;
 			AddMemoryPressure();
@@ -328,7 +328,7 @@ namespace FreeImageAPI
 			dib = FreeImage.CreateFromBitmap(original, true);
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorLoadingBitmap);
+				throw new FreeImageException(ErrorLoadingBitmap);
 			}
 			originalFormat = FreeImage.GetFormat(original.RawFormat);
 			AddMemoryPressure();
@@ -395,13 +395,13 @@ namespace FreeImageAPI
 			FIBITMAP temp = FreeImage.CreateFromBitmap(original, true);
 			if (temp.IsNull)
 			{
-				throw new Exception(ErrorLoadingBitmap);
+				throw new FreeImageException(ErrorLoadingBitmap);
 			}
 			dib = FreeImage.Rescale(temp, width, height, FREE_IMAGE_FILTER.FILTER_BICUBIC);
 			FreeImage.Unload(temp);
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorLoadingBitmap);
+				throw new FreeImageException(ErrorLoadingBitmap);
 			}
 			originalFormat = FreeImage.GetFormat(original.RawFormat);
 			AddMemoryPressure();
@@ -594,7 +594,7 @@ namespace FreeImageAPI
 				FreeImage.FI_RGBA_BLUE_MASK);
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorCreatingBitmap);
+				throw new FreeImageException(ErrorCreatingBitmap);
 			}
 			AddMemoryPressure();
 		}
@@ -667,7 +667,7 @@ namespace FreeImageAPI
 			dib = FreeImage.AllocateT(type, width, height, (int)bpp, redMask, greenMask, blueMask);
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorCreatingBitmap);
+				throw new FreeImageException(ErrorCreatingBitmap);
 			}
 			AddMemoryPressure();
 		}
@@ -702,7 +702,7 @@ namespace FreeImageAPI
 			dib = FreeImage.AllocateT(type, width, height, 0, 0u, 0u, 0u);
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorCreatingBitmap);
+				throw new FreeImageException(ErrorCreatingBitmap);
 			}
 			AddMemoryPressure();
 		}
@@ -757,7 +757,7 @@ namespace FreeImageAPI
 
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorCreatingBitmap);
+				throw new FreeImageException(ErrorCreatingBitmap);
 			}
 			AddMemoryPressure();
 		}
@@ -817,7 +817,7 @@ namespace FreeImageAPI
 
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorCreatingBitmap);
+				throw new FreeImageException(ErrorCreatingBitmap);
 			}
 			AddMemoryPressure();
 		}
@@ -864,7 +864,7 @@ namespace FreeImageAPI
 
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorCreatingBitmap);
+				throw new FreeImageException(ErrorCreatingBitmap);
 			}
 			AddMemoryPressure();
 		}
@@ -916,7 +916,7 @@ namespace FreeImageAPI
 
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorCreatingBitmap);
+				throw new FreeImageException(ErrorCreatingBitmap);
 			}
 			AddMemoryPressure();
 		}
@@ -941,7 +941,7 @@ namespace FreeImageAPI
 
 					if (dib.IsNull)
 					{
-						throw new Exception(ErrorLoadingBitmap);
+						throw new FreeImageException(ErrorLoadingBitmap);
 					}
 
 					AddMemoryPressure();
@@ -1374,7 +1374,7 @@ namespace FreeImageAPI
 				EnsureNotDisposed();
 				if (!FreeImage.SetBackgroundColor(dib, (value.HasValue ? new RGBQUAD[] { value.Value } : null)))
 				{
-					throw new Exception("Setting background color failed.");
+					throw new FreeImageException("Setting background color failed.");
 				}
 			}
 		}
@@ -2285,7 +2285,7 @@ namespace FreeImageAPI
 			}
 			if (!FreeImage.SaveEx(dib, filename, format, flags))
 			{
-				throw new Exception("Unable to save bitmap");
+				throw new FreeImageException("Unable to save bitmap");
 			}
 
 			saveInformation.filename = filename;
@@ -2323,7 +2323,7 @@ namespace FreeImageAPI
 			}
 			if (!FreeImage.SaveToStream(dib, stream, format, flags))
 			{
-				throw new Exception("Unable to save bitmap");
+				throw new FreeImageException("Unable to save bitmap");
 			}
 
 			saveInformation.filename = null;
@@ -2513,7 +2513,7 @@ namespace FreeImageAPI
 				FREE_IMAGE_FORMAT format = originalFormat;
 				FIMULTIBITMAP mdib = FreeImage.OpenMultiBitmapFromStream(stream, ref format, saveInformation.loadFlags);
 				if (mdib.IsNull)
-					throw new Exception(ErrorLoadingBitmap);
+					throw new FreeImageException(ErrorLoadingBitmap);
 
 				try
 				{
@@ -2525,7 +2525,7 @@ namespace FreeImageAPI
 					FIBITMAP newDib = FreeImage.LockPage(mdib, frameIndex);
 					if (newDib.IsNull)
 					{
-						throw new Exception(ErrorLoadingFrame);
+						throw new FreeImageException(ErrorLoadingFrame);
 					}
 
 					try
@@ -2533,7 +2533,7 @@ namespace FreeImageAPI
 						FIBITMAP clone = FreeImage.Clone(newDib);
 						if (clone.IsNull)
 						{
-							throw new Exception(ErrorCreatingBitmap);
+							throw new FreeImageException(ErrorCreatingBitmap);
 						}
 						ReplaceDib(clone);
 					}
@@ -2549,7 +2549,7 @@ namespace FreeImageAPI
 				{
 					if (!FreeImage.CloseMultiBitmapEx(ref mdib))
 					{
-						throw new Exception(ErrorUnloadBitmap);
+						throw new FreeImageException(ErrorUnloadBitmap);
 					}
 				}
 
@@ -2629,7 +2629,7 @@ namespace FreeImageAPI
 					RGBQUAD rgbq;
 					if (!FreeImage.GetPixelColor(dib, (uint)x, (uint)y, out rgbq))
 					{
-						throw new Exception("FreeImage.GetPixelColor() failed");
+						throw new FreeImageException("FreeImage.GetPixelColor() failed");
 					}
 					return rgbq.Color;
 				}
@@ -2638,7 +2638,7 @@ namespace FreeImageAPI
 					byte index;
 					if (!FreeImage.GetPixelIndex(dib, (uint)x, (uint)y, out index))
 					{
-						throw new Exception("FreeImage.GetPixelIndex() failed");
+						throw new FreeImageException("FreeImage.GetPixelIndex() failed");
 					}
 					RGBQUAD* palette = (RGBQUAD*)FreeImage.GetPalette(dib);
 					return palette[index].Color;
@@ -2688,7 +2688,7 @@ namespace FreeImageAPI
 					RGBQUAD rgbq = color;
 					if (!FreeImage.SetPixelColor(dib, (uint)x, (uint)y, ref rgbq))
 					{
-						throw new Exception("FreeImage.SetPixelColor() failed");
+						throw new FreeImageException("FreeImage.SetPixelColor() failed");
 					}
 					return;
 				}
@@ -2703,7 +2703,7 @@ namespace FreeImageAPI
 							byte index = (byte)i;
 							if (!FreeImage.SetPixelIndex(dib, (uint)x, (uint)y, ref index))
 							{
-								throw new Exception("FreeImage.SetPixelIndex() failed");
+								throw new FreeImageException("FreeImage.SetPixelIndex() failed");
 							}
 							return;
 						}
@@ -4132,12 +4132,12 @@ namespace FreeImageAPI
 				FreeImage.OpenMultiBitmapEx(filename, ref format, loadFlags, false, false, true);
 
 			if (mpBitmap.IsNull)
-				throw new Exception(ErrorLoadingBitmap);
+				throw new FreeImageException(ErrorLoadingBitmap);
 
 			FreeImage.AppendPage(mpBitmap, bitmap.dib);
 
 			if (!FreeImage.CloseMultiBitmap(mpBitmap, saveFlags))
-				throw new Exception(ErrorUnloadBitmap);
+				throw new FreeImageException(ErrorUnloadBitmap);
 		}
 
 		/// <summary>
@@ -4190,7 +4190,7 @@ namespace FreeImageAPI
 				FreeImage.OpenMultiBitmapEx(filename, ref format, loadFlags, false, false, true);
 
 			if (mpBitmap.IsNull)
-				throw new Exception(ErrorLoadingBitmap);
+				throw new FreeImageException(ErrorLoadingBitmap);
 
 			int pageCount = FreeImage.GetPageCount(mpBitmap);
 
@@ -4203,7 +4203,7 @@ namespace FreeImageAPI
 				FreeImage.InsertPage(mpBitmap, insertPosition, bitmap.dib);
 
 			if (!FreeImage.CloseMultiBitmap(mpBitmap, saveFlags))
-				throw new Exception(ErrorUnloadBitmap);
+				throw new FreeImageException(ErrorUnloadBitmap);
 		}
 
 		/// <summary>
@@ -4291,7 +4291,7 @@ namespace FreeImageAPI
 			FIMULTIBITMAP mdib = FreeImage.OpenMultiBitmapFromStream(stream, ref format, flags);
 			if (mdib.IsNull)
 			{
-				throw new Exception(ErrorLoadingBitmap);
+				throw new FreeImageException(ErrorLoadingBitmap);
 			}
 			try
 			{
@@ -4301,14 +4301,14 @@ namespace FreeImageAPI
 			{
 				if (!FreeImage.CloseMultiBitmapEx(ref mdib))
 				{
-					throw new Exception(ErrorUnloadBitmap);
+					throw new FreeImageException(ErrorUnloadBitmap);
 				}
 			}
 
 			dib = FreeImage.LoadFromStream(stream, flags, ref format);
 			if (dib.IsNull)
 			{
-				throw new Exception(ErrorLoadingBitmap);
+				throw new FreeImageException(ErrorLoadingBitmap);
 			}
 
 			saveInformation.loadFlags = flags;
