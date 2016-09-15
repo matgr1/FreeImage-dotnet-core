@@ -119,7 +119,7 @@ namespace FreeImageNETUnitTest
 		public void FreeImage_Load()
 		{
 			Assert.That(dib.IsNull);
-			dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_JPEG, iManager.baseDirectory + @"JPEG\Image.jpg", FREE_IMAGE_LOAD_FLAGS.DEFAULT);
+			dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_JPEG, Path.Combine(iManager.baseDirectory, "JPEG", "Image.jpg"), FREE_IMAGE_LOAD_FLAGS.DEFAULT);
 			Assert.That(!dib.IsNull);
 			FreeImage.UnloadEx(ref dib);
 			Assert.That(dib.IsNull);
@@ -129,8 +129,8 @@ namespace FreeImageNETUnitTest
 		public void FreeImage_Unload()
 		{
 			Assert.That(dib.IsNull);
-			dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_JPEG, iManager.baseDirectory + @"JPEG\Image.jpg", FREE_IMAGE_LOAD_FLAGS.DEFAULT);
-			Assert.IsNotNull(dib);
+			dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_JPEG, Path.Combine(iManager.baseDirectory, "JPEG", "Image.jpg"), FREE_IMAGE_LOAD_FLAGS.DEFAULT);
+			Assert.That(!dib.IsNull);
 			FreeImage.Unload(dib);
 			dib.SetNull();
 		}
