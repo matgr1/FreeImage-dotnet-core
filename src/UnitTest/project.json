@@ -2,7 +2,12 @@
 	"version": "1.0.0-*",
 	"buildOptions": {
 		"emitEntryPoint": false,
-		"allowUnsafe": true
+		"allowUnsafe": true,
+		"copyToOutput": {
+			"mappings": {
+				"FreeImage.dll": "../../runtimes/win7-x64/native/FreeImage.dll"
+			}
+		}
 	},
 
 	"dependencies": {
