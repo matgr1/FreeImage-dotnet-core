@@ -1290,7 +1290,7 @@ namespace FreeImageNETUnitTest
 		[Test]
 		public void FreeImage_Invert()
 		{
-			dib = iManager.GetBitmap(ImageType.Odd, ImageColorType.Type_16_555);
+			dib = iManager.GetBitmap(ImageType.Odd, ImageColorType.Type_24);
 			Assert.That(!dib.IsNull);
 
 			Assert.IsTrue(FreeImage.Invert(dib));
