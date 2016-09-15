@@ -1,5 +1,4 @@
 ﻿{
-	"name": "FreeImage-dotnet-core",
 	"version": "3.17.0-*",
 
 	"buildOptions": {

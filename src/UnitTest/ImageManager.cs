@@ -35,7 +35,7 @@ namespace FreeImageNETUnitTest
 		public readonly string baseDirectory = null;
 
 		public ImageManager()
-			: this(new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + @"\UnitTestData\Images\")
+			: this(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + @"\UnitTestData\Images\")
 		{
 		}
 

@@ -1,0 +1,24 @@
+﻿{
+	"version": "1.0.0-*",
+	"buildOptions": {
+		"emitEntryPoint": false,
+		"allowUnsafe": true
+	},
+
+	"dependencies": {
+		"dotnet-test-nunit": "3.4.0-beta-2",
+		"FreeImage-dotnet-core": {
+			"version": "3.17.0-*",
+			"target": "project"
+		},
+		"NUnit": "3.4.1"
+	},
+
+	"testRunner": "nunit",
+
+	"frameworks": {
+		"net451": {
+			"imports": "dnxcore50"
+		}
+	}
+}

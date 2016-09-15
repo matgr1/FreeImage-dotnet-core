@@ -1480,7 +1480,7 @@ namespace FreeImageNETUnitTest
 			FreeImage.UnloadEx(ref dib);
 		}
 
-		[Ignore]
+		[Ignore("Ignoring FreeImage_ApplyColorMapping")]
 		public void FreeImage_ApplyColorMapping()
 		{
 			dib = iManager.GetBitmap(ImageType.Even, ImageColorType.Type_32);
@@ -1874,7 +1874,7 @@ namespace FreeImageNETUnitTest
 			Assert.That(EqualColors(Color.DarkGoldenrod, color));
 		}
 
-		[Ignore]
+		[Ignore("Ignoring FICOMPLEX")]
 		public void FICOMPLEX()
 		{
 		}
@@ -2193,7 +2193,7 @@ namespace FreeImageNETUnitTest
 			Assert.That(rational1 == 0);
 		}
 
-		[Ignore]
+		[Ignore("Ignoring StreamWrapper")]
 		public void StreamWrapper()
 		{
 			string url = @"http://freeimage.sourceforge.net/images/logo.jpg";
@@ -2333,7 +2333,7 @@ namespace FreeImageNETUnitTest
 			stream.Dispose();
 		}
 
-		[Ignore]
+		[Ignore("Ignoring LocalPlugin")]
 		public void LocalPlugin()
 		{
 		}
@@ -3217,7 +3217,7 @@ namespace FreeImageNETUnitTest
 		[Test]
 		public void FreeImage_IsAvailable()
 		{
-			Assert.IsTrue(FreeImage.IsAvailable());
+			Assert.DoesNotThrow(() => FreeImage.ValidateAvailability());
 		}
 
 		[Test]
@@ -5216,12 +5216,12 @@ namespace FreeImageNETUnitTest
 			fib.Dispose();
 		}
 
-		[Ignore]
+		[Ignore("Ignoring LockBits")]
 		public void LockBits()
 		{
 		}
 
-		[Ignore]
+		[Ignore("Ignoring UnlockBits")]
 		public void UnlockBits()
 		{
 		}
