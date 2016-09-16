@@ -477,9 +477,10 @@ namespace FreeImageNETUnitTest
 			Assert.AreEqual(0, FreeImage.GetBlueMask(dib));
 			Assert.AreEqual(0, FreeImage.GetTransparencyCount(dib));
 			Assert.AreNotEqual(IntPtr.Zero, FreeImage.GetTransparencyTable(dib));
-			FreeImage.SetTransparent(dib, false);
-			FreeImage.SetTransparencyTable(dib, new byte[] { });
+			FreeImage.SetTransparent(dib, true);
 			Assert.IsTrue(FreeImage.IsTransparent(dib));
+			FreeImage.SetTransparencyTable(dib, new byte[] { });
+			Assert.IsFalse(FreeImage.IsTransparent(dib));
 			Assert.IsFalse(FreeImage.HasBackgroundColor(dib));
 			RGBQUAD rgb = Color.Teal;
 			Assert.IsTrue(FreeImage.SetBackgroundColor(dib, ref rgb));
