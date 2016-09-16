@@ -6,6 +6,6 @@ nuget package: https://www.nuget.org/packages/FreeImage-dotnet-core
 
 `Install-Package FreeImage-dotnet-core`
 
-### License
+#### License
 
 The license is the same as the FreeImage license available at the link above
