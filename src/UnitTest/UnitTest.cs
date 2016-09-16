@@ -3409,7 +3409,7 @@ namespace FreeImageNETUnitTest
 			FreeImage.UnloadEx(ref dib);
 
 			Assert.That(dib.IsNull);
-			dib = FreeImage.LoadFromStream(new MemoryStream(new byte[] { }));
+			Assert.Throws<IOException>(() => FreeImage.LoadFromStream(new MemoryStream(new byte[] { })));
 			Assert.That(dib.IsNull);
 
 			format = FREE_IMAGE_FORMAT.FIF_BMP;
