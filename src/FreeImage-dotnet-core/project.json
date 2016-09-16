@@ -22,7 +22,7 @@
 			"type": "git",
 			"url": "https://github.com/matgr1/FreeImage-dotnet-core"
 		},
-		"tags": [ "FreeImage" ],
+		"tags": [ "FreeImage", "netcore", "dotnetcore" ],
 		"files": {
 			"mappings": {
 				"runtimes/win7-x86/native/": [ "../../runtimes/win7-x86/native/FreeImage.dll" ],
@@ -39,25 +39,25 @@
 		"netstandard1.6": {
 			"imports": "dnxcore50",
 			"dependencies": {
-				"System.Drawing-dotnet-core": "1.0.1"
+				"System.Drawing-dotnet-core": "1.0.2"
 			}
 		},
 		"netstandard1.5": {
 			"imports": "dnxcore50",
 			"dependencies": {
-				"System.Drawing-dotnet-core": "1.0.1"
+				"System.Drawing-dotnet-core": "1.0.2"
 			}
 		},
 		"netstandard1.4": {
 			"imports": "dnxcore50",
 			"dependencies": {
-				"System.Drawing-dotnet-core": "1.0.1"
+				"System.Drawing-dotnet-core": "1.0.2"
 			}
 		},
 		"netstandard1.3": {
 			"imports": "dnxcore50",
 			"dependencies": {
-				"System.Drawing-dotnet-core": "1.0.1"
+				"System.Drawing-dotnet-core": "1.0.2"
 			}
 		},
 		"net461": {
