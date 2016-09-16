@@ -7,7 +7,7 @@
 
 	"scripts": {
 		"postcompile": [
-			"dotnet pack --no-build --configuration %compile:Configuration% --version-suffix alpha4"
+			"dotnet pack --no-build --configuration %compile:Configuration%"
 		]
 	},
 
