@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace Library
+namespace FreeImageAPI
 {
     internal static class FreeImageStaticImportsLinux
     {

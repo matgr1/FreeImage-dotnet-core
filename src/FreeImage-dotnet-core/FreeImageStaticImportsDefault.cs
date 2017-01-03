@@ -7,9 +7,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace Library
+namespace FreeImageAPI
 {
-    public static class FreeImageStaticImportsWindows
+    public static class FreeImageStaticImportsDefault
     {
         /// <summary>
         /// Filename of the FreeImage library.

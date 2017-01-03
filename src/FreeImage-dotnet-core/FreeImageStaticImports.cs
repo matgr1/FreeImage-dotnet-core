@@ -37,7 +37,6 @@ using System;
 using System.Runtime.InteropServices;
 using FreeImageAPI.Plugins;
 using FreeImageAPI.IO;
-using Library;
 
 namespace FreeImageAPI
 {
@@ -45,7 +44,7 @@ namespace FreeImageAPI
     {
         #region Constants
 
-        private static bool IsWindows => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+        private static bool IsLinux => RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
 
         /// <summary>
         /// Filename of the FreeImage library.
@@ -189,8 +188,8 @@ namespace FreeImageAPI
         /// </param>
         private static void Initialise(bool load_local_plugins_only)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.Initialise(load_local_plugins_only);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.Initialise(load_local_plugins_only);
             else
                 FreeImageStaticImportsLinux.Initialise(load_local_plugins_only);
         }
@@ -200,8 +199,8 @@ namespace FreeImageAPI
         /// </summary>
         private static void DeInitialise()
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.DeInitialise();
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.DeInitialise();
             else
                 FreeImageStaticImportsLinux.DeInitialise();
         }
@@ -213,8 +212,8 @@ namespace FreeImageAPI
         public static unsafe string GetVersion() { return PtrToStr(GetVersion_()); }
         private static unsafe byte* GetVersion_()
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetVersion_();
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetVersion_();
             else
                 return FreeImageStaticImportsLinux.GetVersion_();
         }
@@ -226,8 +225,8 @@ namespace FreeImageAPI
         public static unsafe string GetCopyrightMessage() { return PtrToStr(GetCopyrightMessage_()); }
         private static unsafe byte* GetCopyrightMessage_()
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetCopyrightMessage_();
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetCopyrightMessage_();
             else
                 return FreeImageStaticImportsLinux.GetCopyrightMessage_();
         }
@@ -239,8 +238,8 @@ namespace FreeImageAPI
         /// <param name="message">The error message.</param>
         public static void OutputMessageProc(FREE_IMAGE_FORMAT fif, string message)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.OutputMessageProc(fif, message);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.OutputMessageProc(fif, message);
             else
                 FreeImageStaticImportsLinux.OutputMessageProc(fif, message);
         }
@@ -256,8 +255,8 @@ namespace FreeImageAPI
         /// <param name="omf">Handler to the callback function.</param>
         internal static void SetOutputMessage(OutputMessageFunction omf)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.SetOutputMessage(omf);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.SetOutputMessage(omf);
             else
                 FreeImageStaticImportsLinux.SetOutputMessage(omf);
         }
@@ -283,8 +282,8 @@ namespace FreeImageAPI
         public static FIBITMAP Allocate(int width, int height, int bpp,
             uint red_mask, uint green_mask, uint blue_mask)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Allocate(width, height, bpp, red_mask, green_mask, blue_mask);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Allocate(width, height, bpp, red_mask, green_mask, blue_mask);
             else
                 return FreeImageStaticImportsLinux.Allocate(width, height, bpp, red_mask, green_mask, blue_mask);
         }
@@ -307,8 +306,8 @@ namespace FreeImageAPI
         public static FIBITMAP AllocateT(FREE_IMAGE_TYPE type, int width, int height, int bpp,
             uint red_mask, uint green_mask, uint blue_mask)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.AllocateT(type, width, height, bpp, red_mask, green_mask, blue_mask);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.AllocateT(type, width, height, bpp, red_mask, green_mask, blue_mask);
             else
                 return FreeImageStaticImportsLinux.AllocateT(type, width, height, bpp, red_mask, green_mask, blue_mask);
         }
@@ -317,8 +316,8 @@ namespace FreeImageAPI
             IntPtr color, FREE_IMAGE_COLOR_OPTIONS options, RGBQUAD[] palette,
             uint red_mask, uint green_mask, uint blue_mask)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.AllocateEx(width, height, bpp, color, options, palette, red_mask, green_mask, blue_mask);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.AllocateEx(width, height, bpp, color, options, palette, red_mask, green_mask, blue_mask);
             else
                 return FreeImageStaticImportsLinux.AllocateEx(width, height, bpp, color, options, palette, red_mask, green_mask, blue_mask);
         }
@@ -327,8 +326,8 @@ namespace FreeImageAPI
             IntPtr color, FREE_IMAGE_COLOR_OPTIONS options, RGBQUAD[] palette,
             uint red_mask, uint green_mask, uint blue_mask)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.AllocateExT(type, width, height, bpp, color, options, palette, red_mask, green_mask, blue_mask);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.AllocateExT(type, width, height, bpp, color, options, palette, red_mask, green_mask, blue_mask);
             else
                 return FreeImageStaticImportsLinux.AllocateExT(type, width, height, bpp, color, options, palette, red_mask, green_mask, blue_mask);
         }
@@ -340,8 +339,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP Clone(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Clone(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Clone(dib);
             else
                 return FreeImageStaticImportsLinux.Clone(dib);
         }
@@ -352,8 +351,8 @@ namespace FreeImageAPI
         /// <param name="dib">Handle to a FreeImage bitmap.</param>
         public static void Unload(FIBITMAP dib)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.Unload(dib);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.Unload(dib);
             else
                 FreeImageStaticImportsLinux.Unload(dib);
         }
@@ -367,8 +366,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP Load(FREE_IMAGE_FORMAT fif, string filename, FREE_IMAGE_LOAD_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Load(fif, filename, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Load(fif, filename, flags);
             else
                 return FreeImageStaticImportsLinux.Load(fif, filename, flags);
         }
@@ -383,8 +382,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         private static FIBITMAP LoadU(FREE_IMAGE_FORMAT fif, string filename, FREE_IMAGE_LOAD_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.LoadU(fif, filename, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.LoadU(fif, filename, flags);
             else
                 return FreeImageStaticImportsLinux.LoadU(fif, filename, flags);
         }
@@ -399,8 +398,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP LoadFromHandle(FREE_IMAGE_FORMAT fif, ref FreeImageIO io, fi_handle handle, FREE_IMAGE_LOAD_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.LoadFromHandle(fif, ref io, handle, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.LoadFromHandle(fif, ref io, handle, flags);
             else
                 return FreeImageStaticImportsLinux.LoadFromHandle(fif, ref io, handle, flags);
         }
@@ -415,8 +414,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool Save(FREE_IMAGE_FORMAT fif, FIBITMAP dib, string filename, FREE_IMAGE_SAVE_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Save(fif, dib, filename, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Save(fif, dib, filename, flags);
             else
                 return FreeImageStaticImportsLinux.Save(fif, dib, filename, flags);
         }
@@ -432,8 +431,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         private static bool SaveU(FREE_IMAGE_FORMAT fif, FIBITMAP dib, string filename, FREE_IMAGE_SAVE_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SaveU(fif, dib, filename, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SaveU(fif, dib, filename, flags);
             else
                 return FreeImageStaticImportsLinux.SaveU(fif, dib, filename, flags);
         }
@@ -450,8 +449,8 @@ namespace FreeImageAPI
         public static bool SaveToHandle(FREE_IMAGE_FORMAT fif, FIBITMAP dib, ref FreeImageIO io, fi_handle handle,
                                         FREE_IMAGE_SAVE_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SaveToHandle(fif, dib, ref io, handle, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SaveToHandle(fif, dib, ref io, handle, flags);
             else
                 return FreeImageStaticImportsLinux.SaveToHandle(fif, dib, ref io, handle, flags);
         }
@@ -468,16 +467,16 @@ namespace FreeImageAPI
         /// <returns>Handle to a memory stream.</returns>
         public static FIMEMORY OpenMemory(IntPtr data, uint size_in_bytes)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.OpenMemory(data, size_in_bytes);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.OpenMemory(data, size_in_bytes);
             else
                 return FreeImageStaticImportsLinux.OpenMemory(data, size_in_bytes);
         }
 
         internal static FIMEMORY OpenMemoryEx(byte[] data, uint size_in_bytes)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.OpenMemoryEx(data, size_in_bytes);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.OpenMemoryEx(data, size_in_bytes);
             else
                 return FreeImageStaticImportsLinux.OpenMemoryEx(data, size_in_bytes);
         }
@@ -488,8 +487,8 @@ namespace FreeImageAPI
         /// <param name="stream">Handle to a memory stream.</param>
         public static void CloseMemory(FIMEMORY stream)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.CloseMemory(stream);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.CloseMemory(stream);
             else
                 FreeImageStaticImportsLinux.CloseMemory(stream);
         }
@@ -503,8 +502,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP LoadFromMemory(FREE_IMAGE_FORMAT fif, FIMEMORY stream, FREE_IMAGE_LOAD_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.LoadFromMemory(fif, stream, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.LoadFromMemory(fif, stream, flags);
             else
                 return FreeImageStaticImportsLinux.LoadFromMemory(fif, stream, flags);
         }
@@ -519,8 +518,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SaveToMemory(FREE_IMAGE_FORMAT fif, FIBITMAP dib, FIMEMORY stream, FREE_IMAGE_SAVE_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SaveToMemory(fif, dib, stream, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SaveToMemory(fif, dib, stream, flags);
             else
                 return FreeImageStaticImportsLinux.SaveToMemory(fif, dib, stream, flags);
         }
@@ -532,8 +531,8 @@ namespace FreeImageAPI
         /// <returns>The current file position if successful, -1 otherwise.</returns>
         public static int TellMemory(FIMEMORY stream)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.TellMemory(stream);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.TellMemory(stream);
             else
                 return FreeImageStaticImportsLinux.TellMemory(stream);
         }
@@ -547,8 +546,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SeekMemory(FIMEMORY stream, int offset, System.IO.SeekOrigin origin)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SeekMemory(stream, offset, origin);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SeekMemory(stream, offset, origin);
             else
                 return FreeImageStaticImportsLinux.SeekMemory(stream, offset, origin);
         }
@@ -562,8 +561,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool AcquireMemory(FIMEMORY stream, ref IntPtr data, ref uint size_in_bytes)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.AcquireMemory(stream, ref data, ref size_in_bytes);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.AcquireMemory(stream, ref data, ref size_in_bytes);
             else
                 return FreeImageStaticImportsLinux.AcquireMemory(stream, ref data, ref size_in_bytes);
         }
@@ -580,8 +579,8 @@ namespace FreeImageAPI
         /// May be less than count on error or stream-end.</returns>
         public static uint ReadMemory(byte[] buffer, uint size, uint count, FIMEMORY stream)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ReadMemory(buffer, size, count, stream);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ReadMemory(buffer, size, count, stream);
             else
                 return FreeImageStaticImportsLinux.ReadMemory(buffer, size, count, stream);
         }
@@ -598,8 +597,8 @@ namespace FreeImageAPI
         /// May be less than count on error or stream-end.</returns>
         public static uint WriteMemory(byte[] buffer, uint size, uint count, FIMEMORY stream)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.WriteMemory(buffer, size, count, stream);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.WriteMemory(buffer, size, count, stream);
             else
                 return FreeImageStaticImportsLinux.WriteMemory(buffer, size, count, stream);
         }
@@ -613,8 +612,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage multi-paged bitmap.</returns>
         public static FIMULTIBITMAP LoadMultiBitmapFromMemory(FREE_IMAGE_FORMAT fif, FIMEMORY stream, FREE_IMAGE_LOAD_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.LoadMultiBitmapFromMemory(fif, stream, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.LoadMultiBitmapFromMemory(fif, stream, flags);
             else
                 return FreeImageStaticImportsLinux.LoadMultiBitmapFromMemory(fif, stream, flags);
         }
@@ -635,8 +634,8 @@ namespace FreeImageAPI
         public static FREE_IMAGE_FORMAT RegisterLocalPlugin(InitProc proc_address,
                                                             string format, string description, string extension, string regexpr)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.RegisterLocalPlugin(proc_address, format, description, extension, regexpr);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.RegisterLocalPlugin(proc_address, format, description, extension, regexpr);
             else
                 return FreeImageStaticImportsLinux.RegisterLocalPlugin(proc_address, format, description, extension, regexpr);
         }
@@ -654,8 +653,8 @@ namespace FreeImageAPI
         public static FREE_IMAGE_FORMAT RegisterExternalPlugin(string path,
                                                                string format, string description, string extension, string regexpr)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.RegisterExternalPlugin(path, format, description, extension, regexpr);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.RegisterExternalPlugin(path, format, description, extension, regexpr);
             else
                 return FreeImageStaticImportsLinux.RegisterExternalPlugin(path, format, description, extension, regexpr);
         }
@@ -666,8 +665,8 @@ namespace FreeImageAPI
         /// <returns>The number of registered formats.</returns>
         public static int GetFIFCount()
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFIFCount();
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFIFCount();
             else
                 return FreeImageStaticImportsLinux.GetFIFCount();
         }
@@ -681,8 +680,8 @@ namespace FreeImageAPI
         /// 1 - enabled. 0 - disables. -1 plugin does not exist.</returns>
         public static int SetPluginEnabled(FREE_IMAGE_FORMAT fif, bool enable)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetPluginEnabled(fif, enable);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetPluginEnabled(fif, enable);
             else
                 return FreeImageStaticImportsLinux.SetPluginEnabled(fif, enable);
         }
@@ -694,8 +693,8 @@ namespace FreeImageAPI
         /// <returns>1 - enabled. 0 - disables. -1 plugin does not exist.</returns>
         public static int IsPluginEnabled(FREE_IMAGE_FORMAT fif)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.IsPluginEnabled(fif);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.IsPluginEnabled(fif);
             else
                 return FreeImageStaticImportsLinux.IsPluginEnabled(fif);
         }
@@ -707,8 +706,8 @@ namespace FreeImageAPI
         /// <returns>A <see cref="FREE_IMAGE_FORMAT"/> identifier from the format.</returns>
         public static FREE_IMAGE_FORMAT GetFIFFromFormat(string format)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFIFFromFormat(format);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFIFFromFormat(format);
             else
                 return FreeImageStaticImportsLinux.GetFIFFromFormat(format);
         }
@@ -721,8 +720,8 @@ namespace FreeImageAPI
         /// <returns>A <see cref="FREE_IMAGE_FORMAT"/> identifier from the MIME.</returns>
         public static FREE_IMAGE_FORMAT GetFIFFromMime(string mime)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFIFFromMime(mime);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFIFFromMime(mime);
             else
                 return FreeImageStaticImportsLinux.GetFIFFromMime(mime);
         }
@@ -735,8 +734,8 @@ namespace FreeImageAPI
         public static unsafe string GetFormatFromFIF(FREE_IMAGE_FORMAT fif) { return PtrToStr(GetFormatFromFIF_(fif)); }
         private static unsafe byte* GetFormatFromFIF_(FREE_IMAGE_FORMAT fif)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFormatFromFIF_(fif);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFormatFromFIF_(fif);
             else
                 return FreeImageStaticImportsLinux.GetFormatFromFIF_(fif);
         }
@@ -749,8 +748,8 @@ namespace FreeImageAPI
         public static unsafe string GetFIFExtensionList(FREE_IMAGE_FORMAT fif) { return PtrToStr(GetFIFExtensionList_(fif)); }
         private static unsafe byte* GetFIFExtensionList_(FREE_IMAGE_FORMAT fif)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFIFExtensionList_(fif);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFIFExtensionList_(fif);
             else
                 return FreeImageStaticImportsLinux.GetFIFExtensionList_(fif);
         }
@@ -763,8 +762,8 @@ namespace FreeImageAPI
         public static unsafe string GetFIFDescription(FREE_IMAGE_FORMAT fif) { return PtrToStr(GetFIFDescription_(fif)); }
         private static unsafe byte* GetFIFDescription_(FREE_IMAGE_FORMAT fif)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFIFDescription_(fif);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFIFDescription_(fif);
             else
                 return FreeImageStaticImportsLinux.GetFIFDescription_(fif);
         }
@@ -778,8 +777,8 @@ namespace FreeImageAPI
         public static unsafe string GetFIFRegExpr(FREE_IMAGE_FORMAT fif) { return PtrToStr(GetFIFRegExpr_(fif)); }
         private static unsafe byte* GetFIFRegExpr_(FREE_IMAGE_FORMAT fif)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFIFRegExpr_(fif);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFIFRegExpr_(fif);
             else
                 return FreeImageStaticImportsLinux.GetFIFRegExpr_(fif);
         }
@@ -792,8 +791,8 @@ namespace FreeImageAPI
         public static unsafe string GetFIFMimeType(FREE_IMAGE_FORMAT fif) { return PtrToStr(GetFIFMimeType_(fif)); }
         private static unsafe byte* GetFIFMimeType_(FREE_IMAGE_FORMAT fif)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFIFMimeType_(fif);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFIFMimeType_(fif);
             else
                 return FreeImageStaticImportsLinux.GetFIFMimeType_(fif);
         }
@@ -806,8 +805,8 @@ namespace FreeImageAPI
         /// <returns>The <see cref="FREE_IMAGE_FORMAT"/> of the plugin.</returns>
         public static FREE_IMAGE_FORMAT GetFIFFromFilename(string filename)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFIFFromFilename(filename);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFIFFromFilename(filename);
             else
                 return FreeImageStaticImportsLinux.GetFIFFromFilename(filename);
         }
@@ -821,8 +820,8 @@ namespace FreeImageAPI
         /// <returns>The <see cref="FREE_IMAGE_FORMAT"/> of the plugin.</returns>
         private static FREE_IMAGE_FORMAT GetFIFFromFilenameU(string filename)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFIFFromFilenameU(filename);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFIFFromFilenameU(filename);
             else
                 return FreeImageStaticImportsLinux.GetFIFFromFilenameU(filename);
         }
@@ -834,8 +833,8 @@ namespace FreeImageAPI
         /// <returns>True if the plugin can load bitmaps, else false.</returns>
         public static bool FIFSupportsReading(FREE_IMAGE_FORMAT fif)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.FIFSupportsReading(fif);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.FIFSupportsReading(fif);
             else
                 return FreeImageStaticImportsLinux.FIFSupportsReading(fif);
         }
@@ -847,8 +846,8 @@ namespace FreeImageAPI
         /// <returns>True if the plugin can save bitmaps, else false.</returns>
         public static bool FIFSupportsWriting(FREE_IMAGE_FORMAT fif)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.FIFSupportsWriting(fif);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.FIFSupportsWriting(fif);
             else
                 return FreeImageStaticImportsLinux.FIFSupportsWriting(fif);
         }
@@ -861,8 +860,8 @@ namespace FreeImageAPI
         /// <returns>True if the plugin can save bitmaps in the desired bit depth, else false.</returns>
         public static bool FIFSupportsExportBPP(FREE_IMAGE_FORMAT fif, int bpp)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.FIFSupportsExportBPP(fif, bpp);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.FIFSupportsExportBPP(fif, bpp);
             else
                 return FreeImageStaticImportsLinux.FIFSupportsExportBPP(fif, bpp);
         }
@@ -875,8 +874,8 @@ namespace FreeImageAPI
         /// <returns>True if the plugin can save bitmaps as the desired type, else false.</returns>
         public static bool FIFSupportsExportType(FREE_IMAGE_FORMAT fif, FREE_IMAGE_TYPE type)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.FIFSupportsExportType(fif, type);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.FIFSupportsExportType(fif, type);
             else
                 return FreeImageStaticImportsLinux.FIFSupportsExportType(fif, type);
         }
@@ -888,8 +887,8 @@ namespace FreeImageAPI
         /// <returns>True if the plugin can load or save an ICC profile, else false.</returns>
         public static bool FIFSupportsICCProfiles(FREE_IMAGE_FORMAT fif)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.FIFSupportsICCProfiles(fif);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.FIFSupportsICCProfiles(fif);
             else
                 return FreeImageStaticImportsLinux.FIFSupportsICCProfiles(fif);
         }
@@ -912,8 +911,8 @@ namespace FreeImageAPI
         public static FIMULTIBITMAP OpenMultiBitmap(FREE_IMAGE_FORMAT fif, string filename, bool create_new,
                                                     bool read_only, bool keep_cache_in_memory, FREE_IMAGE_LOAD_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.OpenMultiBitmap(fif, filename, create_new, read_only, keep_cache_in_memory, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.OpenMultiBitmap(fif, filename, create_new, read_only, keep_cache_in_memory, flags);
             else
                 return FreeImageStaticImportsLinux.OpenMultiBitmap(fif, filename, create_new, read_only, keep_cache_in_memory, flags);
         }
@@ -931,8 +930,8 @@ namespace FreeImageAPI
         public static FIMULTIBITMAP OpenMultiBitmapFromHandle(FREE_IMAGE_FORMAT fif, ref FreeImageIO io,
                                                               fi_handle handle, FREE_IMAGE_LOAD_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.OpenMultiBitmapFromHandle(fif, ref io, handle, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.OpenMultiBitmapFromHandle(fif, ref io, handle, flags);
             else
                 return FreeImageStaticImportsLinux.OpenMultiBitmapFromHandle(fif, ref io, handle, flags);
         }
@@ -945,8 +944,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         private static bool CloseMultiBitmap_(FIMULTIBITMAP bitmap, FREE_IMAGE_SAVE_FLAGS flags)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.CloseMultiBitmap_(bitmap, flags);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.CloseMultiBitmap_(bitmap, flags);
             else
                 return FreeImageStaticImportsLinux.CloseMultiBitmap_(bitmap, flags);
         }
@@ -958,8 +957,8 @@ namespace FreeImageAPI
         /// <returns>Number of pages.</returns>
         public static int GetPageCount(FIMULTIBITMAP bitmap)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetPageCount(bitmap);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetPageCount(bitmap);
             else
                 return FreeImageStaticImportsLinux.GetPageCount(bitmap);
         }
@@ -971,8 +970,8 @@ namespace FreeImageAPI
         /// <param name="data">Handle to a FreeImage bitmap.</param>
         public static void AppendPage(FIMULTIBITMAP bitmap, FIBITMAP data)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.AppendPage(bitmap, data);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.AppendPage(bitmap, data);
             else
                 FreeImageStaticImportsLinux.AppendPage(bitmap, data);
         }
@@ -985,8 +984,8 @@ namespace FreeImageAPI
         /// <param name="data">Handle to a FreeImage bitmap.</param>
         public static void InsertPage(FIMULTIBITMAP bitmap, int page, FIBITMAP data)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.InsertPage(bitmap, page, data);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.InsertPage(bitmap, page, data);
             else
                 FreeImageStaticImportsLinux.InsertPage(bitmap, page, data);
         }
@@ -998,8 +997,8 @@ namespace FreeImageAPI
         /// <param name="page">Number of the page to delete.</param>
         public static void DeletePage(FIMULTIBITMAP bitmap, int page)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.DeletePage(bitmap, page);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.DeletePage(bitmap, page);
             else
                 FreeImageStaticImportsLinux.DeletePage(bitmap, page);
         }
@@ -1012,8 +1011,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP LockPage(FIMULTIBITMAP bitmap, int page)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.LockPage(bitmap, page);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.LockPage(bitmap, page);
             else
                 return FreeImageStaticImportsLinux.LockPage(bitmap, page);
         }
@@ -1026,8 +1025,8 @@ namespace FreeImageAPI
         /// <param name="changed">If true, the page is applied to the multi-page bitmap.</param>
         public static void UnlockPage(FIMULTIBITMAP bitmap, FIBITMAP data, bool changed)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.UnlockPage(bitmap, data, changed);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.UnlockPage(bitmap, data, changed);
             else
                 FreeImageStaticImportsLinux.UnlockPage(bitmap, data, changed);
         }
@@ -1041,8 +1040,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool MovePage(FIMULTIBITMAP bitmap, int target, int source)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.MovePage(bitmap, target, source);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.MovePage(bitmap, target, source);
             else
                 return FreeImageStaticImportsLinux.MovePage(bitmap, target, source);
         }
@@ -1067,8 +1066,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool GetLockedPageNumbers(FIMULTIBITMAP bitmap, int[] pages, ref int count)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetLockedPageNumbers(bitmap, pages, ref count);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetLockedPageNumbers(bitmap, pages, ref count);
             else
                 return FreeImageStaticImportsLinux.GetLockedPageNumbers(bitmap, pages, ref count);
         }
@@ -1085,8 +1084,8 @@ namespace FreeImageAPI
         /// <returns>Type of the bitmap.</returns>
         public static FREE_IMAGE_FORMAT GetFileType(string filename, int size)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFileType(filename, size);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFileType(filename, size);
             else
                 return FreeImageStaticImportsLinux.GetFileType(filename, size);
         }
@@ -1101,8 +1100,8 @@ namespace FreeImageAPI
         /// <returns>Type of the bitmap.</returns>
         private static FREE_IMAGE_FORMAT GetFileTypeU(string filename, int size)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFileTypeU(filename, size);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFileTypeU(filename, size);
             else
                 return FreeImageStaticImportsLinux.GetFileTypeU(filename, size);
         }
@@ -1117,8 +1116,8 @@ namespace FreeImageAPI
         /// <returns>Type of the bitmap.</returns>
         public static FREE_IMAGE_FORMAT GetFileTypeFromHandle(ref FreeImageIO io, fi_handle handle, int size)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFileTypeFromHandle(ref io, handle, size);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFileTypeFromHandle(ref io, handle, size);
             else
                 return FreeImageStaticImportsLinux.GetFileTypeFromHandle(ref io, handle, size);
         }
@@ -1131,8 +1130,8 @@ namespace FreeImageAPI
         /// <returns>Type of the bitmap.</returns>
         public static FREE_IMAGE_FORMAT GetFileTypeFromMemory(FIMEMORY stream, int size)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetFileTypeFromMemory(stream, size);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetFileTypeFromMemory(stream, size);
             else
                 return FreeImageStaticImportsLinux.GetFileTypeFromMemory(stream, size);
         }
@@ -1147,8 +1146,8 @@ namespace FreeImageAPI
         /// <returns>Returns true if the platform is using Litte Endian, else false.</returns>
         public static bool IsLittleEndian()
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.IsLittleEndian();
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.IsLittleEndian();
             else
                 return FreeImageStaticImportsLinux.IsLittleEndian();
         }
@@ -1163,8 +1162,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool LookupX11Color(string szColor, out byte nRed, out byte nGreen, out byte nBlue)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.LookupX11Color(szColor, out nRed, out nGreen, out nBlue);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.LookupX11Color(szColor, out nRed, out nGreen, out nBlue);
             else
                 return FreeImageStaticImportsLinux.LookupX11Color(szColor, out nRed, out nGreen, out nBlue);
         }
@@ -1179,8 +1178,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool LookupSVGColor(string szColor, out byte nRed, out byte nGreen, out byte nBlue)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.LookupSVGColor(szColor, out nRed, out nGreen, out nBlue);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.LookupSVGColor(szColor, out nRed, out nGreen, out nBlue);
             else
                 return FreeImageStaticImportsLinux.LookupSVGColor(szColor, out nRed, out nGreen, out nBlue);
         }
@@ -1196,8 +1195,8 @@ namespace FreeImageAPI
         /// <returns>Pointer to the data-bits.</returns>
         public static IntPtr GetBits(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetBits(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetBits(dib);
             else
                 return FreeImageStaticImportsLinux.GetBits(dib);
         }
@@ -1210,8 +1209,8 @@ namespace FreeImageAPI
         /// <returns>Pointer to the scanline.</returns>
         public static IntPtr GetScanLine(FIBITMAP dib, int scanline)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetScanLine(dib, scanline);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetScanLine(dib, scanline);
             else
                 return FreeImageStaticImportsLinux.GetScanLine(dib, scanline);
         }
@@ -1226,8 +1225,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool GetPixelIndex(FIBITMAP dib, uint x, uint y, out byte value)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetPixelIndex(dib, x, y, out value);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetPixelIndex(dib, x, y, out value);
             else
                 return FreeImageStaticImportsLinux.GetPixelIndex(dib, x, y, out value);
         }
@@ -1242,8 +1241,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool GetPixelColor(FIBITMAP dib, uint x, uint y, out RGBQUAD value)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetPixelColor(dib, x, y, out value);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetPixelColor(dib, x, y, out value);
             else
                 return FreeImageStaticImportsLinux.GetPixelColor(dib, x, y, out value);
         }
@@ -1258,8 +1257,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetPixelIndex(FIBITMAP dib, uint x, uint y, ref byte value)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetPixelIndex(dib, x, y, ref value);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetPixelIndex(dib, x, y, ref value);
             else
                 return FreeImageStaticImportsLinux.SetPixelIndex(dib, x, y, ref value);
         }
@@ -1274,8 +1273,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetPixelColor(FIBITMAP dib, uint x, uint y, ref RGBQUAD value)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetPixelColor(dib, x, y, ref value);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetPixelColor(dib, x, y, ref value);
             else
                 return FreeImageStaticImportsLinux.SetPixelColor(dib, x, y, ref value);
         }
@@ -1291,8 +1290,8 @@ namespace FreeImageAPI
         /// <returns>Type of the bitmap.</returns>
         public static FREE_IMAGE_TYPE GetImageType(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetImageType(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetImageType(dib);
             else
                 return FreeImageStaticImportsLinux.GetImageType(dib);
         }
@@ -1304,8 +1303,8 @@ namespace FreeImageAPI
         /// <returns>Palette-size for palletised bitmaps, and 0 for high-colour bitmaps.</returns>
         public static uint GetColorsUsed(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetColorsUsed(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetColorsUsed(dib);
             else
                 return FreeImageStaticImportsLinux.GetColorsUsed(dib);
         }
@@ -1317,8 +1316,8 @@ namespace FreeImageAPI
         /// <returns>Size of one pixel in the bitmap in bits.</returns>
         public static uint GetBPP(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetBPP(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetBPP(dib);
             else
                 return FreeImageStaticImportsLinux.GetBPP(dib);
         }
@@ -1330,8 +1329,8 @@ namespace FreeImageAPI
         /// <returns>With of the bitmap.</returns>
         public static uint GetWidth(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetWidth(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetWidth(dib);
             else
                 return FreeImageStaticImportsLinux.GetWidth(dib);
         }
@@ -1343,8 +1342,8 @@ namespace FreeImageAPI
         /// <returns>Height of the bitmap.</returns>
         public static uint GetHeight(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetHeight(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetHeight(dib);
             else
                 return FreeImageStaticImportsLinux.GetHeight(dib);
         }
@@ -1356,8 +1355,8 @@ namespace FreeImageAPI
         /// <returns>With of the bitmap in bytes.</returns>
         public static uint GetLine(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetLine(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetLine(dib);
             else
                 return FreeImageStaticImportsLinux.GetLine(dib);
         }
@@ -1370,8 +1369,8 @@ namespace FreeImageAPI
         /// <returns>With of the bitmap in bytes.</returns>
         public static uint GetPitch(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetPitch(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetPitch(dib);
             else
                 return FreeImageStaticImportsLinux.GetPitch(dib);
         }
@@ -1383,8 +1382,8 @@ namespace FreeImageAPI
         /// <returns>Size of the DIB-element</returns>
         public static uint GetDIBSize(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetDIBSize(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetDIBSize(dib);
             else
                 return FreeImageStaticImportsLinux.GetDIBSize(dib);
         }
@@ -1396,8 +1395,8 @@ namespace FreeImageAPI
         /// <returns>Pointer to the bitmap's palette.</returns>
         public static IntPtr GetPalette(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetPalette(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetPalette(dib);
             else
                 return FreeImageStaticImportsLinux.GetPalette(dib);
         }
@@ -1409,8 +1408,8 @@ namespace FreeImageAPI
         /// <returns>The horizontal resolution, in pixels-per-meter.</returns>
         public static uint GetDotsPerMeterX(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetDotsPerMeterX(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetDotsPerMeterX(dib);
             else
                 return FreeImageStaticImportsLinux.GetDotsPerMeterX(dib);
         }
@@ -1422,8 +1421,8 @@ namespace FreeImageAPI
         /// <returns>The vertical resolution, in pixels-per-meter.</returns>
         public static uint GetDotsPerMeterY(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetDotsPerMeterY(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetDotsPerMeterY(dib);
             else
                 return FreeImageStaticImportsLinux.GetDotsPerMeterY(dib);
         }
@@ -1435,8 +1434,8 @@ namespace FreeImageAPI
         /// <param name="res">The new horizontal resolution.</param>
         public static void SetDotsPerMeterX(FIBITMAP dib, uint res)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.SetDotsPerMeterX(dib, res);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.SetDotsPerMeterX(dib, res);
             else
                 FreeImageStaticImportsLinux.SetDotsPerMeterX(dib, res);
         }
@@ -1448,8 +1447,8 @@ namespace FreeImageAPI
         /// <param name="res">The new vertical resolution.</param>
         public static void SetDotsPerMeterY(FIBITMAP dib, uint res)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.SetDotsPerMeterY(dib, res);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.SetDotsPerMeterY(dib, res);
             else
                 FreeImageStaticImportsLinux.SetDotsPerMeterY(dib, res);
         }
@@ -1461,8 +1460,8 @@ namespace FreeImageAPI
         /// <returns>Poiter to the header of the bitmap.</returns>
         public static IntPtr GetInfoHeader(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetInfoHeader(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetInfoHeader(dib);
             else
                 return FreeImageStaticImportsLinux.GetInfoHeader(dib);
         }
@@ -1475,8 +1474,8 @@ namespace FreeImageAPI
         /// <returns>Pointer to the <see cref="BITMAPINFO"/> structure for the bitmap.</returns>
         public static IntPtr GetInfo(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetInfo(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetInfo(dib);
             else
                 return FreeImageStaticImportsLinux.GetInfo(dib);
         }
@@ -1488,8 +1487,8 @@ namespace FreeImageAPI
         /// <returns>The color type of the bitmap.</returns>
         public static FREE_IMAGE_COLOR_TYPE GetColorType(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetColorType(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetColorType(dib);
             else
                 return FreeImageStaticImportsLinux.GetColorType(dib);
         }
@@ -1501,8 +1500,8 @@ namespace FreeImageAPI
         /// <returns>The bit pattern for RED.</returns>
         public static uint GetRedMask(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetRedMask(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetRedMask(dib);
             else
                 return FreeImageStaticImportsLinux.GetRedMask(dib);
         }
@@ -1514,8 +1513,8 @@ namespace FreeImageAPI
         /// <returns>The bit pattern for green.</returns>
         public static uint GetGreenMask(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetGreenMask(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetGreenMask(dib);
             else
                 return FreeImageStaticImportsLinux.GetGreenMask(dib);
         }
@@ -1527,8 +1526,8 @@ namespace FreeImageAPI
         /// <returns>The bit pattern for blue.</returns>
         public static uint GetBlueMask(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetBlueMask(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetBlueMask(dib);
             else
                 return FreeImageStaticImportsLinux.GetBlueMask(dib);
         }
@@ -1540,8 +1539,8 @@ namespace FreeImageAPI
         /// <returns>The number of transparent colors in a palletised bitmap.</returns>
         public static uint GetTransparencyCount(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetTransparencyCount(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetTransparencyCount(dib);
             else
                 return FreeImageStaticImportsLinux.GetTransparencyCount(dib);
         }
@@ -1553,8 +1552,8 @@ namespace FreeImageAPI
         /// <returns>Pointer to the bitmap's transparency table.</returns>
         public static IntPtr GetTransparencyTable(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetTransparencyTable(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetTransparencyTable(dib);
             else
                 return FreeImageStaticImportsLinux.GetTransparencyTable(dib);
         }
@@ -1567,8 +1566,8 @@ namespace FreeImageAPI
         /// <param name="enabled">True to enable the transparency, false to disable.</param>
         public static void SetTransparent(FIBITMAP dib, bool enabled)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.SetTransparent(dib, enabled);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.SetTransparent(dib, enabled);
             else
                 FreeImageStaticImportsLinux.SetTransparent(dib, enabled);
         }
@@ -1581,8 +1580,8 @@ namespace FreeImageAPI
         /// <param name="count">The number of transparent colors in the new transparency table.</param>
         internal static void SetTransparencyTable(FIBITMAP dib, byte[] table, int count)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.SetTransparencyTable(dib, table, count);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.SetTransparencyTable(dib, table, count);
             else
                 FreeImageStaticImportsLinux.SetTransparencyTable(dib, table, count);
         }
@@ -1595,8 +1594,8 @@ namespace FreeImageAPI
         /// or when the input dib contains alpha values (32-bit images). Returns false otherwise.</returns>
         public static bool IsTransparent(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.IsTransparent(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.IsTransparent(dib);
             else
                 return FreeImageStaticImportsLinux.IsTransparent(dib);
         }
@@ -1608,8 +1607,8 @@ namespace FreeImageAPI
         /// <returns>Returns true when the image has a file background color, false otherwise.</returns>
         public static bool HasBackgroundColor(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.HasBackgroundColor(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.HasBackgroundColor(dib);
             else
                 return FreeImageStaticImportsLinux.HasBackgroundColor(dib);
         }
@@ -1624,8 +1623,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool GetBackgroundColor(FIBITMAP dib, out RGBQUAD bkcolor)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetBackgroundColor(dib, out bkcolor);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetBackgroundColor(dib, out bkcolor);
             else
                 return FreeImageStaticImportsLinux.GetBackgroundColor(dib, out bkcolor);
         }
@@ -1639,8 +1638,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static unsafe bool SetBackgroundColor(FIBITMAP dib, ref RGBQUAD bkcolor)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetBackgroundColor(dib, ref bkcolor);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetBackgroundColor(dib, ref bkcolor);
             else
                 return FreeImageStaticImportsLinux.SetBackgroundColor(dib, ref bkcolor);
         }
@@ -1674,8 +1673,8 @@ namespace FreeImageAPI
         /// </example>
         public static unsafe bool SetBackgroundColor(FIBITMAP dib, RGBQUAD[] bkcolor)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetBackgroundColor(dib, bkcolor);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetBackgroundColor(dib, bkcolor);
             else
                 return FreeImageStaticImportsLinux.SetBackgroundColor(dib, bkcolor);
         }
@@ -1688,8 +1687,8 @@ namespace FreeImageAPI
         /// <param name="index">The index of the palette entry to be set as transparent color.</param>
         public static void SetTransparentIndex(FIBITMAP dib, int index)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.SetTransparentIndex(dib, index);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.SetTransparentIndex(dib, index);
             else
                 FreeImageStaticImportsLinux.SetTransparentIndex(dib, index);
         }
@@ -1705,8 +1704,8 @@ namespace FreeImageAPI
         /// (e.g. the image is a high color image).</returns>
         public static int GetTransparentIndex(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetTransparentIndex(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetTransparentIndex(dib);
             else
                 return FreeImageStaticImportsLinux.GetTransparentIndex(dib);
         }
@@ -1731,8 +1730,8 @@ namespace FreeImageAPI
         /// <returns>Pointer to the <see cref="FIICCPROFILE"/> data of the bitmap.</returns>
         public static IntPtr GetICCProfile(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetICCProfile(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetICCProfile(dib);
             else
                 return FreeImageStaticImportsLinux.GetICCProfile(dib);
         }
@@ -1747,8 +1746,8 @@ namespace FreeImageAPI
         /// <returns>Pointer to the created <see cref="FIICCPROFILE"/> structure.</returns>
         public static IntPtr CreateICCProfile(FIBITMAP dib, byte[] data, int size)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.CreateICCProfile(dib, data, size);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.CreateICCProfile(dib, data, size);
             else
                 return FreeImageStaticImportsLinux.CreateICCProfile(dib, data, size);
         }
@@ -1761,8 +1760,8 @@ namespace FreeImageAPI
         /// <param name="dib">Handle to a FreeImage bitmap.</param>
         public static void DestroyICCProfile(FIBITMAP dib)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.DestroyICCProfile(dib);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.DestroyICCProfile(dib);
             else
                 FreeImageStaticImportsLinux.DestroyICCProfile(dib);
         }
@@ -1781,8 +1780,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ConvertTo4Bits(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertTo4Bits(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertTo4Bits(dib);
             else
                 return FreeImageStaticImportsLinux.ConvertTo4Bits(dib);
         }
@@ -1796,8 +1795,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ConvertTo8Bits(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertTo8Bits(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertTo8Bits(dib);
             else
                 return FreeImageStaticImportsLinux.ConvertTo8Bits(dib);
         }
@@ -1809,8 +1808,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ConvertToGreyscale(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertToGreyscale(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertToGreyscale(dib);
             else
                 return FreeImageStaticImportsLinux.ConvertToGreyscale(dib);
         }
@@ -1823,8 +1822,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ConvertTo16Bits555(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertTo16Bits555(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertTo16Bits555(dib);
             else
                 return FreeImageStaticImportsLinux.ConvertTo16Bits555(dib);
         }
@@ -1836,8 +1835,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ConvertTo16Bits565(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertTo16Bits565(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertTo16Bits565(dib);
             else
                 return FreeImageStaticImportsLinux.ConvertTo16Bits565(dib);
         }
@@ -1849,8 +1848,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ConvertTo24Bits(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertTo24Bits(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertTo24Bits(dib);
             else
                 return FreeImageStaticImportsLinux.ConvertTo24Bits(dib);
         }
@@ -1862,8 +1861,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ConvertTo32Bits(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertTo32Bits(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertTo32Bits(dib);
             else
                 return FreeImageStaticImportsLinux.ConvertTo32Bits(dib);
         }
@@ -1876,8 +1875,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ColorQuantize(FIBITMAP dib, FREE_IMAGE_QUANTIZE quantize)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ColorQuantize(dib, quantize);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ColorQuantize(dib, quantize);
             else
                 return FreeImageStaticImportsLinux.ColorQuantize(dib, quantize);
         }
@@ -1896,8 +1895,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ColorQuantizeEx(FIBITMAP dib, FREE_IMAGE_QUANTIZE quantize, int PaletteSize, int ReserveSize, RGBQUAD[] ReservePalette)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ColorQuantizeEx(dib, quantize, PaletteSize, ReserveSize, ReservePalette);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ColorQuantizeEx(dib, quantize, PaletteSize, ReserveSize, ReservePalette);
             else
                 return FreeImageStaticImportsLinux.ColorQuantizeEx(dib, quantize, PaletteSize, ReserveSize, ReservePalette);
         }
@@ -1913,8 +1912,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP Threshold(FIBITMAP dib, byte t)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Threshold(dib, t);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Threshold(dib, t);
             else
                 return FreeImageStaticImportsLinux.Threshold(dib, t);
         }
@@ -1928,8 +1927,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP Dither(FIBITMAP dib, FREE_IMAGE_DITHER algorithm)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Dither(dib, algorithm);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Dither(dib, algorithm);
             else
                 return FreeImageStaticImportsLinux.Dither(dib, algorithm);
         }
@@ -1955,8 +1954,8 @@ namespace FreeImageAPI
         public static FIBITMAP ConvertFromRawBits(IntPtr bits, int width, int height, int pitch,
                                                   uint bpp, uint red_mask, uint green_mask, uint blue_mask, bool topdown)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertFromRawBits(bits, width, height, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertFromRawBits(bits, width, height, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
             else
                 return FreeImageStaticImportsLinux.ConvertFromRawBits(bits, width, height, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
         }
@@ -1982,8 +1981,8 @@ namespace FreeImageAPI
         public static FIBITMAP ConvertFromRawBits(byte[] bits, int width, int height, int pitch,
                                                   uint bpp, uint red_mask, uint green_mask, uint blue_mask, bool topdown)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertFromRawBits(bits, width, height, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertFromRawBits(bits, width, height, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
             else
                 return FreeImageStaticImportsLinux.ConvertFromRawBits(bits, width, height, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
         }
@@ -2007,8 +2006,8 @@ namespace FreeImageAPI
         public static void ConvertToRawBits(IntPtr bits, FIBITMAP dib, int pitch, uint bpp,
                                             uint red_mask, uint green_mask, uint blue_mask, bool topdown)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.ConvertToRawBits(bits, dib, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.ConvertToRawBits(bits, dib, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
             else
                 FreeImageStaticImportsLinux.ConvertToRawBits(bits, dib, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
         }
@@ -2032,8 +2031,8 @@ namespace FreeImageAPI
         public static void ConvertToRawBits(byte[] bits, FIBITMAP dib, int pitch, uint bpp,
                                             uint red_mask, uint green_mask, uint blue_mask, bool topdown)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.ConvertToRawBits(bits, dib, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.ConvertToRawBits(bits, dib, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
             else
                 FreeImageStaticImportsLinux.ConvertToRawBits(bits, dib, pitch, bpp, red_mask, green_mask, blue_mask, topdown);
         }
@@ -2045,8 +2044,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ConvertToRGBF(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertToRGBF(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertToRGBF(dib);
             else
                 return FreeImageStaticImportsLinux.ConvertToRGBF(dib);
         }
@@ -2067,8 +2066,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ConvertToStandardType(FIBITMAP src, bool scale_linear)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertToStandardType(src, scale_linear);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertToStandardType(src, scale_linear);
             else
                 return FreeImageStaticImportsLinux.ConvertToStandardType(src, scale_linear);
         }
@@ -2082,8 +2081,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ConvertToType(FIBITMAP src, FREE_IMAGE_TYPE dst_type, bool scale_linear)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ConvertToType(src, dst_type, scale_linear);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ConvertToType(src, dst_type, scale_linear);
             else
                 return FreeImageStaticImportsLinux.ConvertToType(src, dst_type, scale_linear);
         }
@@ -2102,8 +2101,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP ToneMapping(FIBITMAP dib, FREE_IMAGE_TMO tmo, double first_param, double second_param)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ToneMapping(dib, tmo, first_param, second_param);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ToneMapping(dib, tmo, first_param, second_param);
             else
                 return FreeImageStaticImportsLinux.ToneMapping(dib, tmo, first_param, second_param);
         }
@@ -2119,8 +2118,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP TmoDrago03(FIBITMAP src, double gamma, double exposure)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.TmoDrago03(src, gamma, exposure);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.TmoDrago03(src, gamma, exposure);
             else
                 return FreeImageStaticImportsLinux.TmoDrago03(src, gamma, exposure);
         }
@@ -2135,8 +2134,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP TmoReinhard05(FIBITMAP src, double intensity, double contrast)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.TmoReinhard05(src, intensity, contrast);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.TmoReinhard05(src, intensity, contrast);
             else
                 return FreeImageStaticImportsLinux.TmoReinhard05(src, intensity, contrast);
         }
@@ -2150,8 +2149,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP TmoFattal02(FIBITMAP src, double color_saturation, double attenuation)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.TmoFattal02(src, color_saturation, attenuation);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.TmoFattal02(src, color_saturation, attenuation);
             else
                 return FreeImageStaticImportsLinux.TmoFattal02(src, color_saturation, attenuation);
         }
@@ -2171,8 +2170,8 @@ namespace FreeImageAPI
         /// <returns>The actual size of the compressed buffer, or 0 if an error occurred.</returns>
         public static uint ZLibCompress(byte[] target, uint target_size, byte[] source, uint source_size)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ZLibCompress(target, target_size, source, source_size);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ZLibCompress(target, target_size, source, source_size);
             else
                 return FreeImageStaticImportsLinux.ZLibCompress(target, target_size, source, source_size);
         }
@@ -2188,8 +2187,8 @@ namespace FreeImageAPI
         /// <returns>The actual size of the uncompressed buffer, or 0 if an error occurred.</returns>
         public static uint ZLibUncompress(byte[] target, uint target_size, byte[] source, uint source_size)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ZLibCompress(target, target_size, source, source_size);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ZLibCompress(target, target_size, source, source_size);
             else
                 return FreeImageStaticImportsLinux.ZLibCompress(target, target_size, source, source_size);
         }
@@ -2205,8 +2204,8 @@ namespace FreeImageAPI
         /// <returns>The actual size of the compressed buffer, or 0 if an error occurred.</returns>
         public static uint ZLibGZip(byte[] target, uint target_size, byte[] source, uint source_size)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ZLibGZip(target, target_size, source, source_size);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ZLibGZip(target, target_size, source, source_size);
             else
                 return FreeImageStaticImportsLinux.ZLibGZip(target, target_size, source, source_size);
         }
@@ -2222,8 +2221,8 @@ namespace FreeImageAPI
         /// <returns>The actual size of the uncompressed buffer, or 0 if an error occurred.</returns>
         public static uint ZLibGUnzip(byte[] target, uint target_size, byte[] source, uint source_size)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ZLibGUnzip(target, target_size, source, source_size);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ZLibGUnzip(target, target_size, source, source_size);
             else
                 return FreeImageStaticImportsLinux.ZLibGUnzip(target, target_size, source, source_size);
         }
@@ -2238,8 +2237,8 @@ namespace FreeImageAPI
         /// <returns></returns>
         public static uint ZLibCRC32(uint crc, byte[] source, uint source_size)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ZLibCRC32(crc, source, source_size);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ZLibCRC32(crc, source, source_size);
             else
                 return FreeImageStaticImportsLinux.ZLibCRC32(crc, source, source_size);
         }
@@ -2256,8 +2255,8 @@ namespace FreeImageAPI
         /// <returns>The new <see cref="FITAG"/>.</returns>
         public static FITAG CreateTag()
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.CreateTag();
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.CreateTag();
             else
                 return FreeImageStaticImportsLinux.CreateTag();
         }
@@ -2268,8 +2267,8 @@ namespace FreeImageAPI
         /// <param name="tag">The <see cref="FITAG"/> to destroy.</param>
         public static void DeleteTag(FITAG tag)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.DeleteTag(tag);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.DeleteTag(tag);
             else
                 FreeImageStaticImportsLinux.DeleteTag(tag);
         }
@@ -2281,8 +2280,8 @@ namespace FreeImageAPI
         /// <returns>The new <see cref="FITAG"/>.</returns>
         public static FITAG CloneTag(FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.CloneTag(tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.CloneTag(tag);
             else
                 return FreeImageStaticImportsLinux.CloneTag(tag);
         }
@@ -2299,8 +2298,8 @@ namespace FreeImageAPI
         public static unsafe string GetTagKey(FITAG tag) { return PtrToStr(GetTagKey_(tag)); }
         private static unsafe byte* GetTagKey_(FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetTagKey_(tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetTagKey_(tag);
             else
                 return FreeImageStaticImportsLinux.GetTagKey_(tag);
         }
@@ -2313,8 +2312,8 @@ namespace FreeImageAPI
         public static unsafe string GetTagDescription(FITAG tag) { return PtrToStr(GetTagDescription_(tag)); }
         private static unsafe byte* GetTagDescription_(FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetTagDescription_(tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetTagDescription_(tag);
             else
                 return FreeImageStaticImportsLinux.GetTagDescription_(tag);
         }
@@ -2326,8 +2325,8 @@ namespace FreeImageAPI
         /// <returns>The ID or 0 if unavailable.</returns>
         public static ushort GetTagID(FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetTagID(tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetTagID(tag);
             else
                 return FreeImageStaticImportsLinux.GetTagID(tag);
         }
@@ -2339,8 +2338,8 @@ namespace FreeImageAPI
         /// <returns>The tag type.</returns>
         public static FREE_IMAGE_MDTYPE GetTagType(FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetTagType(tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetTagType(tag);
             else
                 return FreeImageStaticImportsLinux.GetTagType(tag);
         }
@@ -2352,8 +2351,8 @@ namespace FreeImageAPI
         /// <returns>The number of components.</returns>
         public static uint GetTagCount(FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetTagCount(tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetTagCount(tag);
             else
                 return FreeImageStaticImportsLinux.GetTagCount(tag);
         }
@@ -2365,8 +2364,8 @@ namespace FreeImageAPI
         /// <returns>The length of the tag value.</returns>
         public static uint GetTagLength(FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetTagLength(tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetTagLength(tag);
             else
                 return FreeImageStaticImportsLinux.GetTagLength(tag);
         }
@@ -2380,8 +2379,8 @@ namespace FreeImageAPI
         /// <returns>Pointer to the value.</returns>
         public static IntPtr GetTagValue(FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetTagValue(tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetTagValue(tag);
             else
                 return FreeImageStaticImportsLinux.GetTagValue(tag);
         }
@@ -2394,8 +2393,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetTagKey(FITAG tag, string key)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetTagKey(tag, key);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetTagKey(tag, key);
             else
                 return FreeImageStaticImportsLinux.SetTagKey(tag, key);
         }
@@ -2408,8 +2407,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetTagDescription(FITAG tag, string description)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetTagDescription(tag, description);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetTagDescription(tag, description);
             else
                 return FreeImageStaticImportsLinux.SetTagDescription(tag, description);
         }
@@ -2422,8 +2421,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetTagID(FITAG tag, ushort id)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetTagID(tag, id);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetTagID(tag, id);
             else
                 return FreeImageStaticImportsLinux.SetTagID(tag, id);
         }
@@ -2436,8 +2435,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetTagType(FITAG tag, FREE_IMAGE_MDTYPE type)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetTagType(tag, type);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetTagType(tag, type);
             else
                 return FreeImageStaticImportsLinux.SetTagType(tag, type);
         }
@@ -2450,8 +2449,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetTagCount(FITAG tag, uint count)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetTagCount(tag, count);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetTagCount(tag, count);
             else
                 return FreeImageStaticImportsLinux.SetTagCount(tag, count);
         }
@@ -2464,8 +2463,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetTagLength(FITAG tag, uint length)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetTagLength(tag, length);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetTagLength(tag, length);
             else
                 return FreeImageStaticImportsLinux.SetTagLength(tag, length);
         }
@@ -2478,8 +2477,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetTagValue(FITAG tag, byte[] value)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetTagValue(tag, value);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetTagValue(tag, value);
             else
                 return FreeImageStaticImportsLinux.SetTagValue(tag, value);
         }
@@ -2498,8 +2497,8 @@ namespace FreeImageAPI
         /// Null if the metadata model does not exist.</returns>
         public static FIMETADATA FindFirstMetadata(FREE_IMAGE_MDMODEL model, FIBITMAP dib, out FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.FindFirstMetadata(model, dib, out tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.FindFirstMetadata(model, dib, out tag);
             else
                 return FreeImageStaticImportsLinux.FindFirstMetadata(model, dib, out tag);
         }
@@ -2513,8 +2512,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool FindNextMetadata(FIMETADATA mdhandle, out FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.FindNextMetadata(mdhandle, out tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.FindNextMetadata(mdhandle, out tag);
             else
                 return FreeImageStaticImportsLinux.FindNextMetadata(mdhandle, out tag);
         }
@@ -2525,8 +2524,8 @@ namespace FreeImageAPI
         /// <param name="mdhandle">The handle to close.</param>
         private static void FindCloseMetadata_(FIMETADATA mdhandle)
         {
-            if (IsWindows)
-                FreeImageStaticImportsWindows.FindCloseMetadata_(mdhandle);
+            if (!IsLinux)
+                FreeImageStaticImportsDefault.FindCloseMetadata_(mdhandle);
             else
                 FreeImageStaticImportsLinux.FindCloseMetadata_(mdhandle);
         }
@@ -2545,8 +2544,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool GetMetadata(FREE_IMAGE_MDMODEL model, FIBITMAP dib, string key, out FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetMetadata(model, dib, key, out tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetMetadata(model, dib, key, out tag);
             else
                 return FreeImageStaticImportsLinux.GetMetadata(model, dib, key, out tag);
         }
@@ -2561,8 +2560,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetMetadata(FREE_IMAGE_MDMODEL model, FIBITMAP dib, string key, FITAG tag)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetMetadata(model, dib, key, tag);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetMetadata(model, dib, key, tag);
             else
                 return FreeImageStaticImportsLinux.SetMetadata(model, dib, key, tag);
         }
@@ -2579,8 +2578,8 @@ namespace FreeImageAPI
         /// <returns>Number of tags contained in the metadata model.</returns>
         public static uint GetMetadataCount(FREE_IMAGE_MDMODEL model, FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetMetadataCount(model, dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetMetadataCount(model, dib);
             else
                 return FreeImageStaticImportsLinux.GetMetadataCount(model, dib);
         }
@@ -2593,8 +2592,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool CloneMetadata(FIBITMAP dst, FIBITMAP src)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.CloneMetadata(dst, src);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.CloneMetadata(dst, src);
             else
                 return FreeImageStaticImportsLinux.CloneMetadata(dst, src);
         }
@@ -2610,8 +2609,8 @@ namespace FreeImageAPI
         public static unsafe string TagToString(FREE_IMAGE_MDMODEL model, FITAG tag, uint Make) { return PtrToStr(TagToString_(model, tag, Make)); }
         private static unsafe byte* TagToString_(FREE_IMAGE_MDMODEL model, FITAG tag, uint Make)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.TagToString_(model, tag, Make);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.TagToString_(model, tag, Make);
             else
                 return FreeImageStaticImportsLinux.TagToString_(model, tag, Make);
         }
@@ -2631,16 +2630,16 @@ namespace FreeImageAPI
         [Obsolete("RotateClassic is deprecated (use Rotate instead).")]
         public static FIBITMAP RotateClassic(FIBITMAP dib, double angle)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.RotateClassic(dib, angle);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.RotateClassic(dib, angle);
             else
                 return FreeImageStaticImportsLinux.RotateClassic(dib, angle);
         }
 
         internal static FIBITMAP Rotate(FIBITMAP dib, double angle, IntPtr backgroundColor)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Rotate(dib, angle, backgroundColor);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Rotate(dib, angle, backgroundColor);
             else
                 return FreeImageStaticImportsLinux.Rotate(dib, angle, backgroundColor);
         }
@@ -2661,8 +2660,8 @@ namespace FreeImageAPI
         public static FIBITMAP RotateEx(FIBITMAP dib, double angle,
                                         double x_shift, double y_shift, double x_origin, double y_origin, bool use_mask)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.RotateEx(dib, angle, x_shift, y_shift, x_origin, y_origin, use_mask);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.RotateEx(dib, angle, x_shift, y_shift, x_origin, y_origin, use_mask);
             else
                 return FreeImageStaticImportsLinux.RotateEx(dib, angle, x_shift, y_shift, x_origin, y_origin, use_mask);
         }
@@ -2674,8 +2673,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool FlipHorizontal(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.FlipHorizontal(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.FlipHorizontal(dib);
             else
                 return FreeImageStaticImportsLinux.FlipHorizontal(dib);
         }
@@ -2687,8 +2686,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool FlipVertical(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.FlipVertical(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.FlipVertical(dib);
             else
                 return FreeImageStaticImportsLinux.FlipVertical(dib);
         }
@@ -2704,8 +2703,8 @@ namespace FreeImageAPI
         public static bool JPEGTransform(string src_file, string dst_file,
                                          FREE_IMAGE_JPEG_OPERATION operation, bool perfect)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.JPEGTransform(src_file, dst_file, operation, perfect);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.JPEGTransform(src_file, dst_file, operation, perfect);
             else
                 return FreeImageStaticImportsLinux.JPEGTransform(src_file, dst_file, operation, perfect);
         }
@@ -2725,8 +2724,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP Rescale(FIBITMAP dib, int dst_width, int dst_height, FREE_IMAGE_FILTER filter)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Rescale(dib, dst_width, dst_height, filter);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Rescale(dib, dst_width, dst_height, filter);
             else
                 return FreeImageStaticImportsLinux.Rescale(dib, dst_width, dst_height, filter);
         }
@@ -2740,8 +2739,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP MakeThumbnail(FIBITMAP dib, int max_pixel_size, bool convert)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.MakeThumbnail(dib, max_pixel_size, convert);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.MakeThumbnail(dib, max_pixel_size, convert);
             else
                 return FreeImageStaticImportsLinux.MakeThumbnail(dib, max_pixel_size, convert);
         }
@@ -2749,8 +2748,8 @@ namespace FreeImageAPI
         internal static FIBITMAP EnlargeCanvas(FIBITMAP dib,
                                                int left, int top, int right, int bottom, IntPtr color, FREE_IMAGE_COLOR_OPTIONS options)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.EnlargeCanvas(dib, left, top, right, bottom, color, options);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.EnlargeCanvas(dib, left, top, right, bottom, color, options);
             else
                 return FreeImageStaticImportsLinux.EnlargeCanvas(dib, left, top, right, bottom, color, options);
         }
@@ -2769,8 +2768,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool AdjustCurve(FIBITMAP dib, byte[] lookUpTable, FREE_IMAGE_COLOR_CHANNEL channel)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.AdjustCurve(dib, lookUpTable, channel);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.AdjustCurve(dib, lookUpTable, channel);
             else
                 return FreeImageStaticImportsLinux.AdjustCurve(dib, lookUpTable, channel);
         }
@@ -2784,8 +2783,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool AdjustGamma(FIBITMAP dib, double gamma)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.AdjustGamma(dib, gamma);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.AdjustGamma(dib, gamma);
             else
                 return FreeImageStaticImportsLinux.AdjustGamma(dib, gamma);
         }
@@ -2799,8 +2798,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool AdjustBrightness(FIBITMAP dib, double percentage)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.AdjustBrightness(dib, percentage);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.AdjustBrightness(dib, percentage);
             else
                 return FreeImageStaticImportsLinux.AdjustBrightness(dib, percentage);
         }
@@ -2814,8 +2813,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool AdjustContrast(FIBITMAP dib, double percentage)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.AdjustContrast(dib, percentage);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.AdjustContrast(dib, percentage);
             else
                 return FreeImageStaticImportsLinux.AdjustContrast(dib, percentage);
         }
@@ -2827,8 +2826,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool Invert(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Invert(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Invert(dib);
             else
                 return FreeImageStaticImportsLinux.Invert(dib);
         }
@@ -2842,8 +2841,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool GetHistogram(FIBITMAP dib, int[] histo, FREE_IMAGE_COLOR_CHANNEL channel)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetHistogram(dib, histo, channel);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetHistogram(dib, histo, channel);
             else
                 return FreeImageStaticImportsLinux.GetHistogram(dib, histo, channel);
         }
@@ -2860,8 +2859,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP GetChannel(FIBITMAP dib, FREE_IMAGE_COLOR_CHANNEL channel)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetChannel(dib, channel);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetChannel(dib, channel);
             else
                 return FreeImageStaticImportsLinux.GetChannel(dib, channel);
         }
@@ -2876,8 +2875,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetChannel(FIBITMAP dib, FIBITMAP dib8, FREE_IMAGE_COLOR_CHANNEL channel)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetChannel(dib, dib8, channel);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetChannel(dib, dib8, channel);
             else
                 return FreeImageStaticImportsLinux.SetChannel(dib, dib8, channel);
         }
@@ -2890,8 +2889,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP GetComplexChannel(FIBITMAP src, FREE_IMAGE_COLOR_CHANNEL channel)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetComplexChannel(src, channel);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetComplexChannel(src, channel);
             else
                 return FreeImageStaticImportsLinux.GetComplexChannel(src, channel);
         }
@@ -2906,8 +2905,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool SetComplexChannel(FIBITMAP dst, FIBITMAP src, FREE_IMAGE_COLOR_CHANNEL channel)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SetComplexChannel(dst, src, channel);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SetComplexChannel(dst, src, channel);
             else
                 return FreeImageStaticImportsLinux.SetComplexChannel(dst, src, channel);
         }
@@ -2927,8 +2926,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP Copy(FIBITMAP dib, int left, int top, int right, int bottom)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Copy(dib, left, top, right, bottom);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Copy(dib, left, top, right, bottom);
             else
                 return FreeImageStaticImportsLinux.Copy(dib, left, top, right, bottom);
         }
@@ -2947,8 +2946,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool Paste(FIBITMAP dst, FIBITMAP src, int left, int top, int alpha)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Paste(dst, src, left, top, alpha);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Paste(dst, src, left, top, alpha);
             else
                 return FreeImageStaticImportsLinux.Paste(dst, src, left, top, alpha);
         }
@@ -2965,8 +2964,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP Composite(FIBITMAP fg, bool useFileBkg, ref RGBQUAD appBkColor, FIBITMAP bg)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Composite(fg, useFileBkg, ref appBkColor, bg);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Composite(fg, useFileBkg, ref appBkColor, bg);
             else
                 return FreeImageStaticImportsLinux.Composite(fg, useFileBkg, ref appBkColor, bg);
         }
@@ -2984,8 +2983,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP Composite(FIBITMAP fg, bool useFileBkg, RGBQUAD[] appBkColor, FIBITMAP bg)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.Composite(fg, useFileBkg, appBkColor, bg);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.Composite(fg, useFileBkg, appBkColor, bg);
             else
                 return FreeImageStaticImportsLinux.Composite(fg, useFileBkg, appBkColor, bg);
         }
@@ -3002,8 +3001,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool JPEGCrop(string src_file, string dst_file, int left, int top, int right, int bottom)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.JPEGCrop(src_file, dst_file, left, top, right, bottom);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.JPEGCrop(src_file, dst_file, left, top, right, bottom);
             else
                 return FreeImageStaticImportsLinux.JPEGCrop(src_file, dst_file, left, top, right, bottom);
         }
@@ -3017,8 +3016,8 @@ namespace FreeImageAPI
         /// <returns>Returns true on success, false on failure.</returns>
         public static bool PreMultiplyWithAlpha(FIBITMAP dib)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.PreMultiplyWithAlpha(dib);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.PreMultiplyWithAlpha(dib);
             else
                 return FreeImageStaticImportsLinux.PreMultiplyWithAlpha(dib);
         }
@@ -3035,8 +3034,8 @@ namespace FreeImageAPI
         /// <returns>Handle to a FreeImage bitmap.</returns>
         public static FIBITMAP MultigridPoissonSolver(FIBITMAP Laplacian, int ncycle)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.MultigridPoissonSolver(Laplacian, ncycle);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.MultigridPoissonSolver(Laplacian, ncycle);
             else
                 return FreeImageStaticImportsLinux.MultigridPoissonSolver(Laplacian, ncycle);
         }
@@ -3103,8 +3102,8 @@ namespace FreeImageAPI
         /// </remarks>
         public static int GetAdjustColorsLookupTable(byte[] lookUpTable, double brightness, double contrast, double gamma, bool invert)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.GetAdjustColorsLookupTable(lookUpTable, brightness, contrast, gamma, invert);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.GetAdjustColorsLookupTable(lookUpTable, brightness, contrast, gamma, invert);
             else
                 return FreeImageStaticImportsLinux.GetAdjustColorsLookupTable(lookUpTable, brightness, contrast, gamma, invert);
         }
@@ -3164,8 +3163,8 @@ namespace FreeImageAPI
         /// </remarks>
         public static bool AdjustColors(FIBITMAP dib, double brightness, double contrast, double gamma, bool invert)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.AdjustColors(dib, brightness, contrast, gamma, invert);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.AdjustColors(dib, brightness, contrast, gamma, invert);
             else
                 return FreeImageStaticImportsLinux.AdjustColors(dib, brightness, contrast, gamma, invert);
         }
@@ -3206,8 +3205,8 @@ namespace FreeImageAPI
         /// </remarks>
         public static uint ApplyColorMapping(FIBITMAP dib, RGBQUAD[] srccolors, RGBQUAD[] dstcolors, uint count, bool ignore_alpha, bool swap)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ApplyColorMapping(dib, srccolors, dstcolors, count, ignore_alpha, swap);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ApplyColorMapping(dib, srccolors, dstcolors, count, ignore_alpha, swap);
             else
                 return FreeImageStaticImportsLinux.ApplyColorMapping(dib, srccolors, dstcolors, count, ignore_alpha, swap);
         }
@@ -3238,8 +3237,8 @@ namespace FreeImageAPI
         /// </remarks>
         public static uint SwapColors(FIBITMAP dib, ref RGBQUAD color_a, ref RGBQUAD color_b, bool ignore_alpha)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SwapColors(dib, ref color_a, ref color_b, ignore_alpha);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SwapColors(dib, ref color_a, ref color_b, ignore_alpha);
             else
                 return FreeImageStaticImportsLinux.SwapColors(dib, ref color_a, ref color_b, ignore_alpha);
         }
@@ -3273,8 +3272,8 @@ namespace FreeImageAPI
         /// </remarks>
         public static uint ApplyPaletteIndexMapping(FIBITMAP dib, byte[] srcindices, byte[] dstindices, uint count, bool swap)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.ApplyPaletteIndexMapping(dib, srcindices, dstindices, count, swap);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.ApplyPaletteIndexMapping(dib, srcindices, dstindices, count, swap);
             else
                 return FreeImageStaticImportsLinux.ApplyPaletteIndexMapping(dib, srcindices, dstindices, count, swap);
         }
@@ -3302,16 +3301,16 @@ namespace FreeImageAPI
         /// </remarks>
         public static uint SwapPaletteIndices(FIBITMAP dib, ref byte index_a, ref byte index_b)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.SwapPaletteIndices(dib, ref index_a, ref index_b   );
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.SwapPaletteIndices(dib, ref index_a, ref index_b   );
             else
                 return FreeImageStaticImportsLinux.SwapPaletteIndices(dib, ref index_a, ref index_b);
         }
 
         internal static bool FillBackground(FIBITMAP dib, IntPtr color, FREE_IMAGE_COLOR_OPTIONS options)
         {
-            if (IsWindows)
-                return FreeImageStaticImportsWindows.FillBackground(dib, color, options);
+            if (!IsLinux)
+                return FreeImageStaticImportsDefault.FillBackground(dib, color, options);
             else
                 return FreeImageStaticImportsLinux.FillBackground(dib, color, options);
         }
