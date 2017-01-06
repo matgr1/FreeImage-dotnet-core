@@ -1,14 +1,5 @@
-NUnit 2.x is needed for FreeImage .NET wrapper unit tests. It can be
-downloaded from http://www.nunit.org/
+The tests can be run by invoking "dotnet test" from the UnitTest project folder
 
-After installing NUnit, double click on the NUnit project file
-FreeImage.NET.nunit located in the FreeImage .NET wrapper Source folder
-to load the project.
+Alternatively, the test explorer can be used in Visual Studio
 
-The FreeImage .NET wrapper unit test project UnitTest.csproj, located
-under Source\UnitTest, must be compiled in 'Debug' mode prior to opening
-the NUnit project.
-
-The FreeImage .NET wrapper unit test project UnitTest.csproj currently
-relies on the FreeImage .NET wrapper single source file, created by the
-Source File Merger, located in the Source\SourceFileMerger folder.
+If either of these don't work, please open an issue!
