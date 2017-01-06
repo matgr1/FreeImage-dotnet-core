@@ -1,9 +1,8 @@
 ﻿{
-	"version": "3.17.0-*",
+	"version": "3.17.1-*",
 	"title": "FreeImage dotnet core",
 	"copyright": "(c) 2016-present Matt Graham",
 	"authors": [ "Matt Graham" ],
-	"projectUrl": "https://github.com/matgr1/FreeImage-dotnet-core",
 
 	"buildOptions": {
 		"allowUnsafe": true
@@ -15,21 +14,22 @@
 		]
 	},
 
-	"packOptions": {
-		"iconUrl": "http://freeimage.sourceforge.net/images/logo.jpg",
-		"licenseUrl": "http://freeimage.sourceforge.net/license.html",
-		"repository": {
-			"type": "git",
-			"url": "https://github.com/matgr1/FreeImage-dotnet-core"
-		},
-		"tags": [ "FreeImage", "netcore", "dotnetcore" ],
-		"files": {
-			"mappings": {
-				"runtimes/win7-x86/native/": [ "../../runtimes/win7-x86/native/FreeImage.dll" ],
-				"runtimes/win7-x64/native/": [ "../../runtimes/win7-x64/native/FreeImage.dll" ]
-			}
-		}
-	},
+  "packOptions": {
+    "iconUrl": "http://freeimage.sourceforge.net/images/logo.jpg",
+    "licenseUrl": "http://freeimage.sourceforge.net/license.html",
+    "projectUrl": "https://github.com/matgr1/FreeImage-dotnet-core",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/matgr1/FreeImage-dotnet-core"
+    },
+    "tags": [ "FreeImage", "netcore", "dotnetcore" ],
+    "files": {
+      "mappings": {
+        "runtimes/win7-x86/native/": [ "../../runtimes/win7-x86/native/FreeImage.dll" ],
+        "runtimes/win7-x64/native/": [ "../../runtimes/win7-x64/native/FreeImage.dll" ]
+      }
+    }
+  },
 
 	"dependencies": {
 		"NETStandard.Library": "1.6.0"
