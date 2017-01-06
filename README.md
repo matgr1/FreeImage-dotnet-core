@@ -6,6 +6,12 @@ nuget package: https://www.nuget.org/packages/FreeImage-dotnet-core
 
 `Install-Package FreeImage-dotnet-core`
 
+#### FreeImage Version
+
+This is for FreeImage version 3.17.0 
+
+##### The version number of this package no longer matches the FreeImage native library version!
+
 #### License
 
 The license is the same as the FreeImage license available at the link above
