@@ -2188,9 +2188,9 @@ namespace FreeImageAPI
         public static uint ZLibUncompress(byte[] target, uint target_size, byte[] source, uint source_size)
         {
             if (!IsLinux)
-                return FreeImageStaticImportsDefault.ZLibCompress(target, target_size, source, source_size);
+                return FreeImageStaticImportsDefault.ZLibUncompress(target, target_size, source, source_size);
             else
-                return FreeImageStaticImportsLinux.ZLibCompress(target, target_size, source, source_size);
+                return FreeImageStaticImportsLinux.ZLibUncompress(target, target_size, source, source_size);
         }
 
         /// <summary>
