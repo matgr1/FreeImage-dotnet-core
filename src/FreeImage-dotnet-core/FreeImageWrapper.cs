@@ -115,52 +115,52 @@ namespace FreeImageAPI
 
         #region General functions
 
-        private const string FreeImageVersion = "3.17.0";
+		private static readonly Version ExpectedNativeFreeImageVersion = new Version("3.17.0");
 
-        /// <summary>
-        /// Returns the internal version of this FreeImage .NET wrapper.
-        /// </summary>
-        /// <returns>The internal version of this FreeImage .NET wrapper.</returns>
-        public static Version GetWrapperVersion()
-        {
-            if (WrapperVersion == null)
-            {
-                lock (WrapperVersionLock)
-                {
-                    if (WrapperVersion == null)
-                    {
-                        Assembly assembly = GetFreeImageAssembly();
-                        AssemblyInformationalVersionAttribute attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-
-                        if (attribute == null)
-                        {
-                            throw new InvalidOperationException("Failed to get assembly version attribute");
-                        }
-
-                        if (string.IsNullOrWhiteSpace(attribute.InformationalVersion))
-                        {
-                            throw new InvalidOperationException("No assembly version present");
-                        }
-
-                        string version = attribute.InformationalVersion;
-
-                        string[] versionParts = version.Split(new[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
-
-                        if (versionParts.Length < 1)
-                        {
-                            throw new InvalidOperationException("Invalid assembly version");
-                        }
-
-                        if (false == Version.TryParse(versionParts[0], out WrapperVersion))
-                        {
-                            throw new InvalidOperationException("Unable to parse assembly version");
-                        }
-                    }
-                }
-            }
-
-            return WrapperVersion;
-        }
+		///// <summary>
+		///// Returns the internal version of this FreeImage .NET wrapper.
+		///// </summary>
+		///// <returns>The internal version of this FreeImage .NET wrapper.</returns>
+		//public static Version GetWrapperVersion()
+		//{
+		//	if (WrapperVersion == null)
+		//	{
+		//		lock (WrapperVersionLock)
+		//		{
+		//			if (WrapperVersion == null)
+		//			{
+		//				Assembly assembly = GetFreeImageAssembly();
+		//				AssemblyInformationalVersionAttribute attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+		//
+		//				if (attribute == null)
+		//				{
+		//					throw new InvalidOperationException("Failed to get assembly version attribute");
+		//				}
+		//
+		//				if (string.IsNullOrWhiteSpace(attribute.InformationalVersion))
+		//				{
+		//					throw new InvalidOperationException("No assembly version present");
+		//				}
+		//
+		//				string version = attribute.InformationalVersion;
+		//
+		//				string[] versionParts = version.Split(new[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+		//
+		//				if (versionParts.Length < 1)
+		//				{
+		//					throw new InvalidOperationException("Invalid assembly version");
+		//				}
+		//
+		//				if (false == Version.TryParse(versionParts[0], out WrapperVersion))
+		//				{
+		//					throw new InvalidOperationException("Unable to parse assembly version");
+		//				}
+		//			}
+		//		}
+		//	}
+		//
+		//	return WrapperVersion;
+		//}
 
         internal static Assembly GetFreeImageAssembly()
         {
@@ -185,36 +185,37 @@ namespace FreeImageAPI
             return new Version(GetVersion());
         }
 
-        /// <summary>
-        /// Validates that the FreeImage library is available on the system - throws an exception if not
-        /// </summary>
-        /// <remarks>
-        /// The FreeImage.NET library is a wrapper for the native C++ library
-        /// (FreeImage.dll ... dont mix ist up with this library FreeImageNet.dll).
-        /// The native library <b>must</b> be either in the same folder as the program's
-        /// executable or in a folder contained in the envirent variable <i>PATH</i>
-        /// (for example %WINDIR%\System32).<para/>
-        /// Further more must both libraries, including the program itself,
-        /// be the same architecture (x86 or x64) and be a compatible version.
-        /// </remarks>
-        public static void ValidateAvailability()
-        {
-            try
-            {
-                Version nativeVersion = new Version(GetVersion());
-                Version wrapperVersion = GetWrapperVersion();
+		/// <summary>
+		/// Validates that the FreeImage library is available on the system - throws an exception if not
+		/// </summary>
+		/// <remarks>
+		/// The FreeImage.NET library is a wrapper for the native C++ library
+		/// (FreeImage.dll ... dont mix ist up with this library FreeImageNet.dll).
+		/// The native library <b>must</b> be either in the same folder as the program's
+		/// executable or in a folder contained in the envirent variable <i>PATH</i>
+		/// (for example %WINDIR%\System32).<para/>
+		/// Further more must both libraries, including the program itself,
+		/// be the same architecture (x86 or x64) and be a compatible version.
+		/// </remarks>
+		public static void ValidateAvailability()
+		{
+			try
+			{
+				Version nativeVersion = new Version(GetVersion());
+				//Version wrapperVersion = GetWrapperVersion();
 
-                if (false == ((nativeVersion.Major > wrapperVersion.Major) ||
-                                ((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor > wrapperVersion.Minor)) ||
-                                ((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor == wrapperVersion.Minor) && (nativeVersion.Build >= wrapperVersion.Build))))
-                {
-                    throw new FreeImageException("FreeImage library version mismatch");
-                }
-            }
-            catch (DllNotFoundException e)
-            {
-                throw new FreeImageException("FreeImage library not found", e);
-            }
+				//if (false ==	((nativeVersion.Major > wrapperVersion.Major) ||
+				//				((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor > wrapperVersion.Minor)) ||
+				//				((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor == wrapperVersion.Minor) && (nativeVersion.Build >= wrapperVersion.Build))))
+				if (nativeVersion != ExpectedNativeFreeImageVersion)
+				{
+					throw new FreeImageException("FreeImage library version mismatch");
+				}
+			}
+			catch (DllNotFoundException e)
+			{
+				throw new FreeImageException("FreeImage library not found", e);
+			}
 #if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 			catch (EntryPointNotFoundException e)
 			{
