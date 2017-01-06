@@ -115,52 +115,52 @@ namespace FreeImageAPI
 
 		#region General functions
 
-		private const string FreeImageVersion = "3.17.0";
+		private static readonly Version ExpectedNativeFreeImageVersion = new Version("3.17.0");
 
-		/// <summary>
-		/// Returns the internal version of this FreeImage .NET wrapper.
-		/// </summary>
-		/// <returns>The internal version of this FreeImage .NET wrapper.</returns>
-		public static Version GetWrapperVersion()
-		{
-			if (WrapperVersion == null)
-			{
-				lock (WrapperVersionLock)
-				{
-					if (WrapperVersion == null)
-					{
-						Assembly assembly = GetFreeImageAssembly();
-						AssemblyInformationalVersionAttribute attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-
-						if (attribute == null)
-						{
-							throw new InvalidOperationException("Failed to get assembly version attribute");
-						}
-
-						if (string.IsNullOrWhiteSpace(attribute.InformationalVersion))
-						{
-							throw new InvalidOperationException("No assembly version present");
-						}
-
-						string version = attribute.InformationalVersion;
-
-						string[] versionParts = version.Split(new[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
-
-						if (versionParts.Length < 1)
-						{
-							throw new InvalidOperationException("Invalid assembly version");
-						}
-
-						if (false == Version.TryParse(versionParts[0], out WrapperVersion))
-						{
-							throw new InvalidOperationException("Unable to parse assembly version");
-						}
-					}
-				}
-			}
-
-			return WrapperVersion;
-		}
+		///// <summary>
+		///// Returns the internal version of this FreeImage .NET wrapper.
+		///// </summary>
+		///// <returns>The internal version of this FreeImage .NET wrapper.</returns>
+		//public static Version GetWrapperVersion()
+		//{
+		//	if (WrapperVersion == null)
+		//	{
+		//		lock (WrapperVersionLock)
+		//		{
+		//			if (WrapperVersion == null)
+		//			{
+		//				Assembly assembly = GetFreeImageAssembly();
+		//				AssemblyInformationalVersionAttribute attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+		//
+		//				if (attribute == null)
+		//				{
+		//					throw new InvalidOperationException("Failed to get assembly version attribute");
+		//				}
+		//
+		//				if (string.IsNullOrWhiteSpace(attribute.InformationalVersion))
+		//				{
+		//					throw new InvalidOperationException("No assembly version present");
+		//				}
+		//
+		//				string version = attribute.InformationalVersion;
+		//
+		//				string[] versionParts = version.Split(new[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+		//
+		//				if (versionParts.Length < 1)
+		//				{
+		//					throw new InvalidOperationException("Invalid assembly version");
+		//				}
+		//
+		//				if (false == Version.TryParse(versionParts[0], out WrapperVersion))
+		//				{
+		//					throw new InvalidOperationException("Unable to parse assembly version");
+		//				}
+		//			}
+		//		}
+		//	}
+		//
+		//	return WrapperVersion;
+		//}
 
 		internal static Assembly GetFreeImageAssembly()
 		{
@@ -202,11 +202,12 @@ namespace FreeImageAPI
 			try
 			{
 				Version nativeVersion = new Version(GetVersion());
-				Version wrapperVersion = GetWrapperVersion();
+				//Version wrapperVersion = GetWrapperVersion();
 
-				if (false ==	((nativeVersion.Major > wrapperVersion.Major) ||
-								((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor > wrapperVersion.Minor)) ||
-								((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor == wrapperVersion.Minor) && (nativeVersion.Build >= wrapperVersion.Build))))
+				//if (false ==	((nativeVersion.Major > wrapperVersion.Major) ||
+				//				((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor > wrapperVersion.Minor)) ||
+				//				((nativeVersion.Major == wrapperVersion.Major) && (nativeVersion.Minor == wrapperVersion.Minor) && (nativeVersion.Build >= wrapperVersion.Build))))
+				if (nativeVersion != ExpectedNativeFreeImageVersion)
 				{
 					throw new FreeImageException("FreeImage library version mismatch");
 				}

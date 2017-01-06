@@ -1,9 +1,8 @@
 ﻿{
-	"version": "3.17.0-*",
+	"version": "4.0.0-*",
 	"title": "FreeImage dotnet core",
 	"copyright": "(c) 2016-present Matt Graham",
 	"authors": [ "Matt Graham" ],
-	"projectUrl": "https://github.com/matgr1/FreeImage-dotnet-core",
 
 	"buildOptions": {
 		"allowUnsafe": true
@@ -18,6 +17,7 @@
 	"packOptions": {
 		"iconUrl": "http://freeimage.sourceforge.net/images/logo.jpg",
 		"licenseUrl": "http://freeimage.sourceforge.net/license.html",
+		"projectUrl": "https://github.com/matgr1/FreeImage-dotnet-core",
 		"repository": {
 			"type": "git",
 			"url": "https://github.com/matgr1/FreeImage-dotnet-core"
