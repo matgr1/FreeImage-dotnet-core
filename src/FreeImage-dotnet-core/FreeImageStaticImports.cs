@@ -42,14 +42,18 @@ namespace FreeImageAPI
 {
     public static partial class FreeImage
     {
-        #region Constants
+		#region Constants
 
-        private static bool IsLinux => RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+		private static readonly bool IsLinux = false;
+#else
+		private static readonly bool IsLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+#endif
 
-        /// <summary>
-        /// Filename of the FreeImage library.
-        /// </summary>
-        private const string FreeImageLibrary = "FreeImage";
+		/// <summary>
+		/// Filename of the FreeImage library.
+		/// </summary>
+		private const string FreeImageLibrary = "FreeImage";
 
         /// <summary>
         /// Number of bytes to shift left within a 4 byte block.
@@ -176,9 +180,9 @@ namespace FreeImageAPI
         /// </summary>
         public const int FI16_565_BLUE_SHIFT = 0;
 
-        #endregion
+#endregion
 
-        #region General functions
+#region General functions
 
         /// <summary>
         /// Initialises the library.
@@ -261,9 +265,9 @@ namespace FreeImageAPI
                 FreeImageStaticImportsLinux.SetOutputMessage(omf);
         }
 
-        #endregion
+#endregion
 
-        #region Bitmap management functions
+#region Bitmap management functions
 
         /// <summary>
         /// Creates a new bitmap in memory.
@@ -455,9 +459,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.SaveToHandle(fif, dib, ref io, handle, flags);
         }
 
-        #endregion
+#endregion
 
-        #region Memory I/O streams
+#region Memory I/O streams
 
         /// <summary>
         /// Open a memory stream.
@@ -618,9 +622,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.LoadMultiBitmapFromMemory(fif, stream, flags);
         }
 
-        #endregion
+#endregion
 
-        #region Plugin functions
+#region Plugin functions
 
         /// <summary>
         /// Registers a new plugin to be used in FreeImage.
@@ -893,9 +897,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.FIFSupportsICCProfiles(fif);
         }
 
-        #endregion
+#endregion
 
-        #region Multipage functions
+#region Multipage functions
 
         /// <summary>
         /// Loads a FreeImage multi-paged bitmap.
@@ -1072,9 +1076,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.GetLockedPageNumbers(bitmap, pages, ref count);
         }
 
-        #endregion
+#endregion
 
-        #region Filetype functions
+#region Filetype functions
 
         /// <summary>
         /// Orders FreeImage to analyze the bitmap signature.
@@ -1136,9 +1140,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.GetFileTypeFromMemory(stream, size);
         }
 
-        #endregion
+#endregion
 
-        #region Helper functions
+#region Helper functions
 
         /// <summary>
         /// Returns whether the platform is using Little Endian.
@@ -1184,9 +1188,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.LookupSVGColor(szColor, out nRed, out nGreen, out nBlue);
         }
 
-        #endregion
+#endregion
 
-        #region Pixel access functions
+#region Pixel access functions
 
         /// <summary>
         /// Returns a pointer to the data-bits of the bitmap.
@@ -1279,9 +1283,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.SetPixelColor(dib, x, y, ref value);
         }
 
-        #endregion
+#endregion
 
-        #region Bitmap information functions
+#region Bitmap information functions
 
         /// <summary>
         /// Retrieves the type of the bitmap.
@@ -1710,9 +1714,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.GetTransparentIndex(dib);
         }
 
-        #endregion
+#endregion
 
-        #region ICC profile functions
+#region ICC profile functions
 
         /// <summary>
         /// Retrieves the <see cref="FIICCPROFILE"/> data of the bitmap.
@@ -1766,9 +1770,9 @@ namespace FreeImageAPI
                 FreeImageStaticImportsLinux.DestroyICCProfile(dib);
         }
 
-        #endregion
+#endregion
 
-        #region Conversion functions
+#region Conversion functions
 
         /// <summary>
         /// Converts a bitmap to 4 bits.
@@ -2087,9 +2091,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.ConvertToType(src, dst_type, scale_linear);
         }
 
-        #endregion
+#endregion
 
-        #region Tone mapping operators
+#region Tone mapping operators
 
         /// <summary>
         /// Converts a High Dynamic Range image (48-bit RGB or 96-bit RGBF) to a 24-bit RGB image, suitable for display.
@@ -2155,9 +2159,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.TmoFattal02(src, color_saturation, attenuation);
         }
 
-        #endregion
+#endregion
 
-        #region Compression functions
+#region Compression functions
 
         /// <summary>
         /// Compresses a source buffer into a target buffer, using the ZLib library.
@@ -2243,9 +2247,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.ZLibCRC32(crc, source, source_size);
         }
 
-        #endregion
+#endregion
 
-        #region Tag creation and destruction
+#region Tag creation and destruction
 
         /// <summary>
         /// Allocates a new <see cref="FITAG"/> object.
@@ -2286,9 +2290,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.CloneTag(tag);
         }
 
-        #endregion
+#endregion
 
-        #region Tag accessors
+#region Tag accessors
 
         /// <summary>
         /// Returns the tag field name (unique inside a metadata model).
@@ -2483,9 +2487,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.SetTagValue(tag, value);
         }
 
-        #endregion
+#endregion
 
-        #region Metadata iterator
+#region Metadata iterator
 
         /// <summary>
         /// Provides information about the first instance of a tag that matches the metadata model.
@@ -2530,9 +2534,9 @@ namespace FreeImageAPI
                 FreeImageStaticImportsLinux.FindCloseMetadata_(mdhandle);
         }
 
-        #endregion
+#endregion
 
-        #region Metadata setter and getter
+#region Metadata setter and getter
 
         /// <summary>
         /// Retrieve a metadata attached to a dib.
@@ -2566,9 +2570,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.SetMetadata(model, dib, key, tag);
         }
 
-        #endregion
+#endregion
 
-        #region Metadata helper functions
+#region Metadata helper functions
 
         /// <summary>
         /// Returns the number of tags contained in the model metadata model attached to the input dib.
@@ -2615,9 +2619,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.TagToString_(model, tag, Make);
         }
 
-        #endregion
+#endregion
 
-        #region Rotation and flipping
+#region Rotation and flipping
 
         /// <summary>
         /// This function rotates a 1-, 8-bit greyscale or a 24-, 32-bit color image by means of 3 shears.
@@ -2709,9 +2713,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.JPEGTransform(src_file, dst_file, operation, perfect);
         }
 
-        #endregion
+#endregion
 
-        #region Upsampling / downsampling
+#region Upsampling / downsampling
 
         /// <summary>
         /// Performs resampling (or scaling, zooming) of a greyscale or RGB(A) image
@@ -2754,9 +2758,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.EnlargeCanvas(dib, left, top, right, bottom, color, options);
         }
 
-        #endregion
+#endregion
 
-        #region Color manipulation
+#region Color manipulation
 
         /// <summary>
         /// Perfoms an histogram transformation on a 8-, 24- or 32-bit image.
@@ -2847,9 +2851,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.GetHistogram(dib, histo, channel);
         }
 
-        #endregion
+#endregion
 
-        #region Channel processing
+#region Channel processing
 
         /// <summary>
         /// Retrieves the red, green, blue or alpha channel of a 24- or 32-bit image.
@@ -2911,9 +2915,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.SetComplexChannel(dst, src, channel);
         }
 
-        #endregion
+#endregion
 
-        #region Copy / Paste / Composite routines
+#region Copy / Paste / Composite routines
 
         /// <summary>
         /// Copy a sub part of the current dib image.
@@ -3022,9 +3026,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.PreMultiplyWithAlpha(dib);
         }
 
-        #endregion
+#endregion
 
-        #region Miscellaneous algorithms
+#region Miscellaneous algorithms
 
         /// <summary>
         /// Solves a Poisson equation, remap result pixels to [0..1] and returns the solution.
@@ -3040,9 +3044,9 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.MultigridPoissonSolver(Laplacian, ncycle);
         }
 
-        #endregion
+#endregion
 
-        #region Colors
+#region Colors
 
         /// <summary>
         /// Creates a lookup table to be used with <see cref="AdjustCurve"/> which may adjusts brightness and
@@ -3315,6 +3319,6 @@ namespace FreeImageAPI
                 return FreeImageStaticImportsLinux.FillBackground(dib, color, options);
         }
 
-        #endregion
+#endregion
     }
 }
