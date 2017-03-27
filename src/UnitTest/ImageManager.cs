@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Reflection;
 
 namespace FreeImageNETUnitTest
 {
@@ -157,13 +158,8 @@ namespace FreeImageNETUnitTest
 		}
 
 		private static string GetImageDataFolder()
-		{
-			// TODO: this is pretty hokie...
-
-			// NOTE: when running from the project folder, this should be the project folder...
-			string currentDir = Directory.GetCurrentDirectory();
-
-			string solutionFolder = Path.Combine(Directory.GetCurrentDirectory(), "..", "..");
+		{			
+			string solutionFolder = Utility.GetSolutionFolder();
 			string imagesFolder = Path.Combine(solutionFolder, "UnitTestData", "Images");
 
 			return Path.GetFullPath(imagesFolder);
