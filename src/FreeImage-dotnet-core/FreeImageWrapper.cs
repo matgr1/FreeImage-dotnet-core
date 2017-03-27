@@ -67,11 +67,11 @@ namespace FreeImageAPI
         private static Dictionary<FIMULTIBITMAP, fi_handle> streamHandles =
             new Dictionary<FIMULTIBITMAP, fi_handle>();
 
-        /// <summary>
-        /// Version of the wrapper library.
-        /// </summary>
-        private static Version WrapperVersion;
-        private static object WrapperVersionLock = new object();
+		///// <summary>
+		///// Version of the wrapper library.
+		///// </summary>
+		//private static Version WrapperVersion;
+		//private static object WrapperVersionLock = new object();
 
         private const int DIB_RGB_COLORS = 0;
         private const int DIB_PAL_COLORS = 1;

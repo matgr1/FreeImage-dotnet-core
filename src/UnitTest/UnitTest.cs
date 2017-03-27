@@ -29,12 +29,15 @@ namespace FreeImageNETUnitTest
 		[TestFixtureSetUp]
 		public void Init()
 		{
+			Utility.CopyFreeImageNativeDll();
+
 			FreeImageEngine.Message += new OutputMessageFunction(FreeImage_Message);
 		}
 
 		[TestFixtureTearDown]
 		public void DeInit()
 		{
+			// clear message handler
 			FreeImageEngine.Message -= new OutputMessageFunction(FreeImage_Message);
 		}
 
@@ -1608,6 +1611,8 @@ namespace FreeImageNETUnitTest
 		[TestFixtureSetUp]
 		public void Init()
 		{
+			Utility.CopyFreeImageNativeDll();
+
 			FreeImageEngine.Message += new OutputMessageFunction(FreeImage_Message);
 		}
 
@@ -1967,6 +1972,8 @@ namespace FreeImageNETUnitTest
 		[TestFixtureSetUp]
 		public void Init()
 		{
+			Utility.CopyFreeImageNativeDll();
+
 			FreeImageEngine.Message += new OutputMessageFunction(FreeImage_Message);
 		}
 
@@ -3168,6 +3175,8 @@ namespace FreeImageNETUnitTest
 		[TestFixtureSetUp]
 		public void Init()
 		{
+			Utility.CopyFreeImageNativeDll();
+
 			FreeImageEngine.Message += new OutputMessageFunction(FreeImage_Message);
 		}
 
@@ -4735,6 +4744,8 @@ namespace FreeImageNETUnitTest
 		[TestFixtureSetUp]
 		public void Init()
 		{
+			Utility.CopyFreeImageNativeDll();
+
 			FreeImageEngine.Message += new OutputMessageFunction(FreeImage_Message);
 		}
 
