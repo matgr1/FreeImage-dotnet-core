@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Copyright></Copyright>
     <AssemblyTitle>FreeImage dotnet core</AssemblyTitle>
-    <VersionPrefix>4.0.1</VersionPrefix>
+    <VersionPrefix>4.0.2</VersionPrefix>
     <Authors></Authors>
     <TargetFrameworks>netstandard1.6;netstandard1.5;netstandard1.4;netstandard1.3;net461;net46;net452;net451;net45</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -29,7 +29,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>4.0.1</Version>
+    <Version>4.0.2</Version>
     <Description>This is a clone of the FreeImage .NET project (http://freeimage.sourceforge.net/) modified to work with dotnet core. Note that all functions that use System.Drawing.Bitmap have been removed from the netstandard framework versions as there is no implementation for this class.
 
 FreeImage native binaries are included in the nuget package for Windows, other platforms they will have to be installed separately (eg. on OSX brew install freeimage should work)
@@ -47,21 +47,21 @@ This is for FreeImage version 3.17.0 (The version number of this package no long
       <Pack>true</Pack>
     </None>
   </ItemGroup>
-
+	
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <PackageReference Include="System.Drawing-dotnet-core" Version="1.1.2" />
+    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
-    <PackageReference Include="System.Drawing-dotnet-core" Version="1.1.2" />
+    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="System.Drawing-dotnet-core" Version="1.1.2" />
+    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <PackageReference Include="System.Drawing-dotnet-core" Version="1.1.2" />
+    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
