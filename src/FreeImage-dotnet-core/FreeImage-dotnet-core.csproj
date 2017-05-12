@@ -3,7 +3,6 @@
   <PropertyGroup>
     <Copyright></Copyright>
     <AssemblyTitle>FreeImage dotnet core</AssemblyTitle>
-    <VersionPrefix>4.0.2</VersionPrefix>
     <Authors></Authors>
     <TargetFrameworks>netstandard1.6;netstandard1.5;netstandard1.4;netstandard1.3;net461;net46;net452;net451;net45</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -29,7 +28,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>4.0.2</Version>
+    <Version>4.0.3</Version>
     <Description>This is a clone of the FreeImage .NET project (http://freeimage.sourceforge.net/) modified to work with dotnet core. Note that all functions that use System.Drawing.Bitmap have been removed from the netstandard framework versions as there is no implementation for this class.
 
 FreeImage native binaries are included in the nuget package for Windows, other platforms they will have to be installed separately (eg. on OSX brew install freeimage should work)
@@ -38,14 +37,14 @@ This is for FreeImage version 3.17.0 (The version number of this package no long
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="..\..\runtimes\win7-x64\native\FreeImage.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </None>
-    <None Update="..\..\runtimes\win7-x86\native\FreeImage.dll">
-      <PackagePath>runtimes/win7-x86/native/</PackagePath>
-      <Pack>true</Pack>
-    </None>
+		<None Include="..\..\runtimes\win7-x64\native\FreeImage.dll">
+			<PackagePath>runtimes/win7-x64/native/FreeImage.dll</PackagePath>
+			<Pack>true</Pack>
+		</None>
+		<None Include="..\..\runtimes\win7-x86\native\FreeImage.dll">
+			<PackagePath>runtimes/win7-x86/native/FreeImage.dll</PackagePath>
+			<Pack>true</Pack>
+		</None>
   </ItemGroup>
 	
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
