@@ -36,7 +36,7 @@ FreeImage native binaries are included in the nuget package for Windows, other p
 This is for FreeImage version 3.17.0 (The version number of this package no longer matches the FreeImage native library version!)</Description>
   </PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
 		<None Include="..\..\runtimes\win7-x64\native\FreeImage.dll">
 			<PackagePath>runtimes/win7-x64/native/FreeImage.dll</PackagePath>
 			<Pack>true</Pack>
@@ -45,7 +45,7 @@ This is for FreeImage version 3.17.0 (The version number of this package no long
 			<PackagePath>runtimes/win7-x86/native/FreeImage.dll</PackagePath>
 			<Pack>true</Pack>
 		</None>
-  </ItemGroup>
+	</ItemGroup>
 	
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.0" />
