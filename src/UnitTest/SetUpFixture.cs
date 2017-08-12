@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace FreeImageNETUnitTest
@@ -8,11 +9,12 @@ namespace FreeImageNETUnitTest
     [SetUpFixture]
     public class SetUpFixture
     {
+
         [OneTimeSetUp]
         public void Init()
         {
-            string dir = Path.GetDirectoryName(typeof(SetUpFixture).Assembly.Location);
-            Environment.CurrentDirectory = dir;
+            string dir = Path.GetDirectoryName(typeof(SetUpFixture).GetTypeInfo().Assembly.Location);
+            Directory.SetCurrentDirectory(dir);
 
             CopyFreeImageNativeDll();
         }
@@ -27,27 +29,64 @@ namespace FreeImageNETUnitTest
             string solutionFolder = Utility.GetSolutionFolder();
             string runtimesFolder = Path.Combine(solutionFolder, "runtimes");
 
-            int ptrSize = Marshal.SizeOf(new IntPtr());
+            string libraryPath = GetPlatformLibraryPath(runtimesFolder, "FreeImage");
+            string libraryFileName = Path.GetFileName(libraryPath);
 
-            const string freeImageDllName = "FreeImage.dll";
-
-            string runTimeFolderName = (ptrSize == 4) ? "win7-x86" : "win7-x64";
-            string sourceFreeImagePath = Path.Combine(runtimesFolder, runTimeFolderName, "native", freeImageDllName);
-
-            if (false == File.Exists(sourceFreeImagePath))
+            if (false == File.Exists(libraryPath))
             {
-                throw new FileNotFoundException(sourceFreeImagePath);
+                throw new FileNotFoundException(libraryPath);
             }
 
             string executingFolder = Utility.GetExecutingFolder();
-            string targetFreeImagePath = Path.Combine(executingFolder, freeImageDllName);
+            string targetLibraryPath = Path.Combine(executingFolder, libraryFileName);
 
-            if (File.Exists(targetFreeImagePath))
+            if (File.Exists(targetLibraryPath))
             {
-                File.Delete(targetFreeImagePath);
+                File.Delete(targetLibraryPath);
             }
 
-            File.Copy(sourceFreeImagePath, targetFreeImagePath, false);
+            File.Copy(libraryPath, targetLibraryPath, false);
+        }
+
+        private static string GetPlatformLibraryPath(string runtimesFolder, string libraryName)
+        {
+            string runtimeFolderName;
+            string libraryFileName;
+
+#if NET461
+            runtimeFolderName = GetWindowsRuntimeFolder();
+            libraryFileName = $"{libraryName}.dll";
+#else
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                runtimeFolderName = GetWindowsRuntimeFolder();
+                libraryFileName = $"{libraryName}.dll";
+            }
+
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                runtimeFolderName = "osx.10.10-x64";
+                libraryFileName = "libfreeimage.3.17.0.dylib";
+            }
+
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                runtimeFolderName = "ubuntu.16.04-x64";
+                libraryFileName = "libfreeimage-3.17.0.so";
+            }
+            else
+            {
+                throw new Exception($"Unsupported platform");
+            }
+#endif
+
+            return Path.Combine(runtimesFolder, runtimeFolderName, "native", libraryFileName);
+        }
+
+        private static string GetWindowsRuntimeFolder()
+        {
+            int ptrSize = Marshal.SizeOf(new IntPtr());
+            return (ptrSize == 4) ? "win7-x86" : "win7-x64";
         }
     }
 }

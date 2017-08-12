@@ -7,7 +7,7 @@ namespace FreeImageNETUnitTest
 	{
 		public static string GetExecutingFolder()
 		{
-			return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Locati‌​on);
+			return Path.GetDirectoryName(typeof(Utility).GetTypeInfo().Assembly.Locati‌​on);
 		}
 
 		public static string GetSolutionFolder()

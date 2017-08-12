@@ -54,6 +54,9 @@ namespace FreeImageNETUnitTest.TestFixtures
             Assert.DoesNotThrow(() => FreeImage.ValidateAvailability());
         }
 
+
+#if NET461
+
         [Test]
         public void FreeImage_GetBitmap()
         {
@@ -125,6 +128,8 @@ namespace FreeImageNETUnitTest.TestFixtures
             Assert.IsFalse(File.Exists(@"test.png"));
             bitmap.Dispose();
         }
+
+#endif
 
         [Test]
         public void FreeImage_LoadEx()
@@ -219,7 +224,11 @@ namespace FreeImageNETUnitTest.TestFixtures
             Assert.That(FreeImage.GetGreenMask(dib) == FreeImage.FI16_565_GREEN_MASK);
 
             FreeImage.UnloadEx(ref dib);
+
+#if NET461
             fStream.Close();
+#endif
+            fStream.Dispose();
 
             fStream = new FileStream(iManager.GetBitmapPath(ImageType.Metadata, ImageColorType.Type_01_Dither), FileMode.Open);
             Assert.IsNotNull(fStream);
@@ -230,7 +239,11 @@ namespace FreeImageNETUnitTest.TestFixtures
             Assert.That(FreeImage.GetBPP(dib) == 24);
             Assert.That(format == FREE_IMAGE_FORMAT.FIF_JPEG);
             FreeImage.UnloadEx(ref dib);
+
+#if NET461
             fStream.Close();
+#endif
+            fStream.Dispose();
 
             fStream = new FileStream(iManager.GetBitmapPath(ImageType.Even, ImageColorType.Type_32), FileMode.Open);
             format = FREE_IMAGE_FORMAT.FIF_TIFF;
@@ -251,7 +264,10 @@ namespace FreeImageNETUnitTest.TestFixtures
             Assert.That(dib.IsNull);
             Assert.AreEqual(FREE_IMAGE_FORMAT.FIF_BMP, format);
 
+#if NET461
             fStream.Close();
+#endif
+            fStream.Dispose();
         }
 
         [Test]
@@ -431,8 +447,15 @@ namespace FreeImageNETUnitTest.TestFixtures
 
             fStream = new FileStream(iManager.GetBitmapPath(ImageType.Odd, ImageColorType.Type_16_565), FileMode.Open);
             Assert.AreEqual(FREE_IMAGE_FORMAT.FIF_BMP, FreeImage.GetFileTypeFromStream(fStream));
+
+#if NET461
             fStream.Close();
+#endif
+            fStream.Dispose();
         }
+
+
+#if NET461
 
         [Test]
         public void FreeImage_GetHbitmap()
@@ -459,6 +482,8 @@ namespace FreeImageNETUnitTest.TestFixtures
             {
             }
         }
+
+#endif
 
         [Test]
         public void FreeImage_GetResolutionX()

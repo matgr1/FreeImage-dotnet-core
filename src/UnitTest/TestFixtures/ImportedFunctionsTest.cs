@@ -461,9 +461,13 @@ namespace FreeImageNETUnitTest.TestFixtures
 			FreeImage.SetTransparencyTable(dib, new byte[] { });
 			Assert.IsFalse(FreeImage.IsTransparent(dib));
 			Assert.IsFalse(FreeImage.HasBackgroundColor(dib));
+
+#if NET461
 			RGBQUAD rgb = Color.Teal;
 			Assert.IsTrue(FreeImage.SetBackgroundColor(dib, ref rgb));
 			Assert.IsTrue(FreeImage.GetBackgroundColor(dib, out rgb));
+#endif
+
 			FreeImage.UnloadEx(ref dib);
 		}
 
@@ -1500,7 +1504,7 @@ namespace FreeImageNETUnitTest.TestFixtures
 			RGBQUAD[] src = new RGBQUAD[1];
 			RGBQUAD[] dst = new RGBQUAD[1];
 			src[0] = rgbqa[0];
-			dst[0].Color = src[0].Color == Color.White ? Color.Thistle : Color.White;
+			dst[0].Color = src[0].Color == Color.White ? Color.Black : Color.White;
 
 			uint count = FreeImage.ApplyColorMapping(dib, src, dst, 1, true, false); // Memory
 			Assert.That(count > 0);

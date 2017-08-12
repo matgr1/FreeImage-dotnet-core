@@ -22,12 +22,12 @@ namespace FreeImageNETUnitTest
 		public TestClass(object classMember)
 		{
 			this.classMember = classMember;
-			MethodInfo[] infos = classMember.GetType().GetMethods(System.Reflection.BindingFlags.Public | BindingFlags.Instance);
+			MethodInfo[] infos = classMember.GetType().GetTypeInfo().GetMethods(BindingFlags.Public | BindingFlags.Instance);
 			methodList = new List<MethodInfo>(infos.Length);
 
 			foreach (MethodInfo info in infos)
 			{
-				object[] attributes = info.GetCustomAttributes(false);
+				IEnumerable<object> attributes = info.GetCustomAttributes(false);
 				foreach (Attribute attribute in attributes)
 				{
 					if (attribute.GetType() == typeof(TestAttribute))
