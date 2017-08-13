@@ -20,7 +20,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>4.0.3</Version>
+    <Version>4.0.3-alpha1</Version>
     <Description>This is a clone of the FreeImage .NET project (http://freeimage.sourceforge.net/) modified to work with dotnet core. Note that all functions that use System.Drawing.Bitmap have been removed from the netstandard framework versions as there is no implementation for this class.
 
 FreeImage native binaries are included in the nuget package for Windows, other platforms they will have to be installed separately (eg. on OSX brew install freeimage should work)
