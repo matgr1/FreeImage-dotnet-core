@@ -29,8 +29,10 @@ namespace FreeImageNETUnitTest
             string solutionFolder = Utility.GetSolutionFolder();
             string runtimesFolder = Path.Combine(solutionFolder, "runtimes");
 
-            string libraryPath = GetPlatformLibraryPath(runtimesFolder, "FreeImage");
-            string libraryFileName = Path.GetFileName(libraryPath);
+            const string freeImageLibraryName = "FreeImage";
+
+            string libraryPath = GetPlatformLibraryPath(runtimesFolder, freeImageLibraryName);
+            string libraryFileExtension = Path.GetExtension(libraryPath);
 
             if (false == File.Exists(libraryPath))
             {
@@ -38,7 +40,7 @@ namespace FreeImageNETUnitTest
             }
 
             string executingFolder = Utility.GetExecutingFolder();
-            string targetLibraryPath = Path.Combine(executingFolder, libraryFileName);
+            string targetLibraryPath = Path.Combine(executingFolder, $"{freeImageLibraryName}{libraryFileExtension}");
 
             if (File.Exists(targetLibraryPath))
             {
