@@ -182,6 +182,8 @@ namespace FreeImageNETUnitTest.TestFixtures
 			FreeImage.UnloadEx(ref dib);
 		}
 
+		// TODO: not really NET461 only, maybe just Windows only?
+#if NET461
 		[Test]
 		public void FreeImage_RegisterLocalPlugin()
 		{
@@ -194,6 +196,7 @@ namespace FreeImageNETUnitTest.TestFixtures
 		{
 			Assert.AreEqual(FREE_IMAGE_FORMAT.FIF_UNKNOWN, FreeImage.RegisterExternalPlugin("", "", "", "", ""));
 		}
+#endif
 
 		[Test]
 		public void FreeImage_GetFIFCount()
@@ -201,6 +204,8 @@ namespace FreeImageNETUnitTest.TestFixtures
 			Assert.AreNotEqual(0, FreeImage.GetFIFCount());
 		}
 
+		// TODO: not really NET461 only, maybe just Windows only?
+#if NET461
 		[Test]
 		public void FreeImage_SetPluginEnabled_IsPluginEnabled()
 		{
@@ -209,6 +214,7 @@ namespace FreeImageNETUnitTest.TestFixtures
 			FreeImage.SetPluginEnabled(FREE_IMAGE_FORMAT.FIF_PNG, true);
 			Assert.AreEqual(1, FreeImage.IsPluginEnabled(FREE_IMAGE_FORMAT.FIF_PNG));
 		}
+#endif
 
 		[Test]
 		public void FreeImage_GetFIFFromFormat()
