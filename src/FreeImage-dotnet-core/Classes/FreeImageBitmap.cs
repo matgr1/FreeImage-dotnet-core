@@ -2555,7 +2555,9 @@ namespace FreeImageAPI
 
 				this.frameIndex = frameIndex;
 			}
-		}
+        }
+
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
 
 		/// <summary>
 		/// Creates a GDI bitmap object from this <see cref="FreeImageBitmap"/>.
@@ -2583,8 +2585,6 @@ namespace FreeImageAPI
 			}
 		}
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
-
 		/// <summary>
 		/// Returns the handle to an icon.
 		/// </summary>
@@ -2598,28 +2598,28 @@ namespace FreeImageAPI
 			}
 		}
 
-#endif
-
-		/// <summary>
-		/// Creates a GDI bitmap object from this <see cref="FreeImageBitmap"/> with the same
-		/// color depth as the primary device.
-		/// </summary>
-		/// <returns>A handle to the GDI bitmap object that this method creates.</returns>
-		public IntPtr GetHbitmapForDevice()
+        /// <summary>
+        /// Creates a GDI bitmap object from this <see cref="FreeImageBitmap"/> with the same
+        /// color depth as the primary device.
+        /// </summary>
+        /// <returns>A handle to the GDI bitmap object that this method creates.</returns>
+        public IntPtr GetHbitmapForDevice()
 		{
 			EnsureNotDisposed();
 			return FreeImage.GetBitmapForDevice(dib, IntPtr.Zero, false);
 		}
 
-		/// <summary>
-		/// Gets the <see cref="Color"/> of the specified pixel in this <see cref="FreeImageBitmap"/>.
-		/// </summary>
-		/// <param name="x">The x-coordinate of the pixel to retrieve.</param>
-		/// <param name="y">The y-coordinate of the pixel to retrieve.</param>
-		/// <returns>A <see cref="System.Drawing.Color"/> structure that represents the color of the specified pixel.</returns>
-		/// <exception cref="Exception">The operation failed.</exception>
-		/// <exception cref="NotSupportedException">The type of this bitmap is not supported.</exception>
-		public unsafe Color GetPixel(int x, int y)
+#endif
+
+        /// <summary>
+        /// Gets the <see cref="Color"/> of the specified pixel in this <see cref="FreeImageBitmap"/>.
+        /// </summary>
+        /// <param name="x">The x-coordinate of the pixel to retrieve.</param>
+        /// <param name="y">The y-coordinate of the pixel to retrieve.</param>
+        /// <returns>A <see cref="System.Drawing.Color"/> structure that represents the color of the specified pixel.</returns>
+        /// <exception cref="Exception">The operation failed.</exception>
+        /// <exception cref="NotSupportedException">The type of this bitmap is not supported.</exception>
+        public unsafe Color GetPixel(int x, int y)
 		{
 			EnsureNotDisposed();
 			if (FreeImage.GetImageType(dib) == FREE_IMAGE_TYPE.FIT_BITMAP)
@@ -3857,6 +3857,8 @@ namespace FreeImageAPI
 			return new FreeImageBitmap(filename);
 		}
 
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+
 		/// <summary>
 		/// Creates a <see cref="FreeImageBitmap"/> from a handle to a GDI bitmap.
 		/// </summary>
@@ -3894,12 +3896,14 @@ namespace FreeImageAPI
 			return FreeImage.FreeHbitmap(hbitmap);
 		}
 
-		/// <summary>
-		/// Creates a <see cref="FreeImageBitmap"/> from the specified data stream.
-		/// </summary>
-		/// <param name="stream">A <see cref="Stream"/> that contains the data for this <see cref="FreeImageBitmap"/>.</param>
-		/// <returns>The <see cref="FreeImageBitmap"/> this method creates.</returns>
-		public static FreeImageBitmap FromStream(Stream stream)
+#endif
+
+        /// <summary>
+        /// Creates a <see cref="FreeImageBitmap"/> from the specified data stream.
+        /// </summary>
+        /// <param name="stream">A <see cref="Stream"/> that contains the data for this <see cref="FreeImageBitmap"/>.</param>
+        /// <returns>The <see cref="FreeImageBitmap"/> this method creates.</returns>
+        public static FreeImageBitmap FromStream(Stream stream)
 		{
 			return new FreeImageBitmap(stream);
 		}

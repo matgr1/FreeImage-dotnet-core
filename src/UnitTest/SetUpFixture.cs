@@ -87,7 +87,7 @@ namespace FreeImageNETUnitTest
 
         private static string GetWindowsRuntimeFolder()
         {
-            int ptrSize = Marshal.SizeOf(new IntPtr());
+            int ptrSize = Marshal.SizeOf<IntPtr>();
             return (ptrSize == 4) ? "win7-x86" : "win7-x64";
         }
     }

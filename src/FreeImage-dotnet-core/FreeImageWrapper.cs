@@ -2281,6 +2281,8 @@ namespace FreeImageAPI
 
         #region Pixel access functions
 
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+
         /// <summary>
         /// Retrieves an hBitmap for a FreeImage bitmap.
         /// Call FreeHbitmap(IntPtr) to free the handle.
@@ -2448,6 +2450,8 @@ namespace FreeImageAPI
         {
             return DeleteObject(hbitmap);
         }
+        
+#endif
 
         #endregion
 
@@ -4796,7 +4800,7 @@ namespace FreeImageAPI
         /// <returns>true, if all bytes compare as equal, false otherwise.</returns>
         public static unsafe bool CompareMemory(void* buf1, void* buf2, uint length)
         {
-            return (length == RtlCompareMemory(buf1, buf2, length));
+            return (length == PlatformCompareMemory(buf1, buf2, length));
         }
 
         /// <summary>
@@ -4808,7 +4812,7 @@ namespace FreeImageAPI
         /// <returns>true, if all bytes compare as equal, false otherwise.</returns>
         public static unsafe bool CompareMemory(void* buf1, void* buf2, long length)
         {
-            return (length == RtlCompareMemory(buf1, buf2, checked((uint)length)));
+            return (length == PlatformCompareMemory(buf1, buf2, checked((uint)length)));
         }
 
         /// <summary>
@@ -4820,7 +4824,7 @@ namespace FreeImageAPI
         /// <returns>true, if all bytes compare as equal, false otherwise.</returns>
         public static unsafe bool CompareMemory(IntPtr buf1, IntPtr buf2, uint length)
         {
-            return (length == RtlCompareMemory(buf1.ToPointer(), buf2.ToPointer(), length));
+            return (length == PlatformCompareMemory(buf1.ToPointer(), buf2.ToPointer(), length));
         }
 
         /// <summary>
@@ -4832,7 +4836,7 @@ namespace FreeImageAPI
         /// <returns>true, if all bytes compare as equal, false otherwise.</returns>
         public static unsafe bool CompareMemory(IntPtr buf1, IntPtr buf2, long length)
         {
-            return (length == RtlCompareMemory(buf1.ToPointer(), buf2.ToPointer(), checked((uint)length)));
+            return (length == PlatformCompareMemory(buf1.ToPointer(), buf2.ToPointer(), checked((uint)length)));
         }
 
         /// <summary>
@@ -5245,6 +5249,7 @@ namespace FreeImageAPI
 
         #region Dll-Imports
 
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
         /// <summary>
         /// Retrieves a handle to a display device context (DC) for the client area of a specified window
         /// or for the entire screen. You can use the returned handle in subsequent GDI functions to draw in the DC.
@@ -5367,7 +5372,39 @@ namespace FreeImageAPI
         /// <param name="src">Pointer to the starting address of the block of memory to be moved.</param>
         /// <param name="size">Size of the block of memory to move, in bytes.</param>
         [DllImport("Kernel32.dll", EntryPoint = "RtlMoveMemory", SetLastError = false)]
-        public static unsafe extern void MoveMemory(void* dst, void* src, uint size);
+        private static unsafe extern void MoveMemory(void* dst, void* src, uint size);
+#endif
+
+        private static unsafe uint PlatformCompareMemory(void* buf1, void* buf2, uint count)
+        {
+            if (IsWindows)
+            {
+                return RtlCompareMemory(buf1, buf2, count);
+            }
+            else
+            {
+                // TODO: there are probably builtin ways to do this in linux/mac...
+                // TODO: if not, there's probably a clever way of doing this as longs instead of byte by 
+                //       byte (count the bits not set when xor'ing each long?)
+
+                uint matching = 0;
+
+                byte* buf1Byte = (byte*)buf1;
+                byte* buf2Byte = (byte*)buf2;
+
+                byte* buf1ByteEnd = buf1Byte + count;
+
+                while (buf1Byte < buf1ByteEnd)
+                {
+                    if (*buf1Byte++ == *buf2Byte++)
+                    {
+                        matching += sizeof(byte);
+                    }
+                }
+
+                return matching;
+            }
+        }
 
         /// <summary>
         /// The RtlCompareMemory routine compares blocks of memory
@@ -5379,8 +5416,8 @@ namespace FreeImageAPI
         /// <returns>RtlCompareMemory returns the number of bytes that compare as equal.
         /// If all bytes compare as equal, the input Length is returned.</returns>
         [DllImport("ntdll.dll", EntryPoint = "RtlCompareMemory", SetLastError = false)]
-        internal static unsafe extern uint RtlCompareMemory(void* buf1, void* buf2, uint count);
+        private static unsafe extern uint RtlCompareMemory(void* buf1, void* buf2, uint count);
 
-        #endregion
+#endregion
     }
 }
