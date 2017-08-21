@@ -11,7 +11,7 @@ namespace FreeImageAPI
 		// TODO: ideally FreeImage would provide this... either way, it should probably be cleared before any call to the API...
 		[ThreadStatic]
 		public static string LastErrorMessage;
-
+		
 		#region Callback
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -25,6 +25,14 @@ namespace FreeImageAPI
 		static FreeImageEngine()
 		{
 			outputMessageFunctionLock = new object();
+
+			try
+			{
+				InitializeMessage();
+			}
+			catch
+			{
+			}
 		}
 
 		/// <summary>
