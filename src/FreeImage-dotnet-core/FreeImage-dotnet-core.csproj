@@ -57,19 +57,19 @@ This is for FreeImage version 3.17.0 (The version number of this package no long
   </ItemGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.1" />
+    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.2" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
-    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.1" />
+    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.2" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.1" />
+    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.2" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.1" />
+    <PackageReference Include="System.Drawing-dotnet-core" Version="1.2.2" />
   </ItemGroup>	
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
