@@ -1,0 +1,78 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' And '$(OutputType)' != 'Exe' And '$(Platform)' == 'x86'">
+    <NativeLibs Include="$(MSBuildThisFileDirectory)..\runtimes\win7-x86\native\FreeImage.dll" />
+    <None Include="@(NativeLibs)">
+      <Link>%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' And  '$(OutputType)' != 'Exe' And '$(Platform)' != 'x86' ">
+	<NativeLibs Include="$(MSBuildThisFileDirectory)..\runtimes\win7-x64\native\FreeImage.dll" />
+	<None Include="@(NativeLibs)">
+	  <Link>%(FileName)%(Extension)</Link>
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' And '$(OutputType)' != 'Exe' And '$(Platform)' == 'x86'">
+	<NativeLibs Include="$(MSBuildThisFileDirectory)..\runtimes\win7-x86\native\FreeImage.dll" />
+	<None Include="@(NativeLibs)">
+	  <Link>%(FileName)%(Extension)</Link>
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' And  '$(OutputType)' != 'Exe' And '$(Platform)' != 'x86' ">
+	<NativeLibs Include="$(MSBuildThisFileDirectory)..\runtimes\win7-x64\native\FreeImage.dll" />
+	<None Include="@(NativeLibs)">
+	  <Link>%(FileName)%(Extension)</Link>
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' And '$(OutputType)' != 'Exe' And '$(Platform)' == 'x86'">
+	<NativeLibs Include="$(MSBuildThisFileDirectory)..\runtimes\win7-x86\native\FreeImage.dll" />
+	<None Include="@(NativeLibs)">
+	  <Link>%(FileName)%(Extension)</Link>
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' And  '$(OutputType)' != 'Exe' And '$(Platform)' != 'x86' ">
+	<NativeLibs Include="$(MSBuildThisFileDirectory)..\runtimes\win7-x64\native\FreeImage.dll" />
+	<None Include="@(NativeLibs)">
+	  <Link>%(FileName)%(Extension)</Link>
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' And '$(OutputType)' != 'Exe' And '$(Platform)' == 'x86'">
+	<NativeLibs Include="$(MSBuildThisFileDirectory)..\runtimes\win7-x86\native\FreeImage.dll" />
+	<None Include="@(NativeLibs)">
+	  <Link>%(FileName)%(Extension)</Link>
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' And  '$(OutputType)' != 'Exe' And '$(Platform)' != 'x86' ">
+	<NativeLibs Include="$(MSBuildThisFileDirectory)..\runtimes\win7-x64\native\FreeImage.dll" />
+	<None Include="@(NativeLibs)">
+	  <Link>%(FileName)%(Extension)</Link>
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' And '$(OutputType)' != 'Exe' And '$(Platform)' == 'x86'">
+	<NativeLibs Include="$(MSBuildThisFileDirectory)..\runtimes\win7-x86\native\FreeImage.dll" />
+	<None Include="@(NativeLibs)">
+	  <Link>%(FileName)%(Extension)</Link>
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' And  '$(OutputType)' != 'Exe' And '$(Platform)' != 'x86' ">
+	<NativeLibs Include="$(MSBuildThisFileDirectory)..\runtimes\win7-x64\native\FreeImage.dll" />
+	<None Include="@(NativeLibs)">
+	  <Link>%(FileName)%(Extension)</Link>
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+  </ItemGroup>
+  
+</Project>
