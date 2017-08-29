@@ -1,4 +1,4 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<!--<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' And '$(OutputType)' != 'Exe' And '$(Platform)' == 'x86'">
     <NativeLibs Include="$(MSBuildThisFileDirectory)..\runtimes\win7-x86\native\FreeImage.dll" />
@@ -75,4 +75,4 @@
 	</None>
   </ItemGroup>
   
-</Project>
+</Project>-->
