@@ -1,4 +1,4 @@
-This is a clone of the FreeImage .NET project (http://freeimage.sourceforge.net/) modified to work with dotnet core.  Note that all functions that use System.Drawing.Bitmap have been removed from the netstandard framework versions as there is no implementation for this class.
+This is a clone of the FreeImage .NET project (http://freeimage.sourceforge.net/) modified to work with .NET Standard.
 
 FreeImage native binaries are included in the nuget package for Windows x86/x64, Ubuntu x64 (^16.04), and OSX x64 (^10.10).
 
@@ -6,7 +6,7 @@ For other platforms they will have to be installed separately. Note that the nat
 
 nuget package: https://www.nuget.org/packages/FreeImage-dotnet-core
 
-`Install-Package FreeImage-dotnet-core`
+`Install-Package FreeImage.Standard`
 
 #### FreeImage Version
 

@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeImage-dotnet-core", "src\FreeImage-dotnet-core\FreeImage-dotnet-core.csproj", "{249C05B3-BB94-4EB1-92AE-E6DF4C2C068A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeImage.Standard", "src\FreeImage.Standard\FreeImage.Standard.csproj", "{249C05B3-BB94-4EB1-92AE-E6DF4C2C068A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B03B4CBD-B223-4F9B-BC26-274A5FDB660D}"
 	ProjectSection(SolutionItems) = preProject

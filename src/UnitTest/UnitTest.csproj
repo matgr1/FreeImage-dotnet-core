@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1;net461</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net471</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>UnitTest</AssemblyName>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FreeImage-dotnet-core\FreeImage-dotnet-core.csproj" />
+    <ProjectReference Include="..\FreeImage.Standard\FreeImage.Standard.csproj" />
   </ItemGroup>
 
   <ItemGroup>
