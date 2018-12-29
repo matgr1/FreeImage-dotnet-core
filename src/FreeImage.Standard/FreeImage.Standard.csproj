@@ -1,54 +1,55 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<Copyright></Copyright>
-	<AssemblyTitle>FreeImage dotnet core</AssemblyTitle>
-	<VersionPrefix>4.3.6</VersionPrefix>
-	<Authors></Authors>
-	<TargetFrameworks>netstandard2.0;netstandard1.6;netstandard1.5;netstandard1.4;netstandard1.3;net461;net46;net452;net451;net45;net40</TargetFrameworks>
-	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	<AssemblyName>FreeImage-dotnet-core</AssemblyName>
-	<PackageId>FreeImage-dotnet-core</PackageId>
-	<PackageTags>FreeImage;netcore;dotnetcore</PackageTags>
-	<PackageIconUrl>http://freeimage.sourceforge.net/images/logo.jpg</PackageIconUrl>
-	<PackageProjectUrl>https://github.com/matgr1/FreeImage-dotnet-core</PackageProjectUrl>
-	<PackageLicenseUrl>http://freeimage.sourceforge.net/license.html</PackageLicenseUrl>
-	<RepositoryType>git</RepositoryType>
-	<RepositoryUrl>https://github.com/matgr1/FreeImage-dotnet-core</RepositoryUrl>
-	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<Version>4.3.6</Version>
-	<Description>This is a clone of the FreeImage .NET project (http://freeimage.sourceforge.net/) modified to work with dotnet core. Note that all functions that use System.Drawing.Bitmap have been removed from the netstandard framework versions as there is no implementation for this class.
+    <Copyright></Copyright>
+    <AssemblyTitle>FreeImage.Standard</AssemblyTitle>
+    <VersionPrefix>4.3.6</VersionPrefix>
+    <Authors>FreeImage contributors; matgr1; lordbenjamin</Authors>
+    <TargetFrameworks>netstandard2.0;net472;net461</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>FreeImage.Standard</AssemblyName>
+    <PackageId>FreeImage.Standard</PackageId>
+    <PackageTags>FreeImage;netcore;dotnetcore</PackageTags>
+    <PackageIconUrl>http://freeimage.sourceforge.net/images/logo.jpg</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/LordBenjamin/FreeImage.Standard</PackageProjectUrl>
+    <PackageLicenseUrl>http://freeimage.sourceforge.net/license.html</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/LordBenjamin/FreeImage.Standard</RepositoryUrl>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>4.3.6</Version>
+    <Description>
+      This is a clone of the FreeImage .NET project (http://freeimage.sourceforge.net/) modified to work with dotnet core. Note that all functions that use System.Drawing.Bitmap have been removed from the netstandard framework versions as there is no implementation for this class.
 
-FreeImage native binaries are included in the nuget package for Windows x86/x64, Ubuntu x64 (^16.04), and OSX x64 (^10.10).
+      FreeImage native binaries are included in the nuget package for Windows x86/x64, Ubuntu x64 (^16.04), and OSX x64 (^10.10).
 
-For other platforms they will have to be installed separately. Note that the native function calls require the the library filename to be "FreeImage," so symlinking may be required (eg. "sudo ln -s /usr/lib/x86_64-linux-gnu/libfreeimage.so /usr/lib/FreeImage").
+      For other platforms they will have to be installed separately. Note that the native function calls require the the library filename to be "FreeImage," so symlinking may be required (eg. "sudo ln -s /usr/lib/x86_64-linux-gnu/libfreeimage.so /usr/lib/FreeImage").
 
-This is for FreeImage version 3.17.0 (The version number of this package no longer matches the FreeImage native library version!)
-	</Description>
+      This is for FreeImage version 3.17.0 (The version number of this package no longer matches the FreeImage native library version!)
+    </Description>
   </PropertyGroup>
 
   <ItemGroup>
 
-	<None Include="..\..\runtimes\win7-x64\native\FreeImage.dll">
-	  <PackagePath>runtimes/win7-x64/native/FreeImage.dll</PackagePath>
-	  <Pack>true</Pack>
-	</None>
-	<None Include="..\..\runtimes\win7-x86\native\FreeImage.dll">
-	  <PackagePath>runtimes/win7-x86/native/FreeImage.dll</PackagePath>
-	  <Pack>true</Pack>
-	</None>
+    <None Include="..\..\runtimes\win7-x64\native\FreeImage.dll">
+      <PackagePath>runtimes/win7-x64/native/FreeImage.dll</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Include="..\..\runtimes\win7-x86\native\FreeImage.dll">
+      <PackagePath>runtimes/win7-x86/native/FreeImage.dll</PackagePath>
+      <Pack>true</Pack>
+    </None>
 
-	<!-- NOTE: this is renaming to FreeImage... might be avoidable if dll mapping is implemented: https://github.com/dotnet/coreclr/issues/930 -->
-	<None Include="..\..\runtimes\osx.10.10-x64\native\libfreeimage.3.17.0.dylib">
-	  <PackagePath>runtimes/osx.10.10-x64/native/FreeImage.dylib</PackagePath>
-	  <Pack>true</Pack>
-	</None>
+    <!-- NOTE: this is renaming to FreeImage... might be avoidable if dll mapping is implemented: https://github.com/dotnet/coreclr/issues/930 -->
+    <None Include="..\..\runtimes\osx.10.10-x64\native\libfreeimage.3.17.0.dylib">
+      <PackagePath>runtimes/osx.10.10-x64/native/FreeImage.dylib</PackagePath>
+      <Pack>true</Pack>
+    </None>
 
-	<!-- NOTE: this is renaming to FreeImage... might be avoidable if dll mapping is implemented: https://github.com/dotnet/coreclr/issues/930 -->
-	<None Include="..\..\runtimes\ubuntu.16.04-x64\native\libfreeimage-3.17.0.so">
-	  <PackagePath>runtimes/ubuntu.16.04-x64/native/FreeImage.so</PackagePath>
-	  <Pack>true</Pack>
-	</None>
+    <!-- NOTE: this is renaming to FreeImage... might be avoidable if dll mapping is implemented: https://github.com/dotnet/coreclr/issues/930 -->
+    <None Include="..\..\runtimes\ubuntu.16.04-x64\native\libfreeimage-3.17.0.so">
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/FreeImage.so</PackagePath>
+      <Pack>true</Pack>
+    </None>
 
   </ItemGroup>
 
@@ -59,58 +60,11 @@ This is for FreeImage version 3.17.0 (The version number of this package no long
 	</None>
   </ItemGroup>-->
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-	<PackageReference Include="System.Drawing-dotnet-core" Version="1.2.3" />
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
-	<PackageReference Include="System.Drawing-dotnet-core" Version="1.2.3" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-	<PackageReference Include="System.Drawing-dotnet-core" Version="1.2.3" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-	<PackageReference Include="System.Drawing-dotnet-core" Version="1.2.3" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-	<Reference Include="System.Drawing" />
-	<Reference Include="System.Xml" />
-	<Reference Include="System" />
-	<Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-	<Reference Include="System.Drawing" />
-	<Reference Include="System.Xml" />
-	<Reference Include="System" />
-	<Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-	<Reference Include="System.Drawing" />
-	<Reference Include="System.Xml" />
-	<Reference Include="System" />
-	<Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
-	<Reference Include="System.Drawing" />
-	<Reference Include="System.Xml" />
-	<Reference Include="System" />
-	<Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-	<Reference Include="System.Drawing" />
-	<Reference Include="System.Xml" />
-	<Reference Include="System" />
-	<Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+  <ItemGroup>
     <PackageReference Include="System.Drawing.Common">
       <Version>4.5.1</Version>
     </PackageReference>
@@ -118,62 +72,4 @@ This is for FreeImage version 3.17.0 (The version number of this package no long
       <Version>4.3.0</Version>
     </PackageReference>
   </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <PackageReference Include="System.Drawing.Common">
-      <Version>4.5.1</Version>
-    </PackageReference>
-    <PackageReference Include="System.Drawing.Primitives">
-      <Version>4.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
-    <PackageReference Include="System.Drawing.Primitives">
-      <Version>4.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-    <PackageReference Include="System.Drawing.Primitives">
-      <Version>4.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
-    <PackageReference Include="System.Drawing.Primitives">
-      <Version>4.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.5'">
-    <PackageReference Include="System.Drawing.Primitives">
-      <Version>4.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
-    <PackageReference Include="System.Drawing.Primitives">
-      <Version>4.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
-    <PackageReference Include="System.Drawing.Primitives">
-      <Version>4.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-    <PackageReference Include="System.Drawing.Primitives">
-      <Version>4.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net451'">
-    <PackageReference Include="System.Drawing.Primitives">
-      <Version>4.3.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
 </Project>
