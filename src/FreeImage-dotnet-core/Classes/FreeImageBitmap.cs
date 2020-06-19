@@ -45,7 +45,7 @@ using FreeImageAPI.Metadata;
 using System.Diagnostics;
 using System.Reflection;
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 using System.Runtime.Serialization;
 #endif
 
@@ -54,7 +54,7 @@ namespace FreeImageAPI
 	/// <summary>
 	/// Encapsulates a FreeImage-bitmap.
 	/// </summary>
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 	[Serializable, Guid("64a4c935-b757-499c-ab8c-6110316a9e51")]
 	public class FreeImageBitmap : MarshalByRefObject, ICloneable, IDisposable, IEnumerable, ISerializable
 #else
@@ -234,7 +234,7 @@ namespace FreeImageAPI
 			AddMemoryPressure();
 		}
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FreeImageBitmap"/> class
@@ -610,7 +610,7 @@ namespace FreeImageAPI
 		{
 		}
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FreeImageBitmap"/> class bases on the specified size
@@ -921,7 +921,7 @@ namespace FreeImageAPI
 			AddMemoryPressure();
 		}
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FreeImageBitmap"/> class.
@@ -967,7 +967,7 @@ namespace FreeImageAPI
 
 #region Operators
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 
 		/// <summary>
 		/// Converts a <see cref="FreeImageBitmap"/> instance to a <see cref="Bitmap"/> instance.
@@ -1835,7 +1835,7 @@ namespace FreeImageAPI
 			return result;
 		}
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 
 		/// <summary>
 		/// Converts this <see cref="FreeImageBitmap"/> instance to a <see cref="Bitmap"/> instance.
@@ -2557,7 +2557,7 @@ namespace FreeImageAPI
 			}
         }
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 
 		/// <summary>
 		/// Creates a GDI bitmap object from this <see cref="FreeImageBitmap"/>.
@@ -2726,7 +2726,7 @@ namespace FreeImageAPI
 			FreeImage.SetResolutionY(dib, (uint)yDpi);
 		}
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 
 		/// <summary>
 		/// This function is not yet implemented.
@@ -3771,7 +3771,7 @@ namespace FreeImageAPI
 
 #region Static functions
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 
 		/// <summary>
 		/// Returns a value that indicates whether the pixel format for this <see cref="FreeImageBitmap"/> contains alpha information.
@@ -3857,7 +3857,7 @@ namespace FreeImageAPI
 			return new FreeImageBitmap(filename);
 		}
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 
 		/// <summary>
 		/// Creates a <see cref="FreeImageBitmap"/> from a handle to a GDI bitmap.
@@ -3931,7 +3931,7 @@ namespace FreeImageAPI
 			return new FreeImageBitmap(stream);
 		}
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 
 		/// <summary>
 		/// Returns the color depth, in number of bits per pixel,
@@ -4327,7 +4327,7 @@ namespace FreeImageAPI
 		/// <summary>
 		/// Helper class to store informations for <see cref="FreeImageBitmap.SaveAdd()"/>.
 		/// </summary>
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 		private sealed class SaveInformation : ICloneable
 #else
 		private sealed class SaveInformation
@@ -4420,7 +4420,7 @@ namespace FreeImageAPI
 			return GetScanlines().GetEnumerator();
 		}
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NETCOREAPP
 
 		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
 		{

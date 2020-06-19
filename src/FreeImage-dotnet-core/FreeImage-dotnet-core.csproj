@@ -5,7 +5,7 @@
 	<AssemblyTitle>FreeImage dotnet core</AssemblyTitle>
 	<VersionPrefix>4.3.6</VersionPrefix>
 	<Authors></Authors>
-	<TargetFrameworks>netstandard2.0;netstandard1.6;netstandard1.5;netstandard1.4;netstandard1.3;net461;net46;net452;net451;net45;net40</TargetFrameworks>
+	<TargetFrameworks>netstandard2.0;netstandard1.6;netstandard1.5;netstandard1.4;netstandard1.3;netcoreapp3.1;net461;net46;net452;net451;net45;net40</TargetFrameworks>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	<AssemblyName>FreeImage-dotnet-core</AssemblyName>
 	<PackageId>FreeImage-dotnet-core</PackageId>
@@ -58,6 +58,10 @@ This is for FreeImage version 3.17.0 (The version number of this package no long
 	  <Pack>true</Pack>
 	</None>
   </ItemGroup>-->
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+	<PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+  </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
 	<PackageReference Include="System.Drawing-dotnet-core" Version="1.2.3" />
