@@ -46,7 +46,7 @@ namespace FreeImageAPI
 	/// access to either a singlepage bitmap or exactly one page of
 	/// a multipage bitmap.
 	/// </remarks>
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 	[Serializable, StructLayout(LayoutKind.Sequential)]
 #else
 	[StructLayout(LayoutKind.Sequential)]

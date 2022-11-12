@@ -9,7 +9,7 @@ namespace FreeImageAPI
 	/// The <b>FI4BIT</b> structure represents the half of a <see cref="Byte"/>.
 	/// It's valuerange is between <i>0</i> and <i>15</i>.
 	/// </summary>
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 	[DebuggerDisplay("{value}"),
 	Serializable]
 #else

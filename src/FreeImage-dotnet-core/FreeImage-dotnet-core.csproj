@@ -5,7 +5,7 @@
 	<AssemblyTitle>FreeImage dotnet core</AssemblyTitle>
 	<VersionPrefix>4.3.6</VersionPrefix>
 	<Authors></Authors>
-	<TargetFrameworks>netstandard2.0;netstandard1.6;netstandard1.5;netstandard1.4;netstandard1.3;net461;net46;net452;net451;net45;net40</TargetFrameworks>
+	<TargetFrameworks>netstandard2.0;netstandard1.6;netstandard1.5;netstandard1.4;netstandard1.3;net6.0-windows;net5.0-windows;net461;net46;net452;net451;net45;net40</TargetFrameworks>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	<AssemblyName>FreeImage-dotnet-core</AssemblyName>
 	<PackageId>FreeImage-dotnet-core</PackageId>
@@ -16,7 +16,7 @@
 	<RepositoryType>git</RepositoryType>
 	<RepositoryUrl>https://github.com/matgr1/FreeImage-dotnet-core</RepositoryUrl>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<Version>4.3.6</Version>
+	<Version>4.3.7</Version>
 	<Description>This is a clone of the FreeImage .NET project (http://freeimage.sourceforge.net/) modified to work with dotnet core. Note that all functions that use System.Drawing.Bitmap have been removed from the netstandard framework versions as there is no implementation for this class.
 
 FreeImage native binaries are included in the nuget package for Windows x86/x64, Ubuntu x64 (^16.04), and OSX x64 (^10.10).
@@ -77,6 +77,14 @@ This is for FreeImage version 3.17.0 (The version number of this package no long
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
 	<PackageReference Include="System.Drawing-dotnet-core" Version="1.2.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0-windows' ">
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0-windows' ">
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">

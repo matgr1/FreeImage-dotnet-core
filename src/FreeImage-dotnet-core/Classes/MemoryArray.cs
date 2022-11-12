@@ -16,7 +16,7 @@ namespace FreeImageAPI
 	/// Use <see cref="System.Int32"/> instead of <see cref="System.Boolean"/> and
 	/// <see cref="System.Byte"/> instead of <see cref="System.Char"/>.
 	/// </remarks>
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 	public unsafe class MemoryArray<T> : IDisposable, ICloneable, ICollection, IEnumerable<T>, IEquatable<MemoryArray<T>> where T : struct
 #else
 	public unsafe class MemoryArray<T> : IDisposable, ICollection, IEnumerable<T>, IEquatable<MemoryArray<T>> where T : struct

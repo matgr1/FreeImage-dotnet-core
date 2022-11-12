@@ -54,7 +54,7 @@ namespace FreeImageAPI
 	/// The structure can be converted into all .NET standard types either implicit or
 	/// explicit.
 	/// </remarks>
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 	[Serializable, StructLayout(LayoutKind.Sequential), ComVisible(true)]
 #else
 	[StructLayout(LayoutKind.Sequential), ComVisible(true)]
