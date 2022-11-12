@@ -42,7 +42,7 @@ namespace FreeImageAPI
 	/// The <b>FICOMPLEX</b> structure describes a color consisting of a real and an imaginary part.
 	/// Each part is using 4 bytes of data.
 	/// </summary>
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 	[Serializable, StructLayout(LayoutKind.Sequential)]
 #else
 	[StructLayout(LayoutKind.Sequential)]

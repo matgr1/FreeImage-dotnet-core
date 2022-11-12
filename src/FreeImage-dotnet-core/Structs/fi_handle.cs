@@ -79,7 +79,7 @@ namespace FreeImageAPI.IO
 	/// This way we can implement a <b>fi_handle</b> that works with managed an unmanaged
 	/// code.
 	/// </remarks>
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 	[Serializable, StructLayout(LayoutKind.Sequential)]
 #else
 	[StructLayout(LayoutKind.Sequential)]

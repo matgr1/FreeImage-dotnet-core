@@ -168,7 +168,7 @@ namespace FreeImageAPI
 
         internal static Assembly GetAssembly(Type type)
         {
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 			return Assembly.GetAssembly(type);
 #else
             return type.GetTypeInfo().Assembly;
@@ -215,7 +215,7 @@ namespace FreeImageAPI
             {
                 throw new FreeImageException("FreeImage library not found", e);
             }
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 			catch (EntryPointNotFoundException e)
 			{
 				throw new FreeImageException("FreeImage entry point not found", e);
@@ -573,7 +573,7 @@ namespace FreeImageAPI
             }
         }
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 
 		/// <summary>
 		/// Converts a FreeImage bitmap to a .NET <see cref="System.Drawing.Bitmap"/>.
@@ -931,7 +931,7 @@ namespace FreeImageAPI
             return dib;
         }
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 
 		/// <summary>
 		/// Saves a .NET <see cref="System.Drawing.Bitmap"/> to a file.
@@ -1084,7 +1084,7 @@ namespace FreeImageAPI
             return dib;
         }
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 
 		/// <summary>
 		/// Loads a .NET <see cref="System.Drawing.Bitmap"/> from a file.
@@ -2281,7 +2281,7 @@ namespace FreeImageAPI
 
         #region Pixel access functions
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 
         /// <summary>
         /// Retrieves an hBitmap for a FreeImage bitmap.
@@ -2779,7 +2779,7 @@ namespace FreeImageAPI
             return result;
         }
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 
 		/// <summary>
 		/// Returns the <see cref="FREE_IMAGE_FORMAT"/> for the specified
@@ -5144,7 +5144,7 @@ namespace FreeImageAPI
 
         internal static string ColorToString(Color color)
         {
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 			return string.Format(
 				System.Globalization.CultureInfo.CurrentCulture,
 				"{{Name={0}, ARGB=({1}, {2}, {3}, {4})}}",
@@ -5249,7 +5249,7 @@ namespace FreeImageAPI
 
         #region Dll-Imports
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
         /// <summary>
         /// Retrieves a handle to a display device context (DC) for the client area of a specified window
         /// or for the entire screen. You can use the returned handle in subsequent GDI functions to draw in the DC.

@@ -42,7 +42,7 @@ namespace FreeImageAPI
 {
     public static partial class FreeImage
     {
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
         // this isn't really valid... could be Mono on another platform... how do we tell in this case?
         public const bool IsWindows = true;
 #else

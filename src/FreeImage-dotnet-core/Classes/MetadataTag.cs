@@ -44,7 +44,7 @@ namespace FreeImageAPI.Metadata
 	/// <summary>
 	/// Manages metadata objects and operations.
 	/// </summary>
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 	public sealed class MetadataTag : IComparable, IComparable<MetadataTag>, ICloneable, IEquatable<MetadataTag>, IDisposable
 #else
 	public sealed class MetadataTag : IComparable, IComparable<MetadataTag>, IEquatable<MetadataTag>, IDisposable
@@ -611,7 +611,7 @@ namespace FreeImageAPI.Metadata
 			return FreeImage.GetMetadata(_model, dib, _key, out tag);
 		}
 
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 
 		/// <summary>
 		/// Gets a .NET PropertyItem for this metadata tag.

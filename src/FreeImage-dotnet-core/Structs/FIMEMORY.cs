@@ -41,7 +41,7 @@ namespace FreeImageAPI
 	/// <summary>
 	/// The <b>FIMEMORY</b> structure is a handle to an opened memory stream.
 	/// </summary>
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 	[Serializable, StructLayout(LayoutKind.Sequential)]
 #else
 	[StructLayout(LayoutKind.Sequential)]

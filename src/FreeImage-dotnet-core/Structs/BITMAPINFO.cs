@@ -60,7 +60,7 @@ namespace FreeImageAPI
 	/// Unless the application has exclusive use and control of the bitmap, the bitmap color table
 	/// should contain explicit RGB values.
 	/// </remarks>
-#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20
+#if NET462 || NET461 || NET46 || NET452 || NET451 || NET45 || NET40 || NET35 || NET20 || NET5_0_OR_GREATER
 	[Serializable, StructLayout(LayoutKind.Sequential)]
 #else
 	[StructLayout(LayoutKind.Sequential)]
